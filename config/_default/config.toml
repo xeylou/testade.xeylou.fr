@@ -3,9 +3,9 @@
 # https://blowfish.page/docs/getting-started/
 
 theme = "blowfish"
-baseURL = "https://mywebsiteyouhou.net/"
+baseURL = "https://xeylou.fr/"
 defaultContentLanguage = "en"
-languageCode = "en"
+# languageCode = "en"
 
 
 # pluralizeListTitles = "true" # hugo function useful for non-english languages, find out more in  https://gohugo.io/getting-started/configuration/#pluralizelisttitles
