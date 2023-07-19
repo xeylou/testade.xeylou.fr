@@ -15,6 +15,19 @@
   pageRef = "posts"
   weight = 10
 
+# [[main]]
+#   name = "En"
+#   parent = "Posts"
+#   pageRef = "en"
+#   weight = 10
+
+# [[main]]
+#   name = "Fr"
+#   parent = "Posts"
+#   pageRef = "fr"
+#   weight = 10
+
+
 [[main]]
   name= "Now"
   pageRef = "now"

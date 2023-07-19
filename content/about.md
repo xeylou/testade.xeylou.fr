@@ -17,3 +17,6 @@ I do a work-study as an Network & System Administrator for a french IT service d
 
 ## Hobbies
 
+I like learning as much as I can about everything.
+
+I am a IT privacy & security enthusiast. (:heart:FOSS)

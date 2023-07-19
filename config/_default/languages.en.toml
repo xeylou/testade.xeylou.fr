@@ -7,8 +7,8 @@ title = "xeylou"
   displayName = "EN"
   isoCode = "en"
   rtl = false
-  # dateFormat = "2 January 2006"
   dateFormat="2006-01-02"
+  # dateFormat = "2 January 2006"
   logo = "img/xeylou_transparent_small.png"
   # secondaryLogo = "img/00.jpg"
   description = "xeylou's website"
@@ -21,10 +21,10 @@ title = "xeylou"
   # bio = "bug"
   links = [
     { github = "https://github.com/xeylou" },
-    { telegram = "https://t.me/xeylou" },
     { email = "mailto:xeylou@proton.me" },
-
     
+
+#     { telegram = "https://t.me/xeylou" },
 #     { link = "https://link-to-some-website.com/" },
 #     { amazon = "https://www.amazon.com/hz/wishlist/ls/wishlist-id" },
 #     { apple = "https://www.apple.com" },
@@ -38,7 +38,7 @@ title = "xeylou"
 #     { foursquare = "https://foursquare.com/username" },
 #     { gitlab = "https://gitlab.com/username" },
 #     { google = "https://www.google.com/" },
-#     { hashnode = "https://username.hashnode.dev" },
+#     { hashnode = "htBefore we starttps://username.hashnode.dev" },
 #     { instagram = "https://instagram.com/username" },
 #     { keybase = "https://keybase.io/username" },
 #     { kickstarter = "https://www.kickstarter.com/profile/username" },
