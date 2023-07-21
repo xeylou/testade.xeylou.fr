@@ -18,12 +18,12 @@ You can always contact me if the last update is too old.
 
 ### Work
 
-Studying at [University of Pau and the Adour Region](https://univ-pau.fr).
+I am a second grade Network & Telecommunication student at [University of Pau and the Adour Region](https://univ-pau.fr).
 
-Doing a work-study at a french IT service delivery company.
+I do a work-study as an Network & System Administrator for a french IT service delivery company.
 
 ### Freetime
 
 Constantly building and maintaining this blog
 
-Explore Github projects & talk about IT related stuff
+Exploring & creating Github repos about IT related stuff

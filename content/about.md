@@ -11,9 +11,8 @@ showRelatedContent: false
 ---
 
 ## Study
-I am a second grade Network & Telecommunication student at [University of Pau and the Adour Region](https://univ-pau.fr).
 
-I do a work-study as an Network & System Administrator for a french IT service delivery company.
+I have French high-school general degree in mathematics & computer science.
 
 ## Hobbies
 
