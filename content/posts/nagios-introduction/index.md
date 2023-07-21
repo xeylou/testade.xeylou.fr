@@ -163,10 +163,9 @@ I'll deploy & configure a Nagios Core server, monitoring the system utilisation 
 ```
 ### nagios installation
 
-I'll install Nagios Core & Nagios Plugins on debian to make the Nagios Server.
+I'll install Nagios Core & Nagios Plugins from source code on Debian to make the Nagios Server.
 
-I made a script to automate their installation available on my [Github](https://github.com/xeylou), working & tested on debian 11 & 12.  
-*(note: i didn't installed them from repos but from compiling from source code. You can still try installing them from repos if you encounter problems.)*
+I made a script for their installation on my [Github](https://github.com/xeylou), working & tested on debian 11 & 12.  
 
 Once installed, the Nagios web interface can be reach at `http://192.168.122.25/nagios`
 ### windows configuration
