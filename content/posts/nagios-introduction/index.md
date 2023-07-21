@@ -138,14 +138,15 @@ These are `*.cfg` configuration files in which you define the host informations 
 
 It is recommended to create directories to manage your kinds of hosts - create a folder with all the `*.cfg` files for windows clients, linux servers etc.
 
-## implementation
+## deployment
 Here i demonstrate what i said in [how nagios works](#how-nagios-works).
 
-I'll deploy & configure a Nagios Core server, monitoring the system utilisation of a windows client & a debian server hosting a mysql server & apache.
+Deploying an infrastructure based on the system monitoring of a `Windows Host` (server or client) & a `Debian Host`.  
+The `Nagios Server` will also monitor a mysql server & an apache website hosted on the Debian Host.
 
-### simple architecture
+### network plan
 ```goat
-                               +------------+------------+
+                               +-------------------------+
                                |                         |
                                |         Switch          |
                                |                         |
@@ -157,18 +158,41 @@ I'll deploy & configure a Nagios Core server, monitoring the system utilisation 
              | '--------------'             | '--------------'            | '--------------'
 +------------+------------+   +-------------+-----------+    +------------+------------+
 |                         |   |                         |    |                         |
-|      Nagios Server      |   |      Windows Client     |    |      Debian Server      |
+|      Nagios Server      |   |       Windows Host      |    |       Debian Host       |
 |                         |   |                         |    |                         |
 +-------------------------+   +-------------------------+    +-------------------------+
 ```
-### nagios installation
 
-I'll install Nagios Core & Nagios Plugins from source code on Debian to make the Nagios Server.
+### windows host
 
-I made a script for their installation on my [Github](https://github.com/xeylou), working & tested on debian 11 & 12.  
+[Add-ons](#add-ons) are needed to monitor hosts system activity.
 
-Once installed, the Nagios web interface can be reach at `http://192.168.122.25/nagios`
-### windows configuration
-### linux configuration
-### overall aspect
-## overview
+[NSClient++](https://nsclient.org/) will be the add-on used for windows. NSClient++ agent need to be installed on the host & the Nagios Server will be configured to call the agent to gather system metrics.
+
+***parler du password***
+
+### linux host
+
+As well as for the [windows host](#windows-configuration), the debian server will have an add-on agent: [nrpe](https://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details).
+
+I made a script to install nrpe on debian hosts, source code is on [Github](https://github.com/xeylou).
+
+***change github link to the nrpe installer with code view***
+### nagios server
+
+The Nagios Server is a Debian machine hosting Nagios Core & Nagios Plugins.
+
+I made a script for their installation on my [Github](https://github.com/xeylou), working & tested on debian 11 & 12.
+
+To download & launch the installer, replicate these commands on your host.
+
+```sh
+wget https://github.com/xeylou/nagios-introduction/debian-nagios-install.sh
+chmod +x debian-nagios-install.sh
+./debian-nagios-install.sh
+```
+
+Once installed, the Nagios web interface can be reach at `http://192.168.122.25/nagios` with the user `nagiosadmin` & the password gave during the installation.
+
+### overview
+## opinion

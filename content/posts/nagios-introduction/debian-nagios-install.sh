@@ -20,8 +20,8 @@ check_root_privilieges ()
 check_empty_dir ()
 {
     show_time
-    echo -n "Checking file presence in dir..."
-    if [ "$(ls -A)" != "debian12-nagios-install.sh" ]; then
+    echo -n "Checking file presence..."
+    if [ "$(ls -A)" != "debian-nagios-install.sh" ]; then
         echo -e "failed\n\nPlease run the script in an empty or a in new directory\n"
         exit 1
     else
@@ -177,7 +177,7 @@ cleaning_up ()
 {
     show_time
     echo -n "Cleaning up..."
-    ls -A | grep -v debian12-nagios-install.sh | xargs rm -rf
+    ls -A | grep -v debian-nagios-install.sh | xargs rm -rf
     check_status
 }
 
@@ -212,7 +212,7 @@ install_nagios_plugins ()
 {
     show_time
     echo -n "Downloading & compiling Nagios Plugins..."
-    ls -A | grep -v "debian12-nagios-install.sh" | xargs rm -rf
+    ls -A | grep -v "debian-nagios-install.sh" | xargs rm -rf
     hidden_check_status
     wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.5.tar.gz &> "$log_file"
     hidden_check_status
@@ -260,7 +260,7 @@ main ()
 
 main
 
-mkdir a && cd a && nano debian12-nagios-install.sh && chmod +x debian12-nagios-install.sh && clear && ./debian12-nagios-install.sh
+# mkdir a && cd a && nano debian-nagios-install.sh && chmod +x debian-nagios-install.sh && clear && ./debian-nagios-install.sh
 
 
 
@@ -272,22 +272,10 @@ mkdir a && cd a && nano debian12-nagios-install.sh && chmod +x debian12-nagios-i
 
 
 
-apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext libpqxx-dev libdbi-dev libfreeradius-dev libldap2-dev default-libmysqlclient-dev libmariadb-dev libmariadb-dev-compat dnsutils smbclient qstat fping
+# apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext libpqxx-dev libdbi-dev libfreeradius-dev libldap2-dev default-libmysqlclient-dev libmariadb-dev libmariadb-dev-compat dnsutils smbclient qstat fping
 
-wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.5.tar.gz
-tar zxf nagios-plugins.tar.gz
-
-
-
-
-
-
-
-
-
-
-
-
+# wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.5.tar.gz
+# tar zxf nagios-plugins.tar.gz
 
 
 
@@ -305,45 +293,57 @@ tar zxf nagios-plugins.tar.gz
 
 
 
-# plugins dependencies
-# https://support.nagios.com/kb/article/nagios-plugins-installing-nagios-plugins-from-source-569.html#Debian
 
 
-# check_radius plugins is not installed?
-# link https://github.com/FreeRADIUS/pam_radius/archive/release_2_0_0.tar.gz
-apt-get -y install freeradius
 
-# check_ldap
-sudo apt-get install -y libldap2-dev
 
-# check_mysql check_mysql_querry
-apt-get install -y libmariadb-dev libmariadb-dev-compat
 
-# check_dig check_dns /!\ check_dns was already present? dnsutils was not a dependency?
-apt-get install -y dnsutils
 
-# check_disk_smb
-apt-get install -y smbclient
 
-# check_game
-apt-get install -y qstat
 
-# check_fping
-apt-get install -y fping
 
-# install nagios plugins
 
-apt-get install -y autoconf gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext
-cd /tmp
-# https://github.com/nagios-plugins/nagios-plugins/releases
-wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.5.tar.gz
-tar zxf nagios-plugins.tar.gz
-cd /tmp/nagios-plugins-release-2.4.5/
-./tools/setup
-./configure
-make
-make install
-systemctl restart nagios.service
-systemctl status nagios.service
-systemctl status apache2
+
+
+# # plugins dependencies
+# # https://support.nagios.com/kb/article/nagios-plugins-installing-nagios-plugins-from-source-569.html#Debian
+
+
+# # check_radius plugins is not installed?
+# # link https://github.com/FreeRADIUS/pam_radius/archive/release_2_0_0.tar.gz
+# apt-get -y install freeradius
+
+# # check_ldap
+# sudo apt-get install -y libldap2-dev
+
+# # check_mysql check_mysql_querry
+# apt-get install -y libmariadb-dev libmariadb-dev-compat
+
+# # check_dig check_dns /!\ check_dns was already present? dnsutils was not a dependency?
+# apt-get install -y dnsutils
+
+# # check_disk_smb
+# apt-get install -y smbclient
+
+# # check_game
+# apt-get install -y qstat
+
+# # check_fping
+# apt-get install -y fping
+
+# # install nagios plugins
+
+# apt-get install -y autoconf gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext
+# cd /tmp
+# # https://github.com/nagios-plugins/nagios-plugins/releases
+# wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.5.tar.gz
+# tar zxf nagios-plugins.tar.gz
+# cd /tmp/nagios-plugins-release-2.4.5/
+# ./tools/setup
+# ./configure
+# make
+# make install
+# systemctl restart nagios.service
+# systemctl status nagios.service
+# systemctl status apache2
 
