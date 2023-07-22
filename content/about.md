@@ -18,4 +18,4 @@ I have French high-school general degree in mathematics & computer science.
 
 I like learning as much as I can about everything.
 
-I am a IT privacy & security enthusiast. (:heart:FOSS)
+I am a IT privacy & security enthusiast.

@@ -3,8 +3,8 @@ title: ""
 description: ""
 ---
 
-you somehow found my website  
-you can know more about me in the [about](https://xeylou.fr/about) section  
-there is the [now](https://xeylou.fr/now) section for my current life doing
+you have found my website somehow  
+you can find out more about me in the [about](about) section  
+there is the [now](now) section for my current life in progress
 
 ---

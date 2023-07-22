@@ -17,7 +17,7 @@ check_root_privilieges ()
     fi
 }
 
-check_empty_dir ()
+check_file_presence ()
 {
     show_time
     echo -n "Checking file presence..."
@@ -230,10 +230,78 @@ install_nagios_plugins ()
     check_status
 }
 
+install_nrpe_dependencies ()
+{
+    show_time
+    echo -n "Installing dependencies..."
+    apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget &> "$log_file"
+    check_status
+}
+
+nrpe_install ()
+{
+    show_time
+    echo -n "Downloading & compiling nrpe agent..."
+    wget --no-check-certificate -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-4.1.0.tar.gz &> "$log_file"
+    hidden_check_status
+    tar xvzf nrpe.tar.gz &> "$log_file"
+    hidden_check_status
+    cp -r nrpe-nrpe-4.1.0/* . &> "$log_file"
+    hidden_check_status
+    ./configure --enable-command-args &> "$log_file"
+    hidden_check_status
+    make all &> "$log_file"
+    hidden_check_status
+    make install-groups-users &> "$log_file"
+    hidden_check_status
+    make install &> "$log_file"
+    hidden_check_status
+    make install-config &> "$log_file"
+    check_status
+}
+
+nrpe_service_install ()
+{
+    show_time
+    echo -n "Updating services file..."
+    echo >> /etc/services &> "$log_file"
+    hidden_check_status
+    echo '# Nagios services' >> /etc/services &> "$log_file"
+    hidden_check_status
+    echo 'nrpe    5666/tcp' >> /etc/services &> "$log_file"
+    check_status
+}
+
+nrpe_daemon_install ()
+{
+    show_time
+    echo -n "Installing daemon files..."
+    make install-init &> "$log_file"
+    hidden_check_status
+    systemctl enable nrpe.service &> "$log_file"
+    check_status
+}
+
+nrpe_update ()
+{
+    show_time
+    echo -n "Updating nrpe config file..."
+    sed -i 's/^dont_blame_nrpe=.*/dont_blame_nrpe=1/g' /usr/local/nagios/etc/nrpe.cfg &> "$log_file"
+    check_status
+}
+
+nrpe_start ()
+{
+    show_time
+    echo -n "Starting nrpe service..."
+    systemctl start nrpe.service &> "$log_file"
+    check_status
+}
+
 main ()
 {
     check_root_privilieges
-    check_empty_dir
+    check_file_presence
     check_internet_access
     nagios_admin_password
     update
@@ -251,8 +319,15 @@ main ()
     hidden_check_status
     restart_apache_nagios
     cleaning_up
+    install_nrpe_dependencies
+    nrpe_install
+    nrpe_service_install
+    nrpe_daemon_install
+    nrpe_update
+    nrpe_start
+    cleaning_up
     install_nagios_plugins_dependencies
-    install_nagios_plugins
+    install_nagios_plugins    
     restart_apache_nagios
     cleaning_up
     installation_is_done

@@ -167,7 +167,7 @@ nrpe_start ()
 {
     show_time
     echo -n "Starting nrpe service..."
-    systemctl start nrpe.service &> "$log_file"
+    systemctl restart nrpe.service &> "$log_file"
     check_status
 }
 
