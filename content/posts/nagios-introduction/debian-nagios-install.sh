@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/bash
 
 show_time ()
 {
@@ -29,7 +29,7 @@ check_file_presence ()
     fi
 }
 
-log_file=$(mktemp /tmp/itop-install.XXXXXX)
+log_file=$(mktemp /tmp/nagios-install.XXXXXX)
 
 check_status ()
 {
@@ -230,71 +230,25 @@ install_nagios_plugins ()
     check_status
 }
 
-install_nrpe_dependencies ()
+install_ncpa_check ()
 {
     show_time
-    echo -n "Installing dependencies..."
-    apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget &> "$log_file"
-    check_status
-}
-
-nrpe_install ()
-{
-    show_time
-    echo -n "Downloading & compiling nrpe agent..."
-    wget --no-check-certificate -O nrpe.tar.gz https://github.com/NagiosEnterprises/nrpe/archive/nrpe-4.1.0.tar.gz &> "$log_file"
+    echo -n "Installing check_ncpa..."
+    cleaning_up
     hidden_check_status
-    tar xvzf nrpe.tar.gz &> "$log_file"
+    wget https://assets.nagios.com/downloads/ncpa/check_ncpa.tar.gz
     hidden_check_status
-    cp -r nrpe-nrpe-4.1.0/* . &> "$log_file"
+    tar xvzf check_ncpa.tar.gz
+    hidden_check_status    
+    chown nagios:nagios check_ncpa.py
     hidden_check_status
-    ./configure --enable-command-args &> "$log_file"
+    chmod 775 check_ncpa.py
     hidden_check_status
-    make all &> "$log_file"
+    sed -i -e 's|/usr/bin/env python|/usr/bin/python3|g' check_ncpa.py
     hidden_check_status
-    make install-groups-users &> "$log_file"
+    mv check_ncpa.py /usr/local/nagios/libexec/
     hidden_check_status
-    make install &> "$log_file"
-    hidden_check_status
-    make install-config &> "$log_file"
-    check_status
-}
-
-nrpe_service_install ()
-{
-    show_time
-    echo -n "Updating services file..."
-    echo >> /etc/services &> "$log_file"
-    hidden_check_status
-    echo '# Nagios services' >> /etc/services &> "$log_file"
-    hidden_check_status
-    echo 'nrpe    5666/tcp' >> /etc/services &> "$log_file"
-    check_status
-}
-
-nrpe_daemon_install ()
-{
-    show_time
-    echo -n "Installing daemon files..."
-    make install-init &> "$log_file"
-    hidden_check_status
-    systemctl enable nrpe.service &> "$log_file"
-    check_status
-}
-
-nrpe_update ()
-{
-    show_time
-    echo -n "Updating nrpe config file..."
-    sed -i 's/^dont_blame_nrpe=.*/dont_blame_nrpe=1/g' /usr/local/nagios/etc/nrpe.cfg &> "$log_file"
-    check_status
-}
-
-nrpe_start ()
-{
-    show_time
-    echo -n "Starting nrpe service..."
-    systemctl start nrpe.service &> "$log_file"
+    /usr/local/nagios/libexec/check_ncpa.py -V
     check_status
 }
 
@@ -319,106 +273,12 @@ main ()
     hidden_check_status
     restart_apache_nagios
     cleaning_up
-    install_nrpe_dependencies
-    nrpe_install
-    nrpe_service_install
-    nrpe_daemon_install
-    nrpe_update
-    nrpe_start
-    cleaning_up
     install_nagios_plugins_dependencies
-    install_nagios_plugins    
+    install_nagios_plugins
+    install_ncpa_check
     restart_apache_nagios
     cleaning_up
     installation_is_done
 }
 
 main
-
-# mkdir a && cd a && nano debian-nagios-install.sh && chmod +x debian-nagios-install.sh && clear && ./debian-nagios-install.sh
-
-
-
-
-
-
-
-
-
-
-
-# apt-get install -y autoconf automake gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext libpqxx-dev libdbi-dev libfreeradius-dev libldap2-dev default-libmysqlclient-dev libmariadb-dev libmariadb-dev-compat dnsutils smbclient qstat fping
-
-# wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.5.tar.gz
-# tar zxf nagios-plugins.tar.gz
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# # plugins dependencies
-# # https://support.nagios.com/kb/article/nagios-plugins-installing-nagios-plugins-from-source-569.html#Debian
-
-
-# # check_radius plugins is not installed?
-# # link https://github.com/FreeRADIUS/pam_radius/archive/release_2_0_0.tar.gz
-# apt-get -y install freeradius
-
-# # check_ldap
-# sudo apt-get install -y libldap2-dev
-
-# # check_mysql check_mysql_querry
-# apt-get install -y libmariadb-dev libmariadb-dev-compat
-
-# # check_dig check_dns /!\ check_dns was already present? dnsutils was not a dependency?
-# apt-get install -y dnsutils
-
-# # check_disk_smb
-# apt-get install -y smbclient
-
-# # check_game
-# apt-get install -y qstat
-
-# # check_fping
-# apt-get install -y fping
-
-# # install nagios plugins
-
-# apt-get install -y autoconf gcc libc6 libmcrypt-dev make libssl-dev wget bc gawk dc build-essential snmp libnet-snmp-perl gettext
-# cd /tmp
-# # https://github.com/nagios-plugins/nagios-plugins/releases
-# wget --no-check-certificate -O nagios-plugins.tar.gz https://github.com/nagios-plugins/nagios-plugins/archive/release-2.4.5.tar.gz
-# tar zxf nagios-plugins.tar.gz
-# cd /tmp/nagios-plugins-release-2.4.5/
-# ./tools/setup
-# ./configure
-# make
-# make install
-# systemctl restart nagios.service
-# systemctl status nagios.service
-# systemctl status apache2
-
