@@ -249,6 +249,13 @@ install_ncpa_check ()
     mv check_ncpa.py /usr/local/nagios/libexec/
     hidden_check_status
     /usr/local/nagios/libexec/check_ncpa.py -V
+    hidden_check_status
+    user1='$USER1$'
+    hostaddress='$HOSTADDRESS$'
+    arg1='$ARG1$'
+    echo -e "\n# check_ncpa command from the installation script\ndefine command {\n\n    command_name   check_ncpa\n    command_line    $user1/check_ncpa.py -H $hostaddress $arg1\n}" >> /usr/local/nagios/etc/objects/commands.cfg
+    hidden_check_status
+    cleaning_up
     check_status
 }
 

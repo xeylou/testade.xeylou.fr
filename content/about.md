@@ -12,16 +12,15 @@ showRelatedContent: false
 
 ## Study
 
-I have French high-school general degree in mathematics & computer science.
+I have a French high-school bachelor general degree in mathematics & computer science.
 
 ## Hobbies
 
 I like learning as much as I can about everything.
 
-I am a IT privacy & security enthusiast.
+I am an IT privacy & security enthusiast.
 
-## OS
+## OSs
 
-NixOS user
-
+NixOS active user  
 Debian enjoyer

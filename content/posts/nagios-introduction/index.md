@@ -10,8 +10,8 @@ slug: "nagios-introduction"
 ---
 
 {{< lead >}}
-understanding Nagios principles  
-& deploying it using custom scripts
+understanding Nagios principles & deploying  
+a monitoring infrastructure using custom scripts
 {{< /lead >}}
 
 ## introduction
@@ -21,24 +21,24 @@ Here i expose what i've learned & what i've done with it.
 
 I'd be extremely grateful if you'd consider correcting me if i said something wrong.
 
-This article mainly talk about Nagios as the Nagios Core solution.
+This article mainly talks about Nagios as the Nagios Core solution.
 
 ### presentation
 [Nagios Core](https://www.nagios.org/projects/nagios-core/) is a open source, widely used monitoring tool for hosts, applications & services.
 
 The company behind Nagios, [Nagios Enterprises](https://www.nagios.com/about-nagios-enterprises/), afford to make Nagios Core free & open source by their financing policy.
 
-They provide non-free solutions to make the Nagios Core utilisation simplified, such as a native & more sophisticated dashboard - [Nagios XI](https://www.nagios.com/products/nagios-xi/), or a better network implementation - [Nagios Network Analyzer](https://www.nagios.com/products/nagios-network-analyzer/).
+They provide non-free solutions to make the Nagios Core utilisation simplified, such as a more sophisticated dashboard - [Nagios XI](https://www.nagios.com/products/nagios-xi/), or a better network implementation - [Nagios Network Analyzer](https://www.nagios.com/products/nagios-network-analyzer/).
 
-These solutions are improvers for Nagios Core, highly prefered for production use but not essential to use Nagios Core.
+Those solutions are improvers for Nagios Core, highly prefered for production use but not essential to use Nagios Core.
 
 ### side notes
 
 Nagios Core code can be found on [Github](https://github.com/NagiosEnterprises/nagioscore), it is mostly written in C language.
 
-I found the [documentation](https://www.nagios.org/documentation/) quite well explained (using and compiling Nagios from source code) although sometimes confusing, obsolete or "oldish".
+I found the [documentation](https://www.nagios.org/documentation/) quite well explained (using and compiling Nagios from source) although sometimes confusing, obsolete or "oldish".
 
-You may also consider, regarding your deontology or your use cases, collecting your own metrics for your hosts to serve them into a dashboard - using Prometheus & Grafana for known examples.
+You may also consider, regarding your deontology or your use case, using your own metrics collector to serve them into a dashboard - using Prometheus & Grafana for examples.
 
 ## nagios principles
 
@@ -47,13 +47,14 @@ I will cover the basics of Nagios Core according to monitoring windows & linux h
 ### fundamentals
 Nagios Core need to be installed on a host, bare metal or in a vm - no official docker image available.
 
-To monitor hosts, the Nagios server will execute a sequence of commands at a sheduled time interval & will define the state of the monitored host/service according to the output of the command.
+To monitor hosts, the Nagios server will execute a sequence of commands at a sheduled interval & will define the state of the monitored host/service according to the output of the commands.
 
-This series of tests can be customise according to what service you want to monitor on which host.
+This series of tests can be customise according to what service you want to monitor.
 
-A simple & in use example can be the `HOST STATUS` check by Nagios: the Nagios server send an echo request to the host - ping command. If it receive an echo reply -> `HOST STATUS: ONLINE`, else -> `HOST STATUS: OFFLINE`.
+A simple & in use example can be the default `HOST STATUS` check by Nagios: the Nagios server send an echo request to the host - ping command. If it receive an echo reply back -> `HOST STATUS: UP`, else -> `HOST STATUS: DOWN`.
 
-In addition to well-known protocols, to monitor the largest amount of services, Nagios let its community post their own `Projects`.  
+Apart from well-known protocols, to monitor the largest amount of services, Nagios lets its community post their own `Projects`.
+
 Since then, the community created & shared their free [plugins](#plugins) & [add-ons](#add-ons) to monitor their needed services on Nagios - all in their [Nagios Exchange](https://exchange.nagios.org/) platform.
 
 ### plugins
@@ -62,30 +63,35 @@ The commands used to monitor services are called `plugins`.
 
 Plugins are located in `/usr/local/nagios/libexec/` with their name starting with `check_*`.
 
-These plugins can be used as executable files to quickly check the status of services (very usefull during pre-production tests for my part).
+These plugins can be used as executable files to quickly check the status of services.  
+Those actions are parts of "active monitoring", which are usefull during pre-production tests.
 
-Here is an example how to use the `check_http` plugin.
+Example of an active check with `check_http` plugin.
 
-```sh
+```bash
 /usr/local/nagios/libexec/check_http -h
 ```
-> displaying the help page  
+> display the help page  
 > for the check_http plugin
 
-Following to the `check_http` help page, we can execute the command on a host.
+Following to the `check_http` help page, this check can be executed on a host to check its http response.
 
 <!-- /usr/local/nagios/libexec/check_tcp -H 192.168.122.15 -p 80 -->
 
-```sh
+```bash
 /usr/local/nagios/libexec/check_http -H 192.168.122.15
 ```
 > HTTP OK: HTTP/1.1 200 OK - 10975 bytes in 0.002 second response time |time=0.001620s;;;0.000000 size=10975B;;;0
 
 ### add-ons
 
-Plugins only check external metrics about hosts. To monitor internal ones like system utilisation (ram, cpu, disk..), Nagios use what they call `add-ons`.
+Plugins only monitor external host metrics.
 
-Add-ons are software installed on hosts that make the Nagios server capable of gathering internal or restricted metrics.
+To monitor internal ones like system utilisation (cpu load, ram utilisation, disk usage etc.), Nagios use what they call `add-ons`.
+
+Add-ons are splited software, an `agent` part is installed on the monitored host waiting for a gathering query & an executable file is on the nagios server to communicate with the agent api.
+
+Those add-ons often use tokens or passwords to verify the authenticity of the nagios server.
 
 Biggest add-ons are maintain by the community of Nagios users to keep gathering their services as they need to.
 
@@ -93,7 +99,7 @@ From the Nagios server side, the add-ons will be used as executable files like p
 
 ### nagios configuration files
 
-Nagios configuration files `*.cfg` are located in `/usr/local/nagios/etc/`.
+Nagios `*.cfg` configuration files are located in `/usr/local/nagios/etc/`.
 
 ```
 .
@@ -118,11 +124,11 @@ The `nagios.cfg` is the main Nagios configuration file. It contains informations
 
 A standard `htpasswd.users` is created in the installation process & define the Nagios users passwords.
 
-CGIs check their `cgi.cfg` configuration file to gather user & groups rights & permission. It also contains the path for Nagios frontend files.
+CGIs check their `cgi.cfg` configuration file to gather user & groups rights & permissions. It also contains the path for Nagios frontend files.
 
 `ressource.cfg` define macros used in hosts configuration files for sensitive informations. Also provide plugins paths - handy for moving plugins or adding custom ones.
 
-*(example of "sensitive informations": to monitor non public metrics about a database, you might need to log into using a username & a password at some point)*
+*(example of "sensitive informations": to monitor non public metrics about a database, you might need at some point to log into using a username & a password)*
 
 The configuration files inside the `objects` directory are used to define commands, contacts, hosts, services etc. (more on that in [hosts configuration files](#hosts-configuration-files))
 
@@ -139,7 +145,8 @@ It is recommended to create directories to manage your kinds of hosts - create a
 ## deployment
 Here i demonstrate what i said in [how nagios works](#how-nagios-works).
 
-Deploying an infrastructure based on the system monitoring of a `Windows Host` (server or client) & a `Debian Host`.  
+Deploying an infrastructure based on the system monitoring of a `Windows Host` (server or client) & a `Debian Host`.
+
 The `Nagios Server` will also monitor a mysql server & an apache website hosted on the Debian Host.
 
 ### network plan
@@ -165,12 +172,11 @@ The `Nagios Server` will also monitor a mysql server & an apache website hosted 
 
 [Add-ons](#add-ons) are needed to monitor hosts system activity.
 
-A lot of agents are available for windows & linux hosts.  
-[Nagios Cross-Platform Agent](https://www.nagios.org/ncpa/) will be used because it is still currently maintained (by Nagios Enterprise).
+A lot of agents are available for windows & linux hosts. [Nagios Cross-Platform Agent (NCPA)](https://www.nagios.org/ncpa/) will be used because it is still recently maintained (by Nagios Enterprise).
 
-For those who would prefer to use community maintained one, [NSclient++](https://nsclient.org/) could be a good choice.
+*(note: for community maintained one, [NSclient++](https://nsclient.org/) for windows & linux seems to be a good choice.)*
 
-To install it, need to start by downloading & executing the agent installer on the host.
+To install NCPA, need to start by downloading & executing the agent installer on the host.
 
 {{< button href="https://assets.nagios.com/downloads/ncpa/ncpa-latest.exe" target="_self" >}}
 Download the latest NCPA agent installer
@@ -178,232 +184,126 @@ Download the latest NCPA agent installer
 
 Here are the simple following steps for the install.
 
-![](ncpa-windows-install-images/00.png)
-![](ncpa-windows-install-images/01.png)
-![](ncpa-windows-install-images/02.png)
-![](ncpa-windows-install-images/03.png)
+![](ncpa-w11-install-screenshots/00.png)
+![](ncpa-w11-install-screenshots/00-0.png)
+![](ncpa-w11-install-screenshots/01.png)
+![](ncpa-w11-install-screenshots/02.png)
+![](ncpa-w11-install-screenshots/03.png)
 
 `Bind IP` as a default value of `0.0.0.0` to accept every ip address who request metrics - replaced it by the Nagios Server ip address.
 
 `Port` & `Token` can be changed.
 
-![](ncpa-windows-install-images/04.png)
-![](ncpa-windows-install-images/05.png)
-![](ncpa-windows-install-images/06.png)
-![](ncpa-windows-install-images/07.png)
+![](ncpa-w11-install-screenshots/04.png)
+![](ncpa-w11-install-screenshots/05.png)
+![](ncpa-w11-install-screenshots/06.png)
+![](ncpa-w11-install-screenshots/07.png)
 
-<!-- 
-```sh
+### linux host
+
+Since ncpa is cross-platform, i chose to use it for the debian host.
+
+I made an install script for the debian agent, source code is on [Github](https://github.com/xeylou/nagios-introduction/debian-ncpa-install.sh).
+
+```bash
+wget https://github.com/xeylou/nagios-introduction/debian-ncpa-install.sh
+chmod +x debian-ncpa-install.sh
+./debian-ncpa-install.sh
+```
+
+By using my script, it will ask you the nagios server ip address to change the `allowed_hosts` in `/usr/local/ncpa/etc/ncpa.cfg` as well as the token by modifying `community_string`.
+
+For other linux distributions, the [ncpa download page](https://www.nagios.org/ncpa/#downloads) can be usefull.
+
+The port `5693` is used to transfer metrics.
+
+### nagios server
+
+The Nagios Server is in my case a Debian machine that host Nagios Core & the Nagios Plugins.
+
+I made an install script for those on my [Github](https://github.com/xeylou/nagios-introduction) - tested on debian 11 & 12.
+
+```bash
+wget https://github.com/xeylou/nagios-introduction/debian-nagios-install.sh
+chmod +x debian-nagios-install.sh
+./debian-nagios-install.sh
+```
+
+Nagios web interface can be reach at `http://192.168.122.203/nagios` with the username `nagiosadmin` & the password given at the beginning of the installation.
+
+To check the connectivity to the hosts.
+
+*(note: the `-H` parameter is the host's hostname or it ip address, `-t` is for the token created by the host during the ncpa installation process, `-P` the used port & `-M` the called value)*
+
+```
+/usr/local/nagios/libexec/check_ncpa.py -H 192.168.122.53 -t 'windows-host' -P 5693 -M system/agent_version
+```
+> OK: Agent_version was ['2.4.1']
+
+```
+/usr/local/nagios/libexec/check_ncpa.py -H 192.168.122.165 -t 'debian-host' -P 5693 -M system/agent_version
+```
+> OK: Agent_version was ['2.4.1']
+
+NCPA is used to monitor the windows & the debian host, the same syntax can be use to monitor both.
+
+Example of active monitoring of the cpu load.
+
+```bash
+/usr/local/nagios/libexec/check_ncpa.py -H 192.168.122.53 -t 'windows-host' -P 5693 -M cpu/percent -w 20 -c 40 -q 'aggregate=avg'
+```
+> OK: Percent was 4.70 % | 'percent'=4.70%;20;40;
+
+Here on the debian host.
+
+```bash
+/usr/local/nagios/libexec/check_ncpa.py -H 192.168.122.165 -t 'debian-host' -P 5693 -M cpu/percent -w 20 -c 40 -q 'aggregate=avg'
+```
+> OK: Percent was 0.00 % | 'percent'=0.00%;20;40;
+
+Refer to the [ncpa documentation](https://www.nagios.org/ncpa/help.php) for other metrics to monitor.
+
+To add the hosts to the nagios web interface and start passively monitoring them: the nagios server requires their `.cfg` configuration files.
+
+These files should define the host using `define host` and the services to monitor (active checks done every `check_interval`).
+
+Here is an example of the `define host` used for monitoring the debian host.
+
+```bash {linenos=inline, hl_lines=["2-4"], linenostart=2}
 define host {
-    host_name               windows-host
-    address                 192.168.122.53
-    check_command           check_ncpa!-t 'windows-host' -P 5693 -M system/agent_version
+    host_name               debian-host
+    address                 192.168.122.165
+    check_command           check_ncpa!-t 'debian-host' -P 5693 -M system/agent_version
     max_check_attempts      5
     check_interval          5
     retry_interval          1
     check_period            24x7
-    # check_interval        5
-    # retry_interval        1
     contacts                nagiosadmin
     notification_interval   60
     notification_period     24x7
     notifications_enabled   1
-    icon_image              ncpa.png
-    statusmap_image         ncpa.png
     register                1
 }
-
-define service {
-    host_name               windows-host
-    service_description     CPU Usage
-    check_command           check_ncpa!-t 'windows-host' -P 5693 -M cpu/percent -w 20 -c 40 -q 'aggregate=avg'
-    max_check_attempts      5
-    check_interval          5
-    retry_interval          1
-    check_period            24x7
-    notification_interval   60
-    notification_period     24x7
-    contacts                nagiosadmin
-    register                1
-}
-
-define service {
-    host_name               windows-host
-    service_description     Memory Usage
-    check_command           check_ncpa!-t 'windows-host' -P 5693 -M memory/virtual -w 50 -c 80 -u G 'aggregate=avg'
-    max_check_attempts      5
-    check_interval          5
-    retry_interval          1
-    check_period            24x7
-    notification_interval   60
-    notification_period     24x7
-    contacts                nagiosadmin
-    register                1
-}
-
-define service {
-    host_name               windows-host
-    service_description     Process Count
-    check_command           check_ncpa!-t 'windows-host' -P 5693 -M processes -w 150 -c 200
-    max_check_attempts      5
-    check_interval          5
-    retry_interval          1
-    check_period            24x7
-    notification_interval   60
-    notification_period     24x7
-    contacts                nagiosadmin
-    register                1
-}
-
-```
- -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- [NSClient++](https://nsclient.org/) will be the add-on used for the windows host.
-
-The nsclient++ agent need to be installed on the host & the nagios server will be configured to call the agent to gather system metrics.
-
-The add-on installation is the same for windows 10 & 11.
-
-To start, you need to download & execute the agent installer on the host.
-
-{{< button href="https://github.com/mickem/nscp/releases/download/0.5.2.41/NSCP-0.5.2.41-x64.msi" target="_self" >}}
-Download the latest nsclient++ agent installer
-{{< /button >}}
-
-The agent will only accept metrics gathering from `allowed_hosts`.
-
-By default the only allowed host is the host himself `127.0.0.1` but the agent installer will ask you to enter a new/an another one: the nagios server ip address.
-
-To prevent ip spoofing for example, a password will be asked to ensure the nagios server authenticity: only the host & the nagios server should know this password.
-
-The port used for the communication between them is `12489`.
-
-Before installing, the agent will prompt you to run the installation process as administrator.
-
-![](nsclient-agent-install-images/nsclient-00.png)
-![](nsclient-agent-install-images/nsclient-01.png)
-![](nsclient-agent-install-images/nsclient-02.png)
-![](nsclient-agent-install-images/nsclient-03.png)
-
-> You can choose the Complete Setup Type for more metrics, the Configuration panel will be the same - tested.
-
-![](nsclient-agent-install-images/nsclient-04.png)
-![](nsclient-agent-install-images/nsclient-05.png)
-![](nsclient-agent-install-images/nsclient-06.png)
-
-Since windows block entering echo request, to make the `HOST STATUS` up in the Nagios interface, windows ingress firewall settings need to be changed.
-
-![](nagios-web-images/02.png)
-![](nagios-web-images/03.png)
-![](nagios-web-images/04.png)
-![](nagios-web-images/05.png) -->
-
-
-
-### linux host
-
-Since ncpa is cross-platform, it will also be use for the debian host.
-
-I made an install script for the debian agent, source code is on [Github](https://github.com/xeylou/nagios-introduction/debian-ncpa-install.sh).
-
-<!-- Same as the [windows host](#windows-configuration), the debian will have an add-on agent: [NRPE](https://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details).
-
-I made an install script for nrpe agent on debian hosts, source code is on [Github](https://github.com/xeylou/nagios-introduction) - tested on debian 11 & 12.
-
-```sh
-wget https://github.com/xeylou/nagios-introduction/debian-nrpe-install.sh
-chmod +x debian-nrpe-install.sh
-./debian-nrpe-install.sh
 ```
 
-NRPE agent accept to transfer metrics to the `allowed_hosts`. Using my script, the value is changed by the nagios server ip you entered.
+The `host_name` is used for nagios to identify the host. The `check_command` will define is the `HOST STATUS` is up or down.
 
-If configuring yourself, this change is made in `/usr/local/nagios/etc/nrpe.cfg`.
 
-The port `5666` will be used to transfer metrics. -->
 
-### nagios server
 
-<!-- The Nagios Server is in my case a Debian machine. The debian will host Nagios Core & the Nagios Plugins.
 
-I made a script for their installation on my [Github](https://github.com/xeylou/nagios-introduction) - tested on debian 11 & 12.
 
-```sh
-wget https://github.com/xeylou/nagios-introduction/debian-nagios-install.sh
-chmod +x debian-nagios-install.sh
-./debian-nagios-install.sh
-```
 
-Once installed, the Nagios web interface can be reach at `http://192.168.122.203/nagios` with the username `nagiosadmin` & the password given at the beginning of the installation.
 
-We can now check the connectivity with the hosts.
+<!-- Creating two directories to organise them: `windows-hosts` & `debian-hosts` (see [host configuration file](#hosts-configuration-files)).
 
-```
-/usr/local/nagios/libexec/check_nrpe -H 192.168.122.165
-```
-> NRPE v4.1.0
-
-```sh
-/usr/local/nagios/libexec/check_nrpe -H 192.168.122.53
-```
-
-> CHECK_NRPE: (ssl_err != 5) Error - Could not complete SSL handshake with 192.168.122.53: 1
-
-I interpret it as a "good" error because it can reach the host without using the password, instead of.
-
-> CHECK_NRPE STATE CRITICAL: Socket timeout after 10 seconds.
-
-Time to create their `*.cfg` configuration files.
-
-Creating two directories: `windows-hosts` & `debian-hosts`.
-
-```sh
+```bash
 mkdir /usr/local/nagios/etc/windows-hosts
 mkdir /usr/local/nagios/etc/debian-hosts
 ```
-
 Added them to the `/usr/local/nagios/etc/nagios.cfg` nagios configuration file.
-The Nagios Server is in my case a Debian machine. The debian will host Nagios Core & the Nagios Plugins.
 
-I made a script for their installation on my [Github](https://github.com/xeylou/nagios-introduction) - tested on debian 11 & 12.
-
-```shThe Nagios Server is in my case a Debian machine. The debian will host Nagios Core & the Nagios Plugins.
-
-I made a script for their installation on my [Github](https://github.com/xeylou/nagios-introduction) - tested on debian 11 & 12.
-
-```sh
-wget https://github.com/xeylou/nagios-introduction/debian-nagios-install.sh
-chmod +x debian-nagios-install.sh
-./debian-nagios-install.sh
-```
-
-Once installed, the Nagios web interface can be reach at `http://192.168.122.203/nagios` with the username `nagiosadmin` & the password given at the beginning of the installation.
-
-We can now check the connectivity with the hosts.
-
-```
-/usr/local/nagios/libexec/check_nrp
-Once installed, the Nagios web interface can be reach at `http://192.168.122.203/nagios` with the username `nagiosadmin` & the password given at the beginning of the installation.
-
-We can now check the connectivity with the hosts.
-
-```
-/usr/local/nagios/libexec/check_nrp
-```sh {linenos=table, hl_lines=["5-6"], linenostart=47}
+```bash {linenos=table, hl_lines=["5-6"], linenostart=47}
 # You can also tell Nagios to process all config files (with a .cfg
 # extension) in a particular directory by using the cfg_dir
 # directive as shown below:
@@ -416,176 +316,29 @@ cfg_dir=/usr/local/nagios/etc/debian-hosts
 #cfg_dir=/usr/local/nagios/etc/routers
 ```
 
-For the windows host, a template in `/usr/local/nagios/etc/objects/windows.cfg` is here to monitor standard services for windows hosts. Used it to create the `windows-host.cfg` windows configuration file.
+Restarting Nagios to make changes take effect.
 
 ```sh
-cp /usr/local/nagios/etc/objects/windows.cfg /usr/local/nagios/etc/windows-hosts/windows-host.cfg
-```
-***ICI j'AI NANO POUR NCPA***
-
-In the new `/usr/local/nagios/etc/windows-hosts/windows-host.cfg`, i changed the template values.
-
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-```sh {linenos=inline, hl_lines=["4-6"], linenostart=21}
-define host {
-
-    use                     windows-server        ; Inherit default values from a template
-    host_name               windows-host        ; The name we're giving to this host
-    alias                   Windows Host        ; A longer name associated with the host
-    address                 192.168.122.53      ; IP address of the host
-}
-```
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-Also replaced the `host_name` in the services, here one example.
-
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-
-```sh {linenos=table, hl_lines=["4"], linenostart=57}
-define service {
-
-    use                     generic-service
-    host_name               windows-host
-    service_description     NSClient++ Version
-    check_command           check_nt!CLIENTVERSION
-}
-```
-
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-
-***ICI J'AI CHANGE POUR MA CONFIG***
-
-***PUIS SYSTEMCTL RESTART NAGIOS***
-
-***FIN***
-
-In the host section of the Nagios web interface. The hosts are found.
-
-![](nagios-web-images/01.png)
-
-Seeing the windows host services, Nagios show up that we didn't entered the asked password.
-
-![](nagios-web-images/06.png)
-
-The password need to be prompted in the `/usr/local/nagios/etc/objects/commands.cfg` command configuration file that nagios execute.
-
-```sh {linenos=inline, hl_lines=["4"], linenostart=222}
-define command {
-
-    command_name    check_nt
-    command_line    $USER1$/check_nt -H $HOSTADDRESS$ -p 12489 -s thisisthepassword -v $ARG1$ $ARG2$
-}
-```
- -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-
-
-```sh
-cp /usr/local/nagios/etc/objects/windows.cfg /usr/local/nagios/etc/windows-hosts/windows-host.cfg
-```
-
-In the new `/usr/local/nagios/etc/windows-hosts/windows-host.cfg` file, i changed the template values.
-
-```sh {linenos=table, hl_lines=["3-6"], linenostart=21}
-define host {
-
-    use                     windows-host
-    host_name               windows-host
-    alias                   Windows Host
-    address                 192.168.122.53
-}
-```
-
-Also replaced the `host_name` in the services, here one example.
-
-```sh {linenos=table, hl_lines=["4"], linenostart=57}
-define service {
-
-    use                     generic-service
-    host_name               windows-host
-    service_description     NSClient++ Version
-    check_command           check_nt!CLIENTVERSION
-}
-```
-
-The debian host configuration file 
-
- -->
-
-
-
-
-
-
-
-
-
-
-<!-- Added them to the `/usr/local/nagios/etc/nagios.cfg` nagios configuration file.
-
-```sh {linenos=table, hl_lines=["4-8"], linenostart=34}
-# Definitions for monitoring the local (Linux) host
-cfg_file=/usr/local/nagios/etc/objects/localhost.cfg
-
-# Definitions for monitoring the Windows Host
-cfg_file=/usr/local/nagios/etc/objects/windows-host.cfg
-
-# Definitions for monitoring the Debian Host
-cfg_file=/usr/local/nagios/etc/objects/debian_host.cfg
+systemctl restart nagios
 ``` -->
 
 
-<!-- 
+
+***ici mettre windows-host.cfg***
+
+***ici mettre debian-host.cfg***
+
+***systemctl restart nagios***
+
+
 ### overview
-***companie orientée profit mais code open source car communauté travail pour elle entre guillement, s'ils ferment le code il ya plus rien, ils perdent l'étendu du monitoringde service (car licences gpl)***
-***tellement vieux***
-***le code bouge plus trop, prendre exemple release date des add-on ou de nagios et dire que je les ai pris dans l'install ici pour fini***
-I keep in mind that Nagios Enterprise is a profit oriented company. Even if they seem to like the idea of keeping Nagios Core open-source, i cannot tell they will not [close their source for competiting or profit reason someday](https://www.redhat.com/en/blog/furthering-evolution-centos-stream).
+
+***screenshots of the nagios interface***
+
 ## opinion
- -->
+
+vieux
+
+se tient debout grace à sa commu opensource (companie orientée profit mais code open source car communauté travail pour elle entre guillement, s'ils ferment le code il ya plus rien, ils perdent l'étendu du monitoringde service (car licences gpl))
+
+les documentations, les forums sont pour la majorité très vieux

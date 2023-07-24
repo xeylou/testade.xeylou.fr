@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 show_time ()
 {
@@ -21,7 +21,7 @@ check_file_presence ()
 {
     show_time
     echo -n "Checking file presence..."
-    if [ "$(ls -A)" != "debian-nagios-install.sh" ]; then
+    if [ "$(ls -A)" != "debian-ncpa-install.sh" ]; then
         echo -e "failed\n\nPlease run the script in an empty or a in new directory\n"
         exit 1
     else
@@ -51,44 +51,77 @@ hidden_check_status ()
     fi
 }
 
-# prompt_nagios_ip ()
-# {
-#     echo -e "\nPlease enter the nagios server ip address\n"
-#     read -p 
-
-# }
-
-# prompt_token ()
-# {
-
-# }
-
-install_ncpa ()
+cleaning_up ()
 {
     show_time
-    echo -n "Downloading & installing ncpa agent..."
-    wget https://assets.nagios.com/downloads/ncpa/ncpa-latest.d11.amd64.deb
+    echo -n "Cleaning up..."
+    ls -A | grep -v debian-ncpa-install.sh | xargs rm -rf
+    check_status
+}
+
+download_ncpa ()
+{
+    show_time
+    echo -n "Downloading ncpa agent..."
+    wget https://assets.nagios.com/downloads/ncpa/ncpa-latest.d11.amd64.deb &> "$log_file"
+    check_status
+}
+
+installing_ncpa ()
+{
+    show_time
+    echo -n "Installing ncpa agent..."
+    dpkg -i ncpa-latest.d11.amd64.deb &> "$log_file"
+    check_status
+}
+
+prompt_nagios_ip ()
+{
+    echo -e "\nPlease enter the nagios server ip address"
+    read nagiosipaddress
     hidden_check_status
-    dpkg -i ncpa-latest.d11.amd64.deb
+    echo
+    show_time
+    echo -e -n "Updating allowed_hosts value..."
+    sed -i -e "s|# allowed_hosts =|allowed_hosts = $nagiosipaddress|g" /usr/local/ncpa/etc/ncpa.cfg &> "$log_file"
+    check_status
+
+}
+
+prompt_token ()
+{
+    echo -e "\nPlease enter the wanted token for the host"
+    read tokenvalue
     hidden_check_status
-    sed -i -e 's|community_string = mytoken|community_string = debian-host|g' /usr/local/ncpa/etc/ncpa.cfg
-    hidden_check_status
-    sed -i -e 's|# allowed_hosts =|allowed_hosts = 192.168.122.203|g' /usr/local/ncpa/etc/ncpa.cfg
-    hidden_check_status
-    /etc/init.d/ncpa_listener restart
+    echo
+    show_time
+    echo -e -n "Updating the token value..."
+    sed -i -e "s|community_string = mytoken|community_string = $tokenvalue|g" /usr/local/ncpa/etc/ncpa.cfg &> "$log_file"
+    check_status
+}
+
+restart_ncpa_listener ()
+{
+    show_time
+    echo -n "Restarting ncpa listener..."
+    /etc/init.d/ncpa_listener restart &> "$log_file"
     check_status
 }
 
 install_done ()
 {
-    echo -e "\n\nInstallation of the ncpa agent is done\nLog file $log_file\n\nAAAAAAAAAAAAAAa\n"
+    echo -e "\n\nInstallation of the ncpa agent is done\nLog file $log_file\n"
 }
 
 main ()
 {
-    # prompt_nagios_ip
-    # prompt_token
-    install_ncpa
+    check_root_privilieges
+    check_file_presence
+    download_ncpa
+    installing_ncpa
+    prompt_nagios_ip
+    prompt_token
+    restart_ncpa_listener
     cleaning_up
     install_done
 }
