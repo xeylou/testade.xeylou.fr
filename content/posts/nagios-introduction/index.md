@@ -201,11 +201,12 @@ Here are the simple following steps for the install.
 
 ### linux host
 
-Since ncpa is cross-platform, i chose to use it for the debian host.
+Since ncpa is cross-platform, i chose to use it for the debian host too.
 
 I made an install script for the debian agent, source code is on [Github](https://github.com/xeylou/nagios-introduction/debian-ncpa-install.sh).
 
 ```bash
+mkdir testing && cd testing
 wget https://github.com/xeylou/nagios-introduction/debian-ncpa-install.sh
 chmod +x debian-ncpa-install.sh
 ./debian-ncpa-install.sh
@@ -224,6 +225,7 @@ The Nagios Server is in my case a Debian machine that host Nagios Core & the Nag
 I made an install script for those on my [Github](https://github.com/xeylou/nagios-introduction) - tested on debian 11 & 12.
 
 ```bash
+mkdir testing && cd testing
 wget https://github.com/xeylou/nagios-introduction/debian-nagios-install.sh
 chmod +x debian-nagios-install.sh
 ./debian-nagios-install.sh
@@ -231,9 +233,9 @@ chmod +x debian-nagios-install.sh
 
 Nagios web interface can be reach at `http://192.168.122.203/nagios` with the username `nagiosadmin` & the password given at the beginning of the installation.
 
-To check the connectivity to the hosts.
+To check the connectivity to the agent hosts.
 
-*(note: the `-H` parameter is the host's hostname or it ip address, `-t` is for the token created by the host during the ncpa installation process, `-P` the used port & `-M` the called value)*
+*(note: the `-H` parameter is the host's hostname or its ip address, `-t` is for the token created by the host during the ncpa installation process, `-P` the used port & `-M` the called value)*
 
 ```
 /usr/local/nagios/libexec/check_ncpa.py -H 192.168.122.53 -t 'windows-host' -P 5693 -M system/agent_version
@@ -263,39 +265,9 @@ Here on the debian host.
 
 Refer to the [ncpa documentation](https://www.nagios.org/ncpa/help.php) for other metrics to monitor.
 
-To add the hosts to the nagios web interface and start passively monitoring them: the nagios server requires their `.cfg` configuration files.
+To add the hosts to the nagios web interface and start passively monitoring them: the nagios server requires `.cfg` configuration files.
 
-These files should define the host using `define host` and the services to monitor (active checks done every `check_interval`).
-
-Here is an example of the `define host` used for monitoring the debian host.
-
-```bash {linenos=inline, hl_lines=["2-4"], linenostart=2}
-define host {
-    host_name               debian-host
-    address                 192.168.122.165
-    check_command           check_ncpa!-t 'debian-host' -P 5693 -M system/agent_version
-    max_check_attempts      5
-    check_interval          5
-    retry_interval          1
-    check_period            24x7
-    contacts                nagiosadmin
-    notification_interval   60
-    notification_period     24x7
-    notifications_enabled   1
-    register                1
-}
-```
-
-The `host_name` is used for nagios to identify the host. The `check_command` will define is the `HOST STATUS` is up or down.
-
-
-
-
-
-
-
-
-<!-- Creating two directories to organise them: `windows-hosts` & `debian-hosts` (see [host configuration file](#hosts-configuration-files)).
+Starting by creating two directories to organise them: `windows-hosts` & `debian-hosts` (see [host configuration file](#hosts-configuration-files)).
 
 ```bash
 mkdir /usr/local/nagios/etc/windows-hosts
@@ -316,24 +288,68 @@ cfg_dir=/usr/local/nagios/etc/debian-hosts
 #cfg_dir=/usr/local/nagios/etc/routers
 ```
 
-Restarting Nagios to make changes take effect.
+These files should define the host using `define host` and the services to monitor (active checks done every `check_interval`).
+
+Here is an example of the `define host` used for monitoring the debian host.
+
+```bash {linenos=inline, hl_lines=["2-4"]}
+define host {
+    host_name               debian-host
+    address                 192.168.122.165
+    check_command           check_ncpa!-t 'debian-host' -P 5693 -M system/agent_version
+    max_check_attempts      5
+    check_interval          5
+    retry_interval          1
+    check_period            24x7
+    contacts                nagiosadmin
+    notification_interval   60
+    notification_period     24x7
+    notifications_enabled   1
+    register                1
+}
+```
+
+The `host_name` is used for nagios to identify the host. The `check_command` will define the check for the `HOST STATUS`.
+
+Here is an example to implement the cpu load check to the configuration file by defining `service`.
+
+```bash {linenos=inline, hl_lines=[2, 4], linenostart=16}
+define service {
+    host_name               debian-host
+    service_description     CPU Load
+    check_command           check_ncpa!-t 'debian-host' -P 5693 -M cpu/percent -w 20 -c 40 -q 'aggregate=avg'
+    max_check_attempts      5
+    check_interval          5
+    retry_interval          1
+    check_period            24x7
+    notification_interval   60
+    notification_period     24x7
+    contacts                nagiosadmin
+    register                1
+}
+```
+
+You can verify if nagios find errors in your configuration files. Here an example with the debian host created.
+
+```bash
+/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/debian-hosts/debian-host.cfg
+```
+
+Finishing by restarting Nagios to make changes take effect.
 
 ```sh
 systemctl restart nagios
-``` -->
-
-
-
-***ici mettre windows-host.cfg***
-
-***ici mettre debian-host.cfg***
-
-***systemctl restart nagios***
-
+```
 
 ### overview
 
-***screenshots of the nagios interface***
+On the nagios web interface, the hosts are in the `Hosts` section.
+
+![](nagios-web-interface-screenshots/00.png)
+
+The services status are available in the `Services` one.
+
+![](nagios-web-interface-screenshots/01.png)
 
 ## opinion
 
