@@ -115,6 +115,7 @@ install_done ()
 
 main ()
 {
+    clear
     check_root_privilieges
     check_file_presence
     download_ncpa

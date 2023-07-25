@@ -261,6 +261,7 @@ install_ncpa_check ()
 
 main ()
 {
+    clear
     check_root_privilieges
     check_file_presence
     check_internet_access
