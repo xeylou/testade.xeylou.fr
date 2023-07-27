@@ -18,7 +18,7 @@ You can always contact me if the last update is too old.
 
 ### Work
 
-I am a second year Network & Telecommunication bachelor student at [University of Pau and the Adour Region](https://univ-pau.fr).
+I am a second-grade Network & Telecommunication bachelor student at [University of Pau and the Adour Region](https://univ-pau.fr).
 
 I do a work-study as an Network & System Administrator for a french IT service delivery company.
 
