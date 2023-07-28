@@ -9,22 +9,26 @@ slug: "nagios-introduction"
 
 ---
 
+<!-- prologue -->
+
 {{< lead >}}
 understanding Nagios principles & deploying  
 a monitoring infrastructure using custom scripts
 {{< /lead >}}
 
+<!-- post -->
+
 ## introduction
 For my work-study, i immersed myself in understanding Nagios for a week.
 
-Here i expose what i've learned & what i've done with it if it's correct.
+Here i expose what i've learned & what i've done with it.
 
 I'd be extremely grateful if you'd consider correcting me if i said something wrong.
 
 This article mainly talks about Nagios as the Nagios Core solution.
 
 ### presentation
-[Nagios Core](https://www.nagios.org/projects/nagios-core/) is a open source, widely used monitoring tool for hosts, applications & services.
+[Nagios Core](https://www.nagios.org/projects/nagios-core/) is an open source, widely used monitoring tool for hosts, applications & services.
 
 The company behind Nagios, [Nagios Enterprises](https://www.nagios.com/about-nagios-enterprises/), afford to make Nagios Core free & open source by their financing policy.
 
@@ -34,7 +38,7 @@ Those solutions are improvers for Nagios Core, highly prefered for production us
 
 ### side notes
 
-Nagios Core code can be found on [Github](https://github.com/NagiosEnterprises/nagioscore), it is written in C language.
+Nagios Core source code can be found on [Github](https://github.com/NagiosEnterprises/nagioscore), it is written in C language.
 
 You may also consider, regarding your deontology or your use case, using your own metrics collector to serve them into a dashboard - using Prometheus & Grafana for examples.
 
@@ -45,7 +49,7 @@ Covering the basics of Nagios Core according to monitoring windows & linux hosts
 ### fundamentals
 Nagios Core need to be installed on a host, bare metal or in a vm - no official docker image available.
 
-To monitor hosts, the Nagios server will execute a sequence of commands at a sheduled interval & will define the state of the monitored host/service according to the output of the command.
+To monitor hosts, the Nagios server will execute a sequence of commands at a sheduled interval & will define the state of the monitored host/service according to the output of the sequence.
 
 This series of checks can be customised according to what service you want to monitor.
 
