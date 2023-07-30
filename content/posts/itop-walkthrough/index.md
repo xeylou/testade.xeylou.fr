@@ -45,9 +45,9 @@ They are a profit based company, they created 2 non-free versions of iTop for bu
 
 They also provide free & non-free external software to enhance iTop utilisation like a [front-end customiser](https://www.combodo.com/itsm-designer-195) or a [network related manager](https://www.combodo.com/teemip-194).
 
-## itop principles
+## understandings 
 
-Skiming through iTop functionnalities.
+Skiming through iTop core functionnalities.
 
 ### fundations
 
@@ -69,7 +69,7 @@ iTop can receive custom objects but the implementation for them is not guided.
 
 Objects & instances are stored in the `MySQL` database attached to itop.
 
-## implementing itop
+## implementation
 ### configuration size
 ### infrastructure
 ### installations
