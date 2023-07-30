@@ -22,5 +22,4 @@ I am an IT privacy & security enthusiast.
 
 ## OSs
 
-NixOS active user  
-Debian enjoyer
+NixOS active user & Debian enjoyer.

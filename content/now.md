@@ -1,7 +1,7 @@
 ---
 title: "Now"
-date: 2023-07-18
-lastmod: 2023-07-19
+date: 2023-07-19
+lastmod: 2023-07-30
 showDate: false
 showReadingTime: false
 showWordCount: false
@@ -11,8 +11,8 @@ showTableOfContents: false
 showRelatedContent: false
 ---
 
-{{< alert icon="fire">}}
-**Note** I try to keep this page as up to date as possible.  
+{{< alert icon="circle-info">}}
+**Info** I try to keep this page as up to date as possible.  
 You can always contact me if the last update is too old.
 {{< /alert >}}
 
