@@ -76,29 +76,37 @@ update ()
     check_status
 }
 
-db_password ()
+db_username_password ()
 {
-    echo -e "\nPlease enter a password for the itop database user"
-    read -s itoptdbpassword
+    echo -e "\nPlease enter a username for iTop to connect to the database"
+    read itopdbusername
     hidden_check_status
+    echo -e "\nPlease enter a password for $itopdbusername"
+    read -s itopdbpassword
+    hidden_check_status
+    echo -e "\nPlease confirm the password"
+    read -s itopdbpassword2
+    if [ $itopdbpassword != $itopdbpassword2 ]; then
+        db_username_password
+    fi
     echo
     echo
     show_time
-    echo -n "Creating itop database password..."
+    echo -n "Creating database username & password for iTop..."
     check_status
 }
 
 install_prerequires ()
 {
     show_time
-    echo -n "Installing prerequires (this might take some time)..."
+    echo -n "Installing prerequires..."
     apt-get install -y mariadb-server &> $log_file
     check_status
 }
 
 creating_db ()
 {
-    echo -e "create database itop character set utf8 collate utf8_bin;\ncreate user 'itop'@'%' identified by '$itoptdbpassword';\ngrant all privileges on itop.* to 'itop'@'%';\nflush privileges;" > commands.sql
+    echo -e "create database itop character set utf8 collate utf8_bin;\ncreate user '$itopdbusername'@'%' identified by '$itopdbpassword';\ngrant all privileges on itop.* to 'itop'@'%';\nflush privileges;" > commands.sql
     hidden_check_status
     show_time
     echo -n "Creating the MySQL database..."
@@ -139,7 +147,7 @@ main ()
     check_root_privilieges
     check_file_presence
     check_internet_access
-    db_password
+    db_username_password
     update
     install_prerequires
     creating_db

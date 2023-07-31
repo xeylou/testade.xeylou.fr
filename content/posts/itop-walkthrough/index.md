@@ -57,7 +57,7 @@ The [documentation](https://www.itophub.io/wiki/page?id=latest:start) is made fo
 
 ### cmdb
 
-The cmdb is the core of itop and needs to be configured first.
+The cmdb is the core of itop and needs to be configured at first.
 
 CMDB works with `Objects`, which are groups of `Instances` that share the same patern.
 
