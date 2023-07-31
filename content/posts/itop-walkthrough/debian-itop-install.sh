@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# mkdir testing && cd testing && nano debian-itop-install.sh && chmod +x debian-itop-install.sh && ./debian-itop-install.sh
+
 show_time ()
 {
     echo -n "$(date +%r) -- "
@@ -79,7 +81,7 @@ update ()
 install_prerequires ()
 {
     show_time
-    echo -n "Installing prerequires (this might take some time)..."
+    echo -n "Installing prerequires (take some time)..."
     apt-get install -y apache2 mariadb-server php php-{mysql,ldap,cli,soap,json,mbstring,xml,gd,zip,curl,mcrypt} libapache2-mod-php graphviz unzip &> $log_file
     check_status
 }

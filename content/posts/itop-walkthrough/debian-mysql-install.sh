@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# mkdir testing && cd testing && nano debian-mysql-install.sh && chmod +x debian-mysql-install.sh && ./debian-mysql-install.sh
+
 show_time ()
 {
     echo -n "$(date +%r) -- "
@@ -78,6 +80,9 @@ update ()
 
 db_username_password ()
 {
+    echo -e "\nPlease enter a database name"
+    read itopdbname
+    hidden_check_status
     echo -e "\nPlease enter a username for iTop to connect to the database"
     read itopdbusername
     hidden_check_status
@@ -92,7 +97,7 @@ db_username_password ()
     echo
     echo
     show_time
-    echo -n "Creating database username & password for iTop..."
+    echo -n "Creating database username & password..."
     check_status
 }
 
@@ -106,7 +111,7 @@ install_prerequires ()
 
 creating_db ()
 {
-    echo -e "create database itop character set utf8 collate utf8_bin;\ncreate user '$itopdbusername'@'%' identified by '$itopdbpassword';\ngrant all privileges on itop.* to 'itop'@'%';\nflush privileges;" > commands.sql
+    echo -e "create database $itopdbname character set utf8 collate utf8_bin;\ncreate user '$itopdbusername'@'%' identified by '$itopdbpassword';\ngrant all privileges on $itopdbname.* to '$itopdbusername'@'%';\nflush privileges;" > commands.sql
     hidden_check_status
     show_time
     echo -n "Creating the MySQL database..."
