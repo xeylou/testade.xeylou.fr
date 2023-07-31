@@ -69,6 +69,12 @@ iTop can receive custom objects but the implementation for them is not guided.
 
 Objects & instances are stored in the `MySQL` database attached to itop.
 
+### portals
+
+Portals are the front-ends users will see according to their permissions.
+
+
+
 ## implementation
 ### configuration size
 ### infrastructure
