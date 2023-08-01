@@ -22,14 +22,16 @@ living it service delivery infrastructure
 
 As with Nagios, i dived a week into Combodo iTop monitoring solution.
 
-Once again, i'd be very grateful if you'd consider correcting me if i said someting wrong.
+I had a harder time getting into it because there are a lot more notions to learn & to consider, outside & inside iTop, to use it properly.
+
+So once again, i'd be very grateful if you'd consider correcting me if i said someting wrong.
 
 ### glossary
 
-Defining acronyms used in this post.
+Defining mandatory acronyms of this post.
 
 ITSM - *IT Service Management*  
-Type of tool usually used by companies to organise & deliver their IT services to other companies or to their departments. They can integrate monitoring tools or a help desk ticketing system for example.
+Type of tool usually used by companies to organise & deliver their IT services to their departments or to other companies. They can integrate monitoring tools or a help desk ticketing system for example.
 
 CMDB - *Configuration Management Database*  
 Term to define a database used to store & organise the hardware items & the software assets of a company or someone.
@@ -45,11 +47,15 @@ They are a profit based company, they created 2 non-free versions of iTop for bu
 
 They also provide free & non-free external software to enhance iTop utilisation like a [front-end customiser](https://www.combodo.com/itsm-designer-195) or a [network related manager](https://www.combodo.com/teemip-194).
 
+iTop is typically used by the IT department of a company to monitor services & implement a help desk ticketing system to the other departments. 
+
+It is also used by companies to deliver IT services to other companies as a service provider.
+
 ## understandings 
 
-Skiming through iTop core functionnalities.
+Skiming through iTop core functionnalities, only the important ones all covered.
 
-### fundations
+### fundamentals
 
 iTop is based on apache, php, graphviz & mysql. However, it can run on nginx instead of apache with extra work.
 
@@ -61,26 +67,214 @@ The cmdb is the core of itop and needs to be configured at first.
 
 CMDB works with `Objects`, which are groups of `Instances` that share the same patern.
 
-*(considering the "Persons" object, all instances of this object would have the same patern: a name, a surname, an age etc.)*
+*(considering the "Persons" object, each instances of this object would have the same patern: a name, a surname, an age etc.)*
 
-The cmdb can receive a populated `*.csv` file to create multiples instances of an object at once. *(instead of entering manually every member of your company for example)*
+The cmdb can receive a populated `*.csv` file to create multiples instances of an object at once. *(instead of entering one by one every member of a company for example)*
 
-iTop can receive custom objects but the implementation for them is not guided.
+iTop can receive custom objects but their implementation is not guided. The default ones are created without instances.
 
-Objects & instances are stored in the `MySQL` database attached to itop.
+Objects & instances are stored in the `MySQL` database.
 
-### portals
+### itsm
 
-Portals are the front-ends users will see according to their permissions.
+The itsm is integrated with the ticket management system.
 
+When installing, iTop proposes two ways to implement it: to deliver services to departments or to other companies.
 
+The itsm provides two types of tickets: `Users requests` & `Incidents`.
+
+Mandatory objects are needed to use them: `Services`, `Contracts` & `SLAs`.
+
+**Services**  
+Are the objects defining what is provided by the service provider (IT department or company). They are called to generate incidents or to supply users requests. Providers contracts required.
+
+**Contracts**  
+Splited in `Customer` & `Provider` contracts. The customer one defines what service(s) is provided/pucharsed by the customer + `SLAs`. The provider one links internal used ressources (`CIs`) according to the customer contract & what service(s) is provided.
+
+**SLTs - *Service Level Target***  
+Define metrics agreements between a customer & the provider. Two type by default: the TTO - *Time To Own* is the time between ticket's creation & the time to take it into account, TTR - *Time To Resolve* a ticket after creating.
+
+**SLAs - Service Level Agreement**  
+Group of `SLTs` defining the agreement between a provider and a customer for a given set of services.
+
+When a customer creates a ticket, it can select the service amongst the list of services defined for this customer.
+
+Tickets deadlines are computed depending on the SLA signed with the customer.
+
+### default objects
+
+Native objects in itop are created during the installation process.
+
+They should be used because related to [itop principles](#presentation).
+
+The mandatory objects are covered here, many more can be used & discovered exploring iTop.
+
+**Organizations**  
+Can be used for two purposes: name the different departments of a company when itop is used to deliver IT services within a company, or name the different companies a company is delivering IT services to.
+
+**Locations**  
+Are used to group objects by geography (servers, organisations etc.). A hierachy can be applied, locations can be linked to parents locations *(example: inside the company A, there is room A & room B in which have differents servers in racks A & racks B)*
+
+**Persons**  
+Defined the persons contacts & responsabilities regarding the IT services delivered. Can be deployed using `Profiles` to quickly assign permissions to the members of a department or a company.
+
+**Teams**  
+Usefull to define permissions easier *(HR & finance can access to..)*. Also help the customer to use the ticketing system & link objects.
+
+**CIs - *Configuration Items***  
+Describe hardware devices (network devices, servers, personal computers, printers & smartphones). Templates are available to all types of CIs.
+
+**Software Installed**  
+Present to easily index software installed on devices.
+
+**Services**  
+Object used to define what actions or device is delivered as a service to a customer. Can be subcategorised *(service A contains sub-service B & sub-service C)*.
+
+### objects agencement
+
+Objects are related to each others by different means.
+
+I will make graphs & try to link them - no spoil.
+
+Graphs following rules:
+
+- Rectangles are highest objects.
+- Rounded objects are those receiving links.
+- Text in lowercaps are instructions, uppercaps are objects name.
+
+`Persons` integrate `Teams` according to their `Role`.
+
+<div style="background-color:white">
+{{< mermaid >}}
+graph LR
+A[Persons] -->|Roles| B(Teams)
+{{< /mermaid >}}
+</div>
+
+`Teams` are parts of an `Organization`.
+
+<div style="background-color:white">
+{{< mermaid >}}
+graph LR
+A[Teams] -->|parts of| B(Organizations)
+{{< /mermaid >}}
+</div>
+
+`Organizations` are linked to `Locations`.
+
+<div style="background-color:white">
+{{< mermaid >}}
+graph LR
+A[Organizations] -->|are located| B(Locations)
+{{< /mermaid >}}
+</div>
+
+`Organizations` are owning `CIs`. Those CIs, depending what they are, have rich `Properties` containing all types of other objects. CIs are exposed to `Services` & are ruled by `Provider Contracts`. `Documents` can be linked to them & they can be related to `Tickets`.
+
+<div style="background-color:white">
+{{< mermaid >}}
+graph LR
+B[Organizations] -->|owning| A(CIs)
+G[Properties] -->|describe| A
+A -->|exposed to| C(Services)
+D[Provider Contracts] -->|rule| A
+A -->|appear in| E(Tickets)
+A -->|related to| F(Documents)
+{{< /mermaid >}}
+</div>
+
+Relations for `Documents`.
+
+<div style="background-color:white">
+{{< mermaid >}}
+graph LR
+C[Organizations] -->|owning| A
+B[Properties] -->|structure| A(Documents)
+D -->|defining| A
+A -->|used for| D(Contracts)
+A -->|give informations| F(CIs)
+A -->|linked to| E(Services)
+{{< /mermaid >}}
+</div>
+
+Relation between objects is too complex to give only one comprehensible graph.
+
+Instances properties change for each, relations between objects change according instances needs.
+
+It would be meaningless to create a relaton graph for all objects.
+
+{{< alert cardColor="#e63946" iconColor="#1d3557" textColor="#f1faee" >}}
+**Do not refer to this graph. Please read above.**
+{{< /alert >}}
+
+<div style="background-color:white">
+{{< mermaid >}}
+graph LR
+A[Persons] -->|Roles| B(Teams)
+B -->|parts of| C(Organizations)
+C -->|are located| I(Locations)
+C -->|owning| D(CIs)
+D -->|related to| E
+D -->|exposed to| G(Services)
+H(Provider Contracts) -->|rule| D
+D -->|appear in| F
+C -->|owning| E(Documents)
+E -->|used for| H
+H -->|defining| E
+E -->|linked to| G
+E -->|give informations| D
+A -->|see activity| D
+A -->|attached to| F(Tickets)
+J[Other Objects] -->|give properties| D
+J -->|structure| E
+subgraph iTop Company View
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+end
+{{< /mermaid >}}
+</div>
+
+Even though this graph seems valid, iTop has many more objects than the ones covered. Links between them should be discovered & created using the web interface.
 
 ## implementation
-### configuration size
+### requirements
 ### infrastructure
 ### installations
+
+<!-- 2 scripts car si déjà un mysql + dire qu'il faut les privilèges etc. -->
+
 ### confirguration
+
+<!-- 1. administration des données -> organizations
+2. gestion des configurations -> locations 
+3. gestion des configurations -> Contacts
+4. gestion des configurations -> tableau de bord -> racks + chassis
+4. gestion des configurations -> new CIs
+4. User contracts -->
+
+<!-- You can easily create Network devices, Server, Personal Computers, Printers and Mobile Phone as
+soon as your organizations and locations are created. -->
+
+<!-- Before creating the softwares installed on an infrastructure, you have to define the “typology” of
+standard applications known in iTop. This is done via menu “Data Administration Applications” . →
+You need as well to create the Licences if you wan to manage such objects but this can be done later.
+Once done, you can create the softwares installed on an infrastructure. The attribute “device”
+depends on the selected owner organization, the attribute software is the list of applications you
+have created in “Data Administration Applications” -->
+
 ## close
 
-It is very complicated to make your hands on. They do bootcamp like https://www.combodo.com/itop-cmdb-online-training-april-4-5 for 140$/h.
+<!-- It is very complicated to make your hands on. They do bootcamp like https://www.combodo.com/itop-cmdb-online-training-april-4-5 for 140$/h.
 Jira is not free.
+
+C'est vraiment long de tout comprendre. Puis ensuite tout intégrêt à itop (création de tous tous les objects et les liens) 
+
+iTop's learning curve seems very low & very long at first. -->

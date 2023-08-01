@@ -12,18 +12,16 @@ showRelatedContent: false
 ---
 
 {{< alert icon="circle-info">}}
-**Info** I try to keep this page as up to date as possible.  
+**Note** I try to keep this page as up to date as possible.  
 You can always contact me if the last update is too old.
 {{< /alert >}}
 
 ### Work
 
-I am a second-grade Network & Telecommunication bachelor student at [University of Pau and the Adour Region](https://univ-pau.fr).
+I am a second-grade Network & Telecommunication bachelor student at [University of Pau and the Adour Region](https://www.univ-pau.fr/en/home.html).
 
 I do a work-study as an Network & System Administrator for a french IT service delivery company.
 
 ### Freetime
 
-Constantly building and maintaining this blog
-
-Exploring & creating Github repos about IT related stuff
+Exploring & creating Github repos about IT related stuff.

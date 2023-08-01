@@ -103,6 +103,27 @@ end
 {{< /mermaid >}}
 </div>
 
+flowchart
+<div style="background-color:white">
+
+{{< mermaid >}}
+graph LR
+A[Christmas] -->|Get money| B(Go shopping)
+B --> C{Let me think}
+B --> G[/Another/]
+C ==>|One| D[Laptop]
+C -->|Two| E[iPhone]
+C -->|Three| F[Car]
+subgraph Section
+C
+D
+E
+F
+G
+end
+{{< /mermaid >}}
+</div>
+
 sequence diagram
 
 <div style="background-color:white">
