@@ -264,10 +264,11 @@ subgraph "Company A"
 end
 {{< /mermaid >}} -->
 
+<div style="background-color:white">
 {{< mermaid >}}
 %%{init: {"flowchart": {"htmlLabels": false}} }%%
-flowchart LR
-subgraph "Company A (service provider)"
+flowchart TD
+subgraph z[Company A - Service Provider]
 subgraph m[CEO]
 a[Person A]
 end
@@ -290,14 +291,17 @@ m---h
 m---i
 i---j
 i---k
+style z fill:#fff,stroke:#fff,stroke-width:4px
 {{< /mermaid >}}
+</div>
 
 The Company B one.
 
+<div style="background-color:white">
 {{< mermaid >}}
 %%{init: {"flowchart": {"htmlLabels": false}} }%%
-flowchart LR
-subgraph "Company B"
+flowchart TD
+subgraph z[Company B]
 subgraph a[CEO]
 b[Person H]
 end
@@ -310,8 +314,7 @@ end
 subgraph g[Head of Logistics]
 h[Person k]
 end
-subgraph i["`Manufacturing 
-Manager`"]
+subgraph i[Manufacturing Manager]
 j[Person M]
 end
 subgraph k[Assistant]
@@ -323,8 +326,9 @@ a---e
 c---g
 c---j
 e---k
+style z fill:#fff,stroke:#fff,stroke-width:4px
 {{< /mermaid >}}
-
+</div>
 
 ### requirements
 
@@ -336,8 +340,69 @@ This is [iTop documentation hardware recommendations](https://manage-wiki.openit
 |:--------:|:---------------:|
 | <table><thead><tr><th>Tickets/month</th><th>Users</th><th>CIs</th></tr></thead><tbody><tr><td>&lt;200</td><td>&lt;20</td><td>&lt;50k</td></tr><tr><td>&lt;5k</td><td>&lt;50</td><td>&lt;200k</td></tr><tr><td>&gt;5k</td><td>&gt;50</td><td>&gt;200k</td></tr></tbody></table> | <table><thead><tr><th>Servers</th><th>CPU</th><th>Memory</th><th>MySQL DB size</th></tr></thead><tbody><tr><td>All-in-one</td><td>2vCPU</td><td>4Gb</td><td>10Gb</td></tr><tr><td>Web+MySQL</td><td>4vCPU</td><td>8Gb</td><td>20Gb</td></tr><tr><td>Web+MySQL</td><td>8vCPU</td><td>16Gb</td><td>50Gb</td></tr></tbody></table> |
 
-
 ### infrastructure
+
+There is in total 13 people in the two companies (< 50). The number of `CIs` will be under 50'000 & the tickets/month under 200.
+
+An all-in-one server can be created with iTop installed & a MySQL database.
+
+For expandability, the seperate solution will be used according to the following graph.
+
+<!-- inversé sens company a & b pour disposition de
+company a à gauche sur le schéma -->
+
+<div style="background-color:white">
+{{< mermaid >}}
+
+graph TD
+subgraph company-b[Company B Network]
+router-b{Router}
+switch-b[Network Switch]
+consumer-pc(Consumer Device)
+end
+
+subgraph company-a[Company A Network]
+router-a{Router}
+switch-a[Network Switch]
+itop-server(iTop Server<br><i>4vCPU 8GB</i>)
+db-server[(MySQL Server<br><i>20GB</i>)]
+end
+
+wan{WAN} --- router-a & router-b
+router-a --- switch-a
+switch-a --- itop-server
+switch-a --- db-server
+router-b --- switch-b
+switch-b --- consumer-pc
+{{< /mermaid >}}
+</div>
+
+<!-- 
+<div style="background-color:white">
+{{< mermaid >}}
+graph TD
+subgraph company-b[Company B Network]
+router-b((Router))
+switch-b[/Network Switch/]
+consumer-pc(Consumer Device)
+end
+subgraph company-a[Company A Network]
+router-a((Router))
+switch-a[/Network Switch/]
+itop-server(iTop Server)
+db-server[(MySQL Server)]
+end
+
+wan{WAN} --- router-a & router-b
+router-a --- switch-a
+switch-a --- itop-server
+switch-a --- db-server
+router-b --- switch-b
+switch-b --- consumer-pc
+{{< /mermaid >}}
+</div>
+-->
+
 ### installations
 
 <!-- 2 scripts car si déjà un mysql + dire qu'il faut les privilèges etc. -->
