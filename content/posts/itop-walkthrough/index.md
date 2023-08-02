@@ -175,7 +175,6 @@ A[Organizations] -->|are located| B(Locations)
 {{< mermaid >}}
 graph LR
 B[Organizations] -->|owning| A(CIs)
-G[Properties] -->|describe| A
 A -->|exposed to| C(Services)
 D[Provider Contracts] -->|rule| A
 A -->|appear in| E(Tickets)
@@ -188,10 +187,9 @@ Relations for `Documents`.
 <div style="background-color:white">
 {{< mermaid >}}
 graph LR
-C[Organizations] -->|owning| A
-B[Properties] -->|structure| A(Documents)
-D -->|defining| A
+C[Organizations] -->|owning| A(Documents)
 A -->|used for| D(Contracts)
+D -->|defining| A
 A -->|give informations| F(CIs)
 A -->|linked to| E(Services)
 {{< /mermaid >}}
@@ -210,6 +208,7 @@ It would be meaningless to create a relaton graph for all objects.
 <div style="background-color:white">
 {{< mermaid >}}
 graph LR
+subgraph iTop Company View
 A[Persons] -->|Roles| B(Teams)
 B -->|parts of| C(Organizations)
 C -->|are located| I(Locations)
@@ -227,17 +226,6 @@ A -->|see activity| D
 A -->|attached to| F(Tickets)
 J[Other Objects] -->|give properties| D
 J -->|structure| E
-subgraph iTop Company View
-A
-B
-C
-D
-E
-F
-G
-H
-I
-J
 end
 {{< /mermaid >}}
 </div>
@@ -245,7 +233,110 @@ end
 Even though this graph seems valid, iTop has many more objects than the ones covered. Links between them should be discovered & created using the web interface.
 
 ## implementation
+
+This sections will implement iTop following a [companies plan](#companies) & an [infrastructure](#infrastructure).
+
+### companies plan
+
+iTop will be used by two companies: `company A` who is the service provider one & `company B` who will use the services.
+
+Here is the Company A agency graph.
+
+<!-- 
+not very visible
+{{< mermaid >}}
+%%{init: {"flowchart": {"htmlLabels": false}} }%%
+flowchart LR
+subgraph "Company A"
+  a["`Person A
+  **CEO**`"] --- b["`Person B
+  **Executive Assistant**`"]
+  a --- c["`Person C
+  **Technical Manager**`"]
+  c --- d["`Person D
+  **Network & Sysadmin**`"]
+  c --- e["`Person E
+  **Network & Sysadmin**`"]
+  c --- f["`Person F
+  **work-study student**`"]
+  c --- g["`Person G
+  **work-study student**`"]
+end
+{{< /mermaid >}} -->
+
+{{< mermaid >}}
+%%{init: {"flowchart": {"htmlLabels": false}} }%%
+flowchart LR
+subgraph "Company A (service provider)"
+subgraph m[CEO]
+a[Person A]
+end
+subgraph h[Executive Assistant]
+b[Person B]
+end
+subgraph i[Technical Manager]
+c[Person C]
+end
+subgraph j[Network & Sysadmins]
+d[Person D]
+e[Person E]
+end
+subgraph k[Work-Study Students]
+f[Person F]
+g[Person G]
+end
+end
+m---h
+m---i
+i---j
+i---k
+{{< /mermaid >}}
+
+The Company B one.
+
+{{< mermaid >}}
+%%{init: {"flowchart": {"htmlLabels": false}} }%%
+flowchart LR
+subgraph "Company B"
+subgraph a[CEO]
+b[Person H]
+end
+subgraph c[Technical Manager]
+d[Person I]
+end
+subgraph e[Sales Manager]
+f[Person J]
+end
+subgraph g[Head of Logistics]
+h[Person k]
+end
+subgraph i["`Manufacturing 
+Manager`"]
+j[Person M]
+end
+subgraph k[Assistant]
+m[Person N]
+end
+end
+a---c
+a---e
+c---g
+c---j
+e---k
+{{< /mermaid >}}
+
+
 ### requirements
+
+This is [iTop documentation hardware recommendations](https://manage-wiki.openitop.org/doku.php?id=latest:install:requirements).
+
+<!-- https://www.tablesgenerator.com/html_tables -->
+
+| Activity | Recommendations |
+|:--------:|:---------------:|
+| <table><thead><tr><th>Tickets/month</th><th>Users</th><th>CIs</th></tr></thead><tbody><tr><td>&lt;200</td><td>&lt;20</td><td>&lt;50k</td></tr><tr><td>&lt;5k</td><td>&lt;50</td><td>&lt;200k</td></tr><tr><td>&gt;5k</td><td>&gt;50</td><td>&gt;200k</td></tr></tbody></table> | <table><thead><tr><th>Servers</th><th>CPU</th><th>Memory</th><th>MySQL DB size</th></tr></thead><tbody><tr><td>All-in-one</td><td>2vCPU</td><td>4Gb</td><td>10Gb</td></tr><tr><td>Web+MySQL</td><td>4vCPU</td><td>8Gb</td><td>20Gb</td></tr><tr><td>Web+MySQL</td><td>8vCPU</td><td>16Gb</td><td>50Gb</td></tr></tbody></table> |
+
+
 ### infrastructure
 ### installations
 
