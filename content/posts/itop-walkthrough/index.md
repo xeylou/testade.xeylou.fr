@@ -22,7 +22,7 @@ living it service delivery infrastructure
 
 As with Nagios, i dived a week into Combodo iTop monitoring solution.
 
-I had a harder time getting into it because there are a lot more notions to learn & to consider, outside & inside iTop, to use it properly.
+I had a harder time getting into it because there are more notions to learn & to consider, outside & inside iTop, to use it properly.
 
 So once again, i'd be very grateful if you'd consider correcting me if i said someting wrong.
 
@@ -238,7 +238,7 @@ This sections will implement iTop following a [companies plan](#companies) & an 
 
 ### companies plan
 
-iTop will be used by two companies: `company A` who is the service provider one & `company B` who will use the services.
+iTop will be used by two companies: `company A` which is the service provider one & `company B` who will use their services.
 
 Here is the Company A agency graph.
 
@@ -268,7 +268,7 @@ end
 {{< mermaid >}}
 %%{init: {"flowchart": {"htmlLabels": false}} }%%
 flowchart TD
-subgraph z[Company A - Service Provider]
+subgraph z[Company A Chart - Service Provider]
 subgraph m[CEO]
 a[Person A]
 end
@@ -301,7 +301,7 @@ The Company B one.
 {{< mermaid >}}
 %%{init: {"flowchart": {"htmlLabels": false}} }%%
 flowchart TD
-subgraph z[Company B]
+subgraph z[Company B Chart]
 subgraph a[CEO]
 b[Person H]
 end
@@ -312,9 +312,10 @@ subgraph e[Sales Manager]
 f[Person J]
 end
 subgraph g[Head of Logistics]
-h[Person k]
+h[Person K]
 end
-subgraph i[Manufacturing Manager]
+subgraph i["Manufacturing
+Manager"]
 j[Person M]
 end
 subgraph k[Assistant]
@@ -324,7 +325,7 @@ end
 a---c
 a---e
 c---g
-c---j
+c---i
 e---k
 style z fill:#fff,stroke:#fff,stroke-width:4px
 {{< /mermaid >}}
@@ -332,7 +333,7 @@ style z fill:#fff,stroke:#fff,stroke-width:4px
 
 ### requirements
 
-This is [iTop documentation hardware recommendations](https://manage-wiki.openitop.org/doku.php?id=latest:install:requirements).
+This is the [iTop hardware recommendations](https://manage-wiki.openitop.org/doku.php?id=latest:install:requirements) from their documentation.
 
 <!-- https://www.tablesgenerator.com/html_tables -->
 
@@ -342,11 +343,11 @@ This is [iTop documentation hardware recommendations](https://manage-wiki.openit
 
 ### infrastructure
 
-There is in total 13 people in the two companies (< 50). The number of `CIs` will be under 50'000 & the tickets/month under 200.
+There is 13 people in the two companies combined (< 50). The number of `CIs` will be under 50'000 & the tickets/month under 200.
 
-An all-in-one server can be created with iTop installed & a MySQL database.
+The all-in-one server will be chose with iTop & a MySQL database installed.
 
-For expandability, the seperate solution will be used according to the following graph.
+For a production use, looking for expandability by choosing the seperate solution could be a great choice.
 
 <!-- inversé sens company a & b pour disposition de
 company a à gauche sur le schéma -->
@@ -359,21 +360,26 @@ subgraph company-b[Company B Network]
 router-b{Router}
 switch-b[Network Switch]
 consumer-pc(Consumer Device)
+apache-b(Apache Server)
 end
 
 subgraph company-a[Company A Network]
 router-a{Router}
 switch-a[Network Switch]
-itop-server(iTop Server<br><i>4vCPU 8GB</i>)
-db-server[(MySQL Server<br><i>20GB</i>)]
+itop-server(Debian Machine<br><i>2vCPU 4GB</i>)
+db-server[(MySQL DB<br><i>10GB</i>)]
+itop(iTop Community)
+apache-a(Apache Server)
 end
 
 wan{WAN} --- router-a & router-b
-router-a --- switch-a
-switch-a --- itop-server
-switch-a --- db-server
-router-b --- switch-b
-switch-b --- consumer-pc
+router-a ---|192.168.122.0/24| switch-a
+switch-a ---|192.168.122.212| itop-server
+itop-server -.- db-server & itop
+switch-a ---|192.168.122.111| apache-a
+router-b ---|192.168.1.0/24| switch-b
+switch-b ---|192.168.1.1| consumer-pc
+switch-b ---|192.168.1.2| apache-b
 {{< /mermaid >}}
 </div>
 
@@ -403,34 +409,37 @@ switch-b --- consumer-pc
 </div>
 -->
 
+The `Company A` will provide an apache web server from their LAN as a service & monitor an other one from the `Company B` LAN.
+
 ### installations
 
-<!-- 2 scripts car si déjà un mysql + dire qu'il faut les privilèges etc. -->
+I made an installation script for iTop & for a MySQL server according to iTop requirements.
+
+Both scripts are made for debian & are available on [Github](https://github.com/xeylou/itop-walkthrough), tested on debian 12.
+
+To install the iTop server, run the following commands.
+
+```bash
+mkdir itop_install && cd itop_install
+wget https://github.com/xeylou/itop-walkthrough/debian-itop-install.sh
+chmod +x debian-itop-install.sh
+./debian-itop-install.sh
+```
+
+For the MySQL one.
+
+```bash
+mkdir mysql_install && cd mysql_install
+wget https://github.com/xeylou/itop-walkthrough/debian-mysql-install.sh
+chmod +x debian-mysql-install.sh
+./debian-mysql-install.sh
+```
+
+You can use an external MySQL database without this script with a database user with all privilieges for iTop.
+
+The installation can be resumed at `https://192.168.122.212`.
+
+
 
 ### confirguration
-
-<!-- 1. administration des données -> organizations
-2. gestion des configurations -> locations 
-3. gestion des configurations -> Contacts
-4. gestion des configurations -> tableau de bord -> racks + chassis
-4. gestion des configurations -> new CIs
-4. User contracts -->
-
-<!-- You can easily create Network devices, Server, Personal Computers, Printers and Mobile Phone as
-soon as your organizations and locations are created. -->
-
-<!-- Before creating the softwares installed on an infrastructure, you have to define the “typology” of
-standard applications known in iTop. This is done via menu “Data Administration Applications” . →
-You need as well to create the Licences if you wan to manage such objects but this can be done later.
-Once done, you can create the softwares installed on an infrastructure. The attribute “device”
-depends on the selected owner organization, the attribute software is the list of applications you
-have created in “Data Administration Applications” -->
-
 ## close
-
-<!-- It is very complicated to make your hands on. They do bootcamp like https://www.combodo.com/itop-cmdb-online-training-april-4-5 for 140$/h.
-Jira is not free.
-
-C'est vraiment long de tout comprendre. Puis ensuite tout intégrêt à itop (création de tous tous les objects et les liens) 
-
-iTop's learning curve seems very low & very long at first. -->

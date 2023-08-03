@@ -2,7 +2,7 @@
 title: "writing memos"
 date: 2023-07-18T22:33:59+02:00
 lastmod: 2023-07-19T22:33:59+02:00
-draft: false
+draft: true
 tags: ["testing", "syntax"]
 series: ["Testing"]
 series_order: 1
