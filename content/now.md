@@ -9,6 +9,7 @@ showViews: false
 showLikes: false
 showTableOfContents: false
 showRelatedContent: false
+showAuthor: false
 ---
 
 {{< alert icon="circle-info">}}

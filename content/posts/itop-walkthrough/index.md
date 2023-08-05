@@ -1,12 +1,11 @@
 ---
 title: "combodo itop walk-through"
-date: 2023-07-27
+date: 2023-08-05
 draft: false
-tags: ["linux", "monitoring", "open-source", "windows"]
+tags: ["linux", "monitoring", "open-source"]
 series: ["Exploring Monitoring Solutions"]
 series_order: 2
 slug: "itop-walkthrough"
-
 ---
 
 <!-- prologue -->
@@ -22,13 +21,14 @@ living it service delivery infrastructure
 
 As with Nagios, i dived a week into Combodo iTop monitoring solution.
 
-I had a harder time getting into it because there are more notions to learn & to consider, outside & inside iTop, to use it properly.
+I had harder time getting into it due to the notions to lean & to consider, inside & outside iTop to use it properly.
+<!-- I had a harder time getting into it because there are more notions to learn & to consider, outside & inside iTop, to use it properly. -->
 
-So once again, i'd be very grateful if you'd consider correcting me if i said someting wrong.
+So once again, i'd be very grateful if you'd consider correcting me if someting wrong is said.
 
 ### glossary
 
-Defining mandatory acronyms of this post.
+Defining mandatory acronyms for this post.
 
 ITSM - *IT Service Management*  
 Type of tool usually used by companies to organise & deliver their IT services to their departments or to other companies. They can integrate monitoring tools or a help desk ticketing system for example.
@@ -37,7 +37,7 @@ CMDB - *Configuration Management Database*
 Term to define a database used to store & organise the hardware items & the software assets of a company or someone.
 
 ITIL - *Information Technology Infrastructure Library*  
-Set of relevant IT practices that describe processes, procedures or tasks for IT related stuff like system administration or itsm management.
+Set of relevant IT practices describing processes, procedures or actions for IT related operations like system administration or itsm management.
 
 ### presentation
 
@@ -53,7 +53,7 @@ It is also used by companies to deliver IT services to other companies as a serv
 
 ## understandings 
 
-Skiming through iTop core functionnalities, only the important ones all covered.
+Skiming through iTop core functionnalities, only the standard ones are covered.
 
 ### fundamentals
 
@@ -65,9 +65,9 @@ The [documentation](https://www.itophub.io/wiki/page?id=latest:start) is made fo
 
 The cmdb is the core of itop and needs to be configured at first.
 
-CMDB works with `Objects`, which are groups of `Instances` that share the same patern.
+CMDB works with `Objects`, which are groups of `Instances` sharing the same patern.
 
-*(considering the "Persons" object, each instances of this object would have the same patern: a name, a surname, an age etc.)*
+*(considering the "Persons" object, each instance of this object would have the same patern: a name, a surname, an age etc.)*
 
 The cmdb can receive a populated `*.csv` file to create multiples instances of an object at once. *(instead of entering one by one every member of a company for example)*
 
@@ -77,7 +77,7 @@ Objects & instances are stored in the `MySQL` database.
 
 ### itsm
 
-The itsm is integrated with the ticket management system.
+The itsm is integrated with the ticket management system & will be described using the itil way.
 
 When installing, iTop proposes two ways to implement it: to deliver services to departments or to other companies.
 
@@ -85,17 +85,19 @@ The itsm provides two types of tickets: `Users requests` & `Incidents`.
 
 Mandatory objects are needed to use them: `Services`, `Contracts` & `SLAs`.
 
-**Services**  
-Are the objects defining what is provided by the service provider (IT department or company). They are called to generate incidents or to supply users requests. Providers contracts required.
+Here are their purposes & how they are related.
 
-**Contracts**  
-Splited in `Customer` & `Provider` contracts. The customer one defines what service(s) is provided/pucharsed by the customer + `SLAs`. The provider one links internal used ressources (`CIs`) according to the customer contract & what service(s) is provided.
+- Services  
+Are defining what is provided by the service provider (IT department or company). Called to generate incidents or to supply users requests. Providers contracts are required.
 
-**SLTs - *Service Level Target***  
-Define metrics agreements between a customer & the provider. Two type by default: the TTO - *Time To Own* is the time between ticket's creation & the time to take it into account, TTR - *Time To Resolve* a ticket after creating.
+- Contracts  
+Splited in `Customer` & `Provider` contracts. Customer one defines service(s) provided to/pucharsed by the customer + the `SLAs`. Provider one links internal ressources (`CIs`) used for the service(s) provided.
 
-**SLAs - Service Level Agreement**  
-Group of `SLTs` defining the agreement between a provider and a customer for a given set of services.
+- SLTs - *Service Level Target*  
+Define metrics agreements between customers & providers. Two by default: TTO - *Time To Own*: time to take a ticket into account & TTR - *Time To Resolve* a ticket after creating.
+
+- SLAs - *Service Level Agreement*  
+Group of `SLTs` defining the agreement between a provider & a customer for a given set of services.
 
 When a customer creates a ticket, it can select the service amongst the list of services defined for this customer.
 
@@ -109,34 +111,34 @@ They should be used because related to [itop principles](#presentation).
 
 The mandatory objects are covered here, many more can be used & discovered exploring iTop.
 
-**Organizations**  
+- Organizations  
 Can be used for two purposes: name the different departments of a company when itop is used to deliver IT services within a company, or name the different companies a company is delivering IT services to.
 
-**Locations**  
-Are used to group objects by geography (servers, organisations etc.). A hierachy can be applied, locations can be linked to parents locations *(example: inside the company A, there is room A & room B in which have differents servers in racks A & racks B)*
+- Locations  
+Are used to group objects by geography *-servers, organisations etc*. A hierachy can be applied, locations can be linked to parents locations *(example: inside the company A, there is room A & room B in which have differents servers in racks A & racks B)*
 
-**Persons**  
-Defined the persons contacts & responsabilities regarding the IT services delivered. Can be deployed using `Profiles` to quickly assign permissions to the members of a department or a company.
+- Persons  
+Define the persons contacts & responsabilities regarding the IT services delivered. Can be deployed using `Profiles` to quickly assign permissions *(to the members of a department or a company for example)*.
 
-**Teams**  
-Usefull to define permissions easier *(HR & finance can access to..)*. Also help the customer to use the ticketing system & link objects.
+- Teams  
+Usefull to define permissions easier *- all the HR & finance teams can access to...*. Can also help the customer to use the ticketing system to communicate.
 
-**CIs - *Configuration Items***  
-Describe hardware devices (network devices, servers, personal computers, printers & smartphones). Templates are available to all types of CIs.
+- CIs - *Configuration Items*  
+Describe hardware devices: network devices, servers, personal computers, hypervisors, vms etc. Templates are available for a large type of CIs.
 
-**Software Installed**  
-Present to easily index software installed on devices.
+- Software Installed  
+Present to easily index software installed on devices, address licences & so on.
 
-**Services**  
-Object used to define what actions or device is delivered as a service to a customer. Can be subcategorised *(service A contains sub-service B & sub-service C)*.
+- Services  
+Object used to define what actions or access is delivered as a service to a customer. Can be subcategorised *- service A contains sub-service B & sub-service C*.
 
 ### objects agencement
 
 Objects are related to each others by different means.
 
-I will make graphs & try to link them - no spoil.
+Graphs are made to show the links between them, or try.
 
-Graphs following rules:
+Graphs are generated using the following rules:
 
 - Rectangles are highest objects.
 - Rounded objects are those receiving links.
@@ -169,7 +171,9 @@ A[Organizations] -->|are located| B(Locations)
 {{< /mermaid >}}
 </div>
 
-`Organizations` are owning `CIs`. Those CIs, depending what they are, have rich `Properties` containing all types of other objects. CIs are exposed to `Services` & are ruled by `Provider Contracts`. `Documents` can be linked to them & they can be related to `Tickets`.
+Regarding only these three objects, links can be done. Before that, checking links between objects from [default objects](#default-objects).
+
+`Organizations` are owning `CIs`. CIs are exposed to `Services` & are ruled by `Provider Contracts`. They can be related to `Documents` & appear in `Tickets`.
 
 <div style="background-color:white">
 {{< mermaid >}}
@@ -195,11 +199,13 @@ A -->|linked to| E(Services)
 {{< /mermaid >}}
 </div>
 
-Relation between objects is too complex to give only one comprehensible graph.
+Relations between objects are too complex to give only one comprehensible graph for each one.
 
-Instances properties change for each, relations between objects change according instances needs.
+The graphs generated above were just linking a reduce number of native objects.
 
-It would be meaningless to create a relaton graph for all objects.
+There is a lot more types of objects in itop, with their own instances properties changing the relations between objects according to their individual needs.
+
+It would be meaningless to create decent relations graphs for all objects, since their dependencies & relationships could change each instance.
 
 {{< alert cardColor="#e63946" iconColor="#1d3557" textColor="#f1faee" >}}
 **Do not refer to this graph. Please read above.**
@@ -230,15 +236,15 @@ end
 {{< /mermaid >}}
 </div>
 
-Even though this graph seems valid, iTop has many more objects than the ones covered. Links between them should be discovered & created using the web interface.
+Even though this graph seems valid for the most part, iTop has many more objects than the ones covered. Links between them should be discovered & created using the web interface.
 
 ## implementation
 
-This sections will implement iTop following a [companies plan](#companies) & an [infrastructure](#infrastructure).
+This sections will implement iTop following a [companies charts](#companies) & an arbitrary [infrastructure](#infrastructure).
 
-### companies plan
+### companies charts
 
-iTop will be used by two companies: `company A` which is the service provider one & `company B` who will use their services.
+iTop will be used by two companies: `Company A` which is the service provider & `Company B` who use their services.
 
 Here is the Company A agency graph.
 
@@ -295,13 +301,13 @@ style z fill:#fff,stroke:#fff,stroke-width:4px
 {{< /mermaid >}}
 </div>
 
-The Company B one.
+And here is the Company B one.
 
 <div style="background-color:white">
 {{< mermaid >}}
 %%{init: {"flowchart": {"htmlLabels": false}} }%%
 flowchart TD
-subgraph z[Company B Chart]
+subgraph z[Company B Chart - Consumer]
 subgraph a[CEO]
 b[Person H]
 end
@@ -343,11 +349,13 @@ This is the [iTop hardware recommendations](https://manage-wiki.openitop.org/dok
 
 ### infrastructure
 
-There is 13 people in the two companies combined (< 50). The number of `CIs` will be under 50'000 & the tickets/month under 200.
+There is 13 people who will potentially use itop in the two companies combined (< 50). The number of `CIs` will be under 50'000 & the tickets/month under 200.
 
-The all-in-one server will be chose with iTop & a MySQL database installed.
+The all-in-one server will be chose with iTop & a MySQL server installed.
 
-For a production use, looking for expandability by choosing the seperate solution could be a great choice.
+For a production use, looking for expandability by choosing the seperate solutions could be a better choice.
+
+Here is the network infrastructure that will be used.
 
 <!-- inversé sens company a & b pour disposition de
 company a à gauche sur le schéma -->
@@ -409,15 +417,15 @@ switch-b --- consumer-pc
 </div>
 -->
 
-The `Company A` will provide an apache web server from their LAN as a service & monitor an other one from the `Company B` LAN.
+The `Company A` will provide an apache web server from their LAN as a service & will monitor an other one from the `Company B` LAN.
 
 ### installations
 
-I made an installation script for iTop & for a MySQL server according to iTop requirements.
+I made an installation scripts for iTop Community & for a MySQL server according to iTop requirements.
 
-Both scripts are made for debian & are available on [Github](https://github.com/xeylou/itop-walkthrough), tested on debian 12.
+Both scripts are interactive & made for debian *- tested for debian 12*, source code is available on [Github](https://github.com/xeylou/itop-walkthrough).
 
-To install the iTop server, run the following commands.
+The iTop server installation can be done running the following commands.
 
 ```bash
 mkdir itop_install && cd itop_install
@@ -435,37 +443,44 @@ chmod +x debian-mysql-install.sh
 ./debian-mysql-install.sh
 ```
 
-You can use an external MySQL database without this script with a database user with all privilieges for iTop.
+An external mysql database can be used without this install script if an all privilieged user if created for iTop.
 
 The installation can be resumed at `http://192.168.122.212`.
 
-*(highlighted forms are where i click/change values)*
+*(highlighted forms are clicked/changed values)*
 
 ![](350/00.png)
 ![](350/01.png)
-The warning says the php version using (latest) was not test by Combodo.
+The warning says the used php version (latest) is not tested for this iTop version by Combodo.
 ![](350/02.png)
 ![](350/03.png)
 ![](350/04.png)
 ![](350/05.png)
 ![](350/06.png)
-The `Server Name` is localhost because iTop is host in the same machine as the mysql db. The `Login` & the `Password` was create in the `debian-mysql-install.sh` script process.
+The `Server Name` is *localhost* because the iTop instance  & the mysql server are hosted in the same host *- can be replaced by the ip address of the external mysql server if using the seperate solution*.
+
+The `Login` & the `Password` was created in the installation proccess of the `debian-mysql-install.sh` script.
 ![](350/07.png)
-The db name found is itopdbname (create in the script process).
+The database name found was also created during the installation process.
 ![](350/08.png)
 ![](350/09.png)
-The `Person C` will have admin privilieges for this iTop instance.
+`Person C` will have admin privilieges for this iTop instance.
+
+The `Language` is set for the user only.
 ![](350/10.png)
+Here the `Default Language` for all users can be changed. Can also be changed by individual users after deploying.
 ![](350/11.png)
 ![](350/12.png)
 ![](350/13.png)
 ![](350/14.png)
-Since the `Company A` acts as a service provider, the second option is chose. If delivering IT services to company departements, keep first choice.
+Since the `Company A` acts as a service provider, the second option is chose. The first option should be kept if delivering IT services to company departements.
 ![](350/15.png)
 ![](350/16.png)
+Simple Ticket Management can be chose to get rid of `SLTs` & `SLAs`.
 ![](350/17.png)
 ![](350/18.png)
 ![](350/19.png)
+The Customer Portal is the iTop interface but reagenced for users tickets. If not chose, tickets should be created using command-lines method.
 ![](350/20.png)
 ![](350/21.png)
 ![](350/22.png)
@@ -478,11 +493,9 @@ Since the `Company A` acts as a service provider, the second option is chose. If
 
 ### confirguration
 
-The cmdb (organisations, persons, teams etc.) needs to be configured first. Depending on the company & the infrastructure size, it could take a long time.
+The cmdb (organizations, persons, teams etc.) needs to be configured first. Depending on the company & the infrastructure size, it could take a long time.
 
 To avoid putting a gigantic amount of screenshots, i made short videos to create different types of basics objects.
-
-This is not a showcase for iTop, only required functionalities are convered.
 
 <!-- 
 
