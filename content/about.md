@@ -11,21 +11,21 @@ showRelatedContent: false
 showAuthor: false
 ---
 
-## Skills
+### Skills
 
-My interests are oriented in **networks & telecommunications**, enjoying learning new technos on bare metal, using embedded or virtualising (gns3, packet tracer).
+My interests are oriented in **networks & telecommunications**, enjoying learning new technos on bare metal, using embedded or virtualization (gns3, packet tracer).
 
 I've been a linux enthusiast for years, having over **3 years of layer 2-7 administration of gnu/linux distributions** for daily use (rhel, debian, alpine, arch, nixos).
 
-I have a **strong background in virtualization & containerization** using qemu/kvm, cisco pt, gns3, proxmox, docker + compose & k8s.
+I have a **strong background in virtualization & containerization** using qemu/kvm, proxmox, gns3, cisco pt, docker + compose & k8s.
 
-I also love programming using java, python, & bash.
+I also love programming using java, python & bash.
 
-## Study
+### Study
 
 I have a French high-school bachelor general **degree in mathematics & computer science**.
 
-## Hobbies
+### Hobbies
 
 I like learning as much as i can about everything.
 

@@ -2,7 +2,7 @@
 title: "combodo itop walk-through"
 date: 2023-08-05
 draft: false
-tags: ["linux", "monitoring", "open-source"]
+tags: ["gnu/linux", "monitoring", "open-source"]
 series: ["Exploring Monitoring Solutions"]
 series_order: 2
 slug: "itop-walkthrough"

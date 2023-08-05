@@ -2,7 +2,7 @@
 title: "introduction to nagios"
 date: 2023-07-25
 draft: false
-tags: ["linux", "monitoring", "open-source", "windows"]
+tags: ["gnu/linux", "monitoring", "open-source", "windows"]
 series: ["Exploring Monitoring Solutions"]
 series_order: 1
 slug: "nagios-introduction"
