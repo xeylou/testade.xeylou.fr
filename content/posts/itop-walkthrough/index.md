@@ -437,9 +437,63 @@ chmod +x debian-mysql-install.sh
 
 You can use an external MySQL database without this script with a database user with all privilieges for iTop.
 
-The installation can be resumed at `https://192.168.122.212`.
+The installation can be resumed at `http://192.168.122.212`.
 
+*(highlighted forms are where i click/change values)*
 
+![](350/00.png)
+![](350/01.png)
+The warning says the php version using (latest) was not test by Combodo.
+![](350/02.png)
+![](350/03.png)
+![](350/04.png)
+![](350/05.png)
+![](350/06.png)
+The `Server Name` is localhost because iTop is host in the same machine as the mysql db. The `Login` & the `Password` was create in the `debian-mysql-install.sh` script process.
+![](350/07.png)
+The db name found is itopdbname (create in the script process).
+![](350/08.png)
+![](350/09.png)
+The `Person C` will have admin privilieges for this iTop instance.
+![](350/10.png)
+![](350/11.png)
+![](350/12.png)
+![](350/13.png)
+![](350/14.png)
+Since the `Company A` acts as a service provider, the second option is chose. If delivering IT services to company departements, keep first choice.
+![](350/15.png)
+![](350/16.png)
+![](350/17.png)
+![](350/18.png)
+![](350/19.png)
+![](350/20.png)
+![](350/21.png)
+![](350/22.png)
+![](350/23.png)
+![](350/24.png)
+![](350/25.png)
+![](350/26.png)
+![](350/27.png)
+![](350/28.png)
 
 ### confirguration
+
+The cmdb (organisations, persons, teams etc.) needs to be configured first. Depending on the company & the infrastructure size, it could take a long time.
+
+To avoid putting a gigantic amount of screenshots, i made short videos to create different types of basics objects.
+
+This is not a showcase for iTop, only required functionalities are convered.
+
+<!-- 
+
+1. Organisations
+2. Locations
+3. Persons + Users + Their locations
+4. Teams
+
+contracts
+cis
+
+ -->
+
 ## close
