@@ -493,10 +493,14 @@ The Customer Portal is the iTop interface but reagenced for users tickets. If no
 
 ### confirguration
 
-The cmdb (organizations, persons, teams etc.) needs to be configured first. Depending on the company & the infrastructure size, it could take a long time.
+The cmdb (organizations, persons, teams etc.) needs to be configured first. Depending on the company/ies & the infrastructure/s sizes, it could take a long time.
 
-To avoid putting a gigantic amount of screenshots, i made short videos to create different types of basics objects.
+Exporting & importing csv files will be done to configure itop quickly.
 
+Manual objects modification will also be covered.
+
+To avoid putting a gigantic amount of screenshots, i made short videos to configure itop after the [installation](#installations).
+  
 <!-- 
 
 1. Organisations
@@ -509,4 +513,5 @@ cis
 
  -->
 
+### monitoring
 ## close
