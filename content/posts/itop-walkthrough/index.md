@@ -413,7 +413,7 @@ switch-a --- itop-server
 switch-a --- db-server
 router-b --- switch-b
 switch-b --- consumer-pc
-{{< /mermaid >}}
+{{< /mermaid >}} 
 </div>
 -->
 
@@ -500,7 +500,7 @@ Exporting & importing csv files will be done to configure itop quickly.
 Manual objects modification will also be covered.
 
 To avoid putting a gigantic amount of screenshots, i made short videos to configure itop after the [installation](#installations).
-  
+
 <!-- 
 
 1. Organisations
