@@ -301,7 +301,7 @@ style z fill:#fff,stroke:#fff,stroke-width:4px
 {{< /mermaid >}}
 </div>
 
-And here is the Company B one.
+Here is the Company B one.
 
 <div style="background-color:white">
 {{< mermaid >}}
@@ -505,11 +505,11 @@ To avoid putting a gigantic amount of screenshots, i made short videos to config
 
 1. Organisations
 2. Locations
-3. Persons + Users + Their locations
-4. Teams
+3. Teams
+3. Persons + Users
 
-contracts
 cis
+contracts
 
  -->
 
