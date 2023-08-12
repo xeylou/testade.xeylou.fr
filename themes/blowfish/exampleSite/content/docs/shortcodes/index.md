@@ -120,36 +120,6 @@ Call to action
 
 <br/><br/><br/>
 
-## Carousel
-
-`carousel` is used to showcase multiple images in an interactive and visually appealing way. This allows a user to slide through multiple images while only taking up the vertical space of a single one. All images are displayed using the full width of the parent component and using one of the predefined aspect ratios of `16:9`, `21:9` or `32:9`.
-
-<!-- prettier-ignore-start -->
-| Parameter     | Description                                                                                                       |
-| ------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `images`      | **Required.** A regex string to match image names.                                                                |
-| `aspectRatio` | **Optional.** The aspect ratio for the carousel. Either `16-9`, `21-9` or `32-9`. It is set to `16-9` by default. |
-| `interval`    | **Optional.** The interval for the auto-scrooling, specified in milliseconds. Defaults to `2000` (2s)             |
-<!-- prettier-ignore-end -->
-
-**Example 1:** 16:9 aspect ratio and verbose list of images
-
-```md
-{{</* carousel images="{gallery/03.jpg, gallery/01.jpg, gallery/02.jpg, gallery/04.jpg}" */>}}
-```
-
-{{< carousel images="{gallery/03.jpg,gallery/01.jpg,gallery/02.jpg,gallery/04.jpg}" >}}
-
-**Example 2:** 21:9 aspect ratio and regex-ed list of images
-
-```md
-{{</* carousel images="gallery/*" aspectRatio="21-9" interval="2500" */>}}
-```
-
-{{< carousel images="gallery/*" aspectRatio="21-9" interval="2500" >}}
-
-<br/><br/><br/>
-
 ## Chart
 
 `chart` uses the Chart.js library to embed charts into articles using simple structured data. It supports a number of [different chart styles](https://www.chartjs.org/docs/latest/samples/) and everything can be configured from within the shortcode. Simply provide the chart parameters between the shortcode tags and Chart.js will do the rest.
