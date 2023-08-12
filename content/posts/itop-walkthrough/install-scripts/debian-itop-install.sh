@@ -82,8 +82,9 @@ install_prerequires ()
 {
     show_time
     echo -n "Installing prerequires (take some time)..."
-    apt-get install -y apache2 mariadb-server php php-{mysql,ldap,cli,soap,json,mbstring,xml,gd,zip,curl,mcrypt} libapache2-mod-php graphviz unzip &> $log_file
+    apt-get install -y apache2 mariadb-server php php-{mysql,ldap,cli,soap,json,mbstring,xml,gd,zip,curl} libapache2-mod-php graphviz unzip &> $log_file
     check_status
+    apt-get install -y php-mcrypt &> $log_file
 }
 
 update_php_config ()

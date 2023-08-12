@@ -19,12 +19,12 @@ living it service delivery infrastructure
 
 ## introduction
 
-As with Nagios, i dived a week into Combodo iTop monitoring solution.
+As with Nagios, i dived a week into Combodo iTop solution.
 
-I had harder time getting into it due to the notions to lean & to consider, inside & outside iTop to use it properly.
-<!-- I had a harder time getting into it because there are more notions to learn & to consider, outside & inside iTop, to use it properly. -->
+I had harder time getting into it due to the notions to lean & to consider, inside & outside itop to use it properly.
+<!-- I had a harder time getting into it because there are more notions to learn & to consider, outside & inside itop, to use it properly. -->
 
-So once again, i'd be very grateful if you'd consider correcting me if someting wrong is said.
+So once again, i'd be very grateful if you'd consider correcting me if i said someting wrong.
 
 ### glossary
 
@@ -41,37 +41,37 @@ Set of relevant IT practices describing processes, procedures or actions for IT 
 
 ### presentation
 
-[Combodo](https://www.combodo.com/) is a 13-year-old french company who created [iTop](https://www.combodo.com/itop), an open source, itil based, itsm & cmdb solution.
+[Combodo](https://www.combodo.com/) is a 13-year-old french company who created [itop](https://www.combodo.com/itop), an open source, itil based, itsm & cmdb solution.
 
-They are a profit based company, they created 2 non-free versions of iTop for business purposes: [essentials & professional/enterprise](https://www.combodo.com/itop#ancre_comparatif).
+They are a profit based company, they created 2 non-free versions of itop for business purposes: [essentials & professional/enterprise](https://www.combodo.com/itop#ancre_comparatif).
 
-They also provide free & non-free external software to enhance iTop utilisation like a [front-end customiser](https://www.combodo.com/itsm-designer-195) or a [network related manager](https://www.combodo.com/teemip-194).
+They also provide free & non-free external software to enhance itop utilisation like a [front-end customiser](https://www.combodo.com/itsm-designer-195) or a [network related manager](https://www.combodo.com/teemip-194); as weel as consultants.
 
-iTop is typically used by the IT department of a company to monitor services & implement a help desk ticketing system to the other departments. 
+itop is typically used by the IT department of a company to organise services & implement a help desk ticketing system to the other departments. 
 
 It is also used by companies to deliver IT services to other companies as a service provider.
 
 ## understandings 
 
-Skiming through iTop core functionnalities, only the standard ones are covered.
+Reviewing my understanding of itop's main features.
 
 ### fundamentals
 
-iTop is based on apache, php, graphviz & mysql. However, it can run on nginx instead of apache with extra work.
+itop is based on apache, php, graphviz & mysql. However, it can run on nginx instead of apache with extra work.
 
 The [documentation](https://www.itophub.io/wiki/page?id=latest:start) is made for anyone who is susceptible to use itop.
 
 ### cmdb
 
-The cmdb is the core of itop and needs to be configured at first.
+The cmdb is the core of itop.
 
-CMDB works with `Objects`, which are groups of `Instances` sharing the same patern.
+The cmd works with `Objects`, which are groups of `Instances` sharing the same patern.
 
 *(considering the "Persons" object, each instance of this object would have the same patern: a name, a surname, an age etc.)*
 
 The cmdb can receive a populated `*.csv` file to create multiples instances of an object at once. *(instead of entering one by one every member of a company for example)*
 
-iTop can receive custom objects but their implementation is not guided. The default ones are created without instances.
+itop can receive custom objects but their implementation is not guided. The default ones are created without instances.
 
 Objects & instances are stored in the `MySQL` database.
 
@@ -79,9 +79,9 @@ Objects & instances are stored in the `MySQL` database.
 
 The itsm is integrated with the ticket management system & will be described using the itil way.
 
-When installing, iTop proposes two ways to implement it: to deliver services to departments or to other companies.
+When installing, itop proposes two ways to implement it: to deliver services to departments or to other companies; saw at the end of the [presentation](#presentation).
 
-The itsm provides two types of tickets: `Users requests` & `Incidents`.
+The itsm provides two types of tickets for end users: `Users requests` & `Incidents`.
 
 Mandatory objects are needed to use them: `Services`, `Contracts` & `SLAs`.
 
@@ -105,29 +105,29 @@ Tickets deadlines are computed depending on the SLA signed with the customer.
 
 ### default objects
 
-Native objects in itop are created during the installation process.
+Native objects in itop are created during the [installation](#installations) process.
 
 They should be used because related to [itop principles](#presentation).
 
-The mandatory objects are covered here, many more can be used & discovered exploring iTop.
+The mandatory objects are covered here, many more can be used & discovered exploring itop.
 
 - Organizations  
 Can be used for two purposes: name the different departments of a company when itop is used to deliver IT services within a company, or name the different companies a company is delivering IT services to.
 
 - Locations  
-Are used to group objects by geography *-servers, organisations etc*. A hierachy can be applied, locations can be linked to parents locations *(example: inside the company A, there is room A & room B in which have differents servers in racks A & racks B)*
+Are used to group objects by geography *- servers, organisations etc*. A hierachy can be applied, locations can be linked to parents locations *(example: inside the company A, there is room A & room B in which have differents servers in racks A & racks B)*
 
 - Persons  
-Define the persons contacts & responsabilities regarding the IT services delivered. Can be deployed using `Profiles` to quickly assign permissions *(to the members of a department or a company for example)*.
+Define the persons contacts & responsabilities regarding the IT services delivered. Can be deployed using `Profiles` to quickly assign permissions *(to the members of a department or a company)*.
 
 - Teams  
-Usefull to define permissions easier *- all the HR & finance teams can access to...*. Can also help the customer to use the ticketing system to communicate.
+Usefull to define permissions easier *- all the HR & finance teams can access to...* -. Can also help the customer to communicate using the ticketing system.
 
 - CIs - *Configuration Items*  
-Describe hardware devices: network devices, servers, personal computers, hypervisors, vms etc. Templates are available for a large type of CIs.
+Describe hardware devices: racks, pdus, network devices, servers, personal computers, hypervisors, vms etc. Templates are available for a large type of CIs.
 
 - Software Installed  
-Present to easily index software installed on devices, address licences & so on.
+Present to easily index software installed on devices, licences & so on.
 
 - Services  
 Object used to define what actions or access is delivered as a service to a customer. Can be subcategorised *- service A contains sub-service B & sub-service C*.
@@ -136,7 +136,7 @@ Object used to define what actions or access is delivered as a service to a cust
 
 Objects are related to each others by different means.
 
-Graphs are made to show the links between them, or try.
+I made graphs to show the links between them, *or tried to*.
 
 Graphs are generated using the following rules:
 
@@ -144,7 +144,7 @@ Graphs are generated using the following rules:
 - Rounded objects are those receiving links.
 - Text in lowercaps are instructions, uppercaps are objects name.
 
-`Persons` integrate `Teams` according to their `Role`.
+`Persons` integrate `Teams` according to their `Roles`.
 
 <div style="background-color:white">
 {{< mermaid >}}
@@ -153,12 +153,12 @@ A[Persons] -->|Roles| B(Teams)
 {{< /mermaid >}}
 </div>
 
-`Teams` are parts of an `Organization`.
+`Teams` belongs to `Organizations`.
 
 <div style="background-color:white">
 {{< mermaid >}}
 graph LR
-A[Teams] -->|parts of| B(Organizations)
+A[Teams] -->|belongs to| B(Organizations)
 {{< /mermaid >}}
 </div>
 
@@ -171,7 +171,10 @@ A[Organizations] -->|are located| B(Locations)
 {{< /mermaid >}}
 </div>
 
-Regarding only these three objects, links can be done. Before that, checking links between objects from [default objects](#default-objects).
+Regarding to only these objects, links can be created.  
+*(Persons -> Teams -> Organizations -> Locations)*
+
+Before doing that, there are links between objects covered in [default objects](#default-objects).
 
 `Organizations` are owning `CIs`. CIs are exposed to `Services` & are ruled by `Provider Contracts`. They can be related to `Documents` & appear in `Tickets`.
 
@@ -199,13 +202,11 @@ A -->|linked to| E(Services)
 {{< /mermaid >}}
 </div>
 
-Relations between objects are too complex to give only one comprehensible graph for each one.
+All objects have relations to others at some point by different ways.
 
-The graphs generated above were just linking a reduce number of native objects.
+In addition to this, objects' instances have their own properties changing the relations between objects according to their needs.
 
-There is a lot more types of objects in itop, with their own instances properties changing the relations between objects according to their individual needs.
-
-It would be meaningless to create decent relations graphs for all objects, since their dependencies & relationships could change each instance.
+It would be meaningless to create decent relations graphs for all objects, since their dependencies & relationships are to massive & could change each instance.
 
 {{< alert cardColor="#e63946" iconColor="#1d3557" textColor="#f1faee" >}}
 **Do not refer to this graph. Please read above.**
@@ -236,15 +237,15 @@ end
 {{< /mermaid >}}
 </div>
 
-Even though this graph seems valid for the most part, iTop has many more objects than the ones covered. Links between them should be discovered & created using the web interface.
+Even though this graph seems valid for the most part, itop has many more objects than the ones covered. Links between them should be discovered & created using the frontend.
 
 ## implementation
 
-This sections will implement iTop following a [companies charts](#companies) & an arbitrary [infrastructure](#infrastructure).
+This sections will implement itop following a [companies charts](#companies) & an arbitrary [infrastructure](#infrastructure).
 
 ### companies charts
 
-iTop will be used by two companies: `Company A` which is the service provider & `Company B` who use their services.
+itop will be used by two companies: `Company A` which is the service provider & `Company B` who use their services.
 
 Here is the Company A agency graph.
 
@@ -337,9 +338,11 @@ style z fill:#fff,stroke:#fff,stroke-width:4px
 {{< /mermaid >}}
 </div>
 
+All persons in the two companies will have access to an itop interface (in reality it is not necessary).
+
 ### requirements
 
-This is the [iTop hardware recommendations](https://manage-wiki.openitop.org/doku.php?id=latest:install:requirements) from their documentation.
+Here is the [itop hardware recommendations](https://manage-wiki.openitop.org/doku.php?id=latest:install:requirements) from their documentation.
 
 <!-- https://www.tablesgenerator.com/html_tables -->
 
@@ -351,9 +354,11 @@ This is the [iTop hardware recommendations](https://manage-wiki.openitop.org/dok
 
 There is 13 people who will potentially use itop in the two companies combined (< 50). The number of `CIs` will be under 50'000 & the tickets/month under 200.
 
-The all-in-one server will be chose with iTop & a MySQL server installed.
+The all-in-one server will be chose with itop & a MySQL server installed.
 
-For a production use, looking for expandability by choosing the seperate solutions could be a better choice.
+{{< alert icon="circle-info">}}
+**Note** For a production use, looking for expandability by choosing the seperate solutions would be a better choice.
+{{< /alert >}}
 
 Here is the network infrastructure that will be used.
 
@@ -376,7 +381,7 @@ router-a{Router}
 switch-a[Network Switch]
 itop-server(Debian Machine<br><i>2vCPU 4GB</i>)
 db-server[(MySQL DB<br><i>10GB</i>)]
-itop(iTop Community)
+itop(itop Community)
 apache-a(Apache Server)
 end
 
@@ -403,7 +408,7 @@ end
 subgraph company-a[Company A Network]
 router-a((Router))
 switch-a[/Network Switch/]
-itop-server(iTop Server)
+itop-server(itop Server)
 db-server[(MySQL Server)]
 end
 
@@ -417,15 +422,16 @@ switch-b --- consumer-pc
 </div>
 -->
 
-The `Company A` will provide an apache web server from their LAN as a service & will monitor an other one from the `Company B` LAN.
+The `Company A` is providing an apache web server from their LAN as a service & monitor an other one from the `Company B` LAN.
 
 ### installations
 
-I made an installation scripts for iTop Community & for a MySQL server according to iTop requirements.
+I made an installation scripts for itop community & for a mysql server according to itop requirements.  
+*(yes, i could saved a lot of time not doing this, but foss)*
 
-Both scripts are interactive & made for debian *- tested for debian 12*, source code is available on [Github](https://github.com/xeylou/itop-walkthrough).
+Both scripts are interactive & made for debian *- tested on debian 11 & 12*, source code is on [Github](https://github.com/xeylou/itop-walkthrough).
 
-The iTop server installation can be done running the following commands.
+The itop server installation can be done running the following commands.
 
 ```bash
 mkdir itop_install && cd itop_install
@@ -434,7 +440,7 @@ chmod +x debian-itop-install.sh
 ./debian-itop-install.sh
 ```
 
-For the MySQL one.
+Here to install the mysql server.
 
 ```bash
 mkdir mysql_install && cd mysql_install
@@ -443,7 +449,7 @@ chmod +x debian-mysql-install.sh
 ./debian-mysql-install.sh
 ```
 
-An external mysql database can be used without this install script if an all privilieged user if created for iTop.
+An external mysql database can be used without this installation script, an full privilieged user for this database is needed to use itop.
 
 The installation can be resumed at `http://192.168.122.212`.
 
@@ -451,22 +457,22 @@ The installation can be resumed at `http://192.168.122.212`.
 
 ![](350/00.png)
 ![](350/01.png)
-The warning says the used php version (latest) is not tested for this iTop version by Combodo.
+The warning says the used php version (latest) is not tested for this itop version by Combodo. *(not appening with debian 11 because its repositories has an older php version)*
 ![](350/02.png)
 ![](350/03.png)
 ![](350/04.png)
 ![](350/05.png)
 ![](350/06.png)
-The `Server Name` is *localhost* because the iTop instance  & the mysql server are hosted in the same host *- can be replaced by the ip address of the external mysql server if using the seperate solution*.
+The `Server Name` is *localhost* because the itop instance  & the mysql server are on the same host *- can be replaced by the ip address of the external mysql server if using the seperate solution*.
 
-The `Login` & the `Password` was created in the installation proccess of the `debian-mysql-install.sh` script.
+The `Login` & the `Password` was created during the `debian-mysql-install.sh` script process *- asked at the beginning -*.
 ![](350/07.png)
 The database name found was also created during the installation process.
 ![](350/08.png)
 ![](350/09.png)
-`Person C` will have admin privilieges for this iTop instance.
+`Person C` will have admin privilieges for this itop instance, since it is the `Technical Manager`. (*can add more admins after*)
 
-The `Language` is set for the user only.
+The `Language` set is for this user only.
 ![](350/10.png)
 Here the `Default Language` for all users can be changed. Can also be changed by individual users after deploying.
 ![](350/11.png)
@@ -480,7 +486,7 @@ Simple Ticket Management can be chose to get rid of `SLTs` & `SLAs`.
 ![](350/17.png)
 ![](350/18.png)
 ![](350/19.png)
-The Customer Portal is the iTop interface but reagenced for users tickets. If not chose, tickets should be created using command-lines method.
+The Customer Portal is the itop interface but reagenced for users tickets. If not chose, tickets should be created using command-lines method or the rest api.
 ![](350/20.png)
 ![](350/21.png)
 ![](350/22.png)
@@ -491,27 +497,68 @@ The Customer Portal is the iTop interface but reagenced for users tickets. If no
 ![](350/27.png)
 ![](350/28.png)
 
-### confirguration
+### cmdb confirguration
 
-The cmdb (organizations, persons, teams etc.) needs to be configured first. Depending on the company/ies & the infrastructure/s sizes, it could take a long time.
+The cmdb (organizations, persons, teams etc.) needs to be configured first.  
 
-Exporting & importing csv files will be done to configure itop quickly.
+Depending on the company/ies & the infrastructure/s sizes, it could take some time to populate.
 
-Manual objects modification will also be covered.
+Exporting & importing csv files is a great option to configure it quickly. Here is a [video from itop](https://youtu.be/od1oYY5zEoA) explaining how to do so (*i still think putting mine will be worse*).
 
-To avoid putting a gigantic amount of screenshots, i made short videos to configure itop after the [installation](#installations).
+Synchronizing csv files (itop server & an editor side) can also be done to avoid entering each modification manually, scheduling this task to. ELDAP & AD services can also be used instead of this method.
 
-<!-- 
+Manual objects implementation & modification can also be done. A rest api is also present for external use cases.
 
-1. Organisations
-2. Locations
-3. Teams
-3. Persons + Users
+### itsm overview
 
-cis
-contracts
+The itsm is following the cmdb configuration: users created, teams, organizations, services, contracts etc. 
 
- -->
+`External User` profile for the `iTop User` object have a dashboard to create requests according to purchased services.
+
+![](350/29.png)
+![](350/31.png)
+![](350/32.png)
+
+The user can change his `Phone` number, `Location` according to his company's locations in the cmdb, the language to use or his profile picture.
+
+![](350/33.png)
+
+It can also rename his function inside the company or change his password.
+
+When entering in `New request`, according to [default objects](#default-objects), the services can be defined in sub-services to help the end user.
+
+The provider has the itop dashboard (administrators like person c or other profiles) to interract with created tickets.
+
+To avoid putting a gigantic amount of screenshots to show how the itsm works, [here is itop video](https://www.youtube.com/watch?v=aCHqQGPdNEk) for that (better than the ones i made i think...). 
+
+A [designer](https://www.combodo.com/itsm-designer-195) is available to custom the itsm interfaces.
 
 ### monitoring
+
+Once the [cmdb is configured](#confirguration), links can be done between hardware & `Application Services` for the end users.
+
+They are created using `Contracts` (Customer & Provider) with `SLAs` etc.
+
+Since itop is an itsm & cmdb solution, it doesn't have a proper monitoring system.
+
+However, itop can integrate nagios for incident management (creating tickets).
+
 ## close
+
+It required a lot of time & effort to make my hands on, it's not incredibly difficult *- depends on what you usually do, i guess -* but demanding & sort of boring.
+
+I am comparing it to the nagios experience i had.
+
+To keep their customers precious time, they do [bootcamps](https://www.combodo.com/itop-cmdb-online-training-april-4-5) for 140$/h & have paid consultants.
+
+For a production or business use, customer may pay for the professional or business itop solutions with consultants to help them integrating itop & keep a lot of time.
+
+It is not for every one, an IT guy or more is needed to maintain it & using oql querries & various technos. 
+
+I saw on forums itop could implemente customer's itsm for their need, but the discussion stopped here.
+
+I also like their [blog](https://blog.combodo.com/en).
+
+I am happy that i have found a way to understand itop & the surroundings properly & alone in a week, i hope so.
+
+Thank you for reading.
