@@ -31,17 +31,6 @@ using lead for a very small description like above
 text
 {{< /lead >}}
 
-
-### showing a website manipulation step by step
-{{< carousel images="gallery/*" aspectRatio="16-9" interval="2500" >}}
-> images needs to have the same aspect ratio  
-(16:9, 21:9, 32:9)
-
-> display in alphabetical order
-
-> stop switching on mouse over
-
-
 ### mathematics formula
 {{< katex >}}
 \\(f(a,b,c) = (a^2+b^2+c^2)^3\\)
