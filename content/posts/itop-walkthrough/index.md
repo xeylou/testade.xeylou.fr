@@ -545,20 +545,16 @@ However, itop can integrate nagios for incident management (creating tickets).
 
 ## close
 
-It required a lot of time & effort to make my hands on, it's not incredibly difficult *- depends on what you usually do, i guess -* but demanding & sort of boring.
+It required a lot of time & effort to make my hands on, it's not incredibly difficult *- depends on what you usually do -* but demanding. (compare to the nagios experience i have)
 
-I am comparing it to the nagios experience i had.
+To keep their customers' time, they do [bootcamps](https://www.combodo.com/itop-cmdb-online-training-april-4-5) for 140$/h & have paid consultants.
 
-To keep their customers precious time, they do [bootcamps](https://www.combodo.com/itop-cmdb-online-training-april-4-5) for 140$/h & have paid consultants.
+For a production or business use, customers may pay for the professional or business itop solutions with consultants to help them integrating itop & keep a lot of time.
 
-For a production or business use, customer may pay for the professional or business itop solutions with consultants to help them integrating itop & keep a lot of time.
+I think one or more IT guys are needed to implement, maintain & using it (expecially with oql querries & various technos not covered).
 
-It is not for every one, an IT guy or more is needed to maintain it & using oql querries & various technos. 
-
-I saw on forums itop could implemente customer's itsm for their need, but the discussion stopped here.
+I saw on forums itop could implement customers' itsm for their need, but the discussion stopped here.
 
 I also like their [blog](https://blog.combodo.com/en).
 
 I am happy that i have found a way to understand itop & the surroundings properly & alone in a week, i hope so.
-
-Thank you for reading.
