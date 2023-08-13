@@ -25,7 +25,7 @@ I also love programming using java, python & bash.
 
 I have a French high-school bachelor general **degree in mathematics & computer science**.
 
-Uni student at [University of Pau and the Adour Region](https://www.univ-pau.fr/en/home.html).
+I am a second-year student at [University of Pau and the Adour Region](https://www.univ-pau.fr/en/home.html).
 
 ### Hobbies
 

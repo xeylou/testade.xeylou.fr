@@ -6,6 +6,7 @@ tags: ["gnu/linux", "monitoring", "open-source", "windows"]
 series: ["Exploring Monitoring Solutions"]
 series_order: 1
 slug: "nagios-introduction"
+description: "understanding Nagios principles & deploying a monitoring infrastructure using custom scripts"
 
 ---
 
