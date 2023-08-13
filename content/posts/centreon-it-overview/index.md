@@ -1,7 +1,7 @@
 ---
 title: "centreon it overview"
 date: 2023-08-12
-draft: false
+draft: true
 tags: ["gnu/linux", "monitoring", "open-source"]
 series: ["Exploring Monitoring Solutions"]
 series_order: 3
