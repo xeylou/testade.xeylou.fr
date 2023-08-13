@@ -1,0 +1,14 @@
+"First Name",Last Name,"Email","Status",Function,"Organization->Name","Phone","Location->Name","Manager->Email","Manager->First Name","Manager->Last Name","Teams"
+"Person",A,"persona@foo.org","Active",CEO,"Company A","0102030405","Company A Location",,,
+"Person",B,"personb@foo.org","Active",Executive Assistant,"Company A","0102030405","Company A Location","persona@foo.org","Person","A"
+"Person",C,"personc@foo.org","Active",Technical Manager,"Company A","0102030405","Company A Location","persona@foo.org","Person","A"
+"Person",D,"persond@foo.org","Active",Network & Sysadmin,"Company A","0102030405","Company A Location","personc@foo.org","Person","C","team_id:14"
+"Person",E,"persone@foo.org","Active",Network & Sysadmin,"Company A","0102030405","Company A Location","personc@foo.org","Person","C","team_id:14"
+"Person",F,"personf@foo.org","Active",Work-Study Student,"Company A","0102030405","Company A Location","personc@foo.org","Person","C","team_id:15"
+"Person",G,"persong@foo.org","Active",Work-Study Student,"Company A","0102030405","Company A Location","personc@foo.org","Person","C","team_id:15"
+"Person",H,"personh@foo.org","Active",CEO,"Company B","0102030405","Company B Location",,,
+"Person",I,"personi@foo.org","Active",Technical Manager,"Company B","0102030405","Company B Location","personh@foo.org","Person","H"
+"Person",J,"personj@foo.org","Active",Sales Manager,"Company B","0102030405","Company B Location","personh@foo.org","Person","H"
+"Person",K,"personk@foo.org","Active",Head of Logistics,"Company B","0102030405","Company B Location","personi@foo.org","Person","I"
+"Person",M,"personm@foo.org","Active",Manufacturing Manager,"Company B","0102030405","Company B Location","personi@foo.org","Person","I"
+"Person",N,"personn@foo.org","Active",Assistant,"Company B","0102030405","Company B Location","personj@foo.org","Person","J"

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://xeylou.github.io/sitemap.xml
