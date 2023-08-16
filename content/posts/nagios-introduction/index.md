@@ -20,7 +20,7 @@ a monitoring infrastructure using custom scripts
 <!-- post -->
 
 ## introduction
-For my work-study, i immersed myself in understanding Nagios for a week.
+For my work-study, i immersed myself in understanding Nagios.
 
 Here i expose what i've learned & what i've done with it.
 

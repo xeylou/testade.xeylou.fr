@@ -60,6 +60,138 @@ Download the latest iso image
 
 ### maps
 
+{{< mermaid >}}
+%%{init: {'theme':'base'}}%%
+graph TD
+central[Central Server]
+remote0[Remote Server]
+remote1[Remote Server]
+remote2[Remote Server]
+poller0((Poller))
+poller1((Poller))
+poller2((Poller))
+poller3((Poller))
+poller4((Poller))
+poller5((Poller))
+
+central --- remote0 & remote1 & remote2
+remote0 --- poller0 & poller1
+remote1 --- poller2 & poller3
+remote2 --- poller4 & poller5
+{{< /mermaid >}}
+
+{{< mermaid >}}
+%%{init: {'theme':'default'}}%%
+graph TD
+central[Central Server]
+remote0[Remote Server]
+remote1[Remote Server]
+remote2[Remote Server]
+poller0((Poller))
+poller1((Poller))
+poller2((Poller))
+poller3((Poller))
+poller4((Poller))
+poller5((Poller))
+
+central --- remote0 & remote1 & remote2
+remote0 --- poller0 & poller1
+remote1 --- poller2 & poller3
+remote2 --- poller4 & poller5
+{{< /mermaid >}}
+
+{{< mermaid >}}
+%%{init: {'theme':'forest'}}%%
+graph TD
+central[Central Server]
+remote0[Remote Server]
+remote1[Remote Server]
+remote2[Remote Server]
+poller0((Poller))
+poller1((Poller))
+poller2((Poller))
+poller3((Poller))
+poller4((Poller))
+poller5((Poller))
+
+central --- remote0 & remote1 & remote2
+remote0 --- poller0 & poller1
+remote1 --- poller2 & poller3
+remote2 --- poller4 & poller5
+{{< /mermaid >}}
+
+{{< mermaid >}}
+%%{init: {'theme':'dark'}}%%
+graph TD
+central[Central Server]
+remote0[Remote Server]
+remote1[Remote Server]
+remote2[Remote Server]
+poller0((Poller))
+poller1((Poller))
+poller2((Poller))
+poller3((Poller))
+poller4((Poller))
+poller5((Poller))
+
+central --- remote0 & remote1 & remote2
+remote0 --- poller0 & poller1
+remote1 --- poller2 & poller3
+remote2 --- poller4 & poller5
+{{< /mermaid >}}
+
+{{< mermaid >}}
+%%{init: {'theme':'neutral'}}%%
+graph TD
+central[Central Server]
+remote0[Remote Server]
+remote1[Remote Server]
+remote2[Remote Server]
+poller0((Poller))
+poller1((Poller))
+poller2((Poller))
+poller3((Poller))
+poller4((Poller))
+poller5((Poller))
+
+central --- remote0 & remote1 & remote2
+remote0 --- poller0 & poller1
+remote1 --- poller2 & poller3
+remote2 --- poller4 & poller5
+{{< /mermaid >}}
+
+{{< mermaid >}}
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#BB2528',
+      'primaryTextColor': '#fff',
+      'primaryBorderColor': '#7C0000',
+      'lineColor': '#F8B229',
+      'secondaryColor': '#006100',
+      'tertiaryColor': '#fff'
+    }
+  }
+}%%
+        graph TD
+          A[Christmas] -->|Get money| B(Go shopping)
+          B --> C{Let me think}
+          B --> G[/Another/]
+          C ==>|One| D[Laptop]
+          C -->|Two| E[iPhone]
+          C -->|Three| F[fa:fa-car Car]
+          subgraph section
+            C
+            D
+            E
+            F
+            G
+          end
+{{< /mermaid >}}
+
+[doc](https://mermaid.js.org/config/theming.html) [doc](https://mermaid.js.org/intro/n00b-syntaxReference.html)
+
 ways to show a specific workflow  
 adding white background for dark themes
 

@@ -19,7 +19,7 @@ living it service delivery infrastructure
 
 ## introduction
 
-As with Nagios, i dived a week into Combodo iTop solution.
+As with Nagios, i dived into Combodo iTop solution.
 
 I had harder time getting into it due to the notions to lean & to consider, inside & outside itop to use it properly.
 <!-- I had a harder time getting into it because there are more notions to learn & to consider, outside & inside itop, to use it properly. -->
