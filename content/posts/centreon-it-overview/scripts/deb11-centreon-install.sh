@@ -105,7 +105,7 @@ mariadb_install ()
     echo -n "Installing MariaDB from source..."
     # https://mariadb.org/download/?t=mariadb&p=mariadb&r=11.2.0&os=Linux&cpu=x86_64&pkg=tar_gz&i=systemd&m=icam
     curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | bash -s -- --os-type=debian --os-version=11 --mariadb-server-version="mariadb-11.1" &> $log_file
-    check_status   
+    check_status
 }
 
 centreon_repos ()
@@ -129,22 +129,15 @@ centreon_install ()
     check_status
 }
 
-ask_timezone ()
+set_timezone ()
 {
     echo -e "\nPlease enter the wanted UTC timezone (ex: Europe/Paris)"
     read askedtimezone
     echo
     show_time
-    echo -n "Saving timezone..."
-    check_status
-}
-
-set_timezone ()
-{
-    show_time
     echo -n "Updating Apache timezone..."
-    echo -e "date.timezone = $askedtimezone" >> /etc/php/8.1/mods-available/centreon.ini  &> $log_file
-    hidden_check_status
+    echo -e "date.timezone = $askedtimezone" >> /etc/php/8.1/mods-available/centreon.ini
+    check_status
 }
 
 perf_services ()
@@ -169,6 +162,7 @@ securing_mysql ()
 {
     echo
     mysql_secure_installation
+    echo
     show_time
     echo -n "Securing the MySQL installation..."
     check_status
@@ -194,7 +188,6 @@ main ()
     check_root_privilieges
     check_file_presence
     check_internet_access
-    ask_timezone
     update
     prerequires
     php_pkgs

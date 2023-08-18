@@ -25,7 +25,7 @@ Feel free to correct me by email if i've said something wrong.
 
 ### presentation
 
-[Centreon IT](https://www.centreon.com) is french an open-source based monitoring solution.
+[Centreon IT](https://www.centreon.com) is a french open-source based monitoring solution.
 
 It is highly [inspired by Nagios](https://www.centreon.com/centreon-and-nagios-3-milestones-to-understand-their-distinctiveness/), since it was a Nagios frontend at its beginning. 
 
@@ -39,7 +39,7 @@ Quotation is based on the number of equipment devices being monitored. Prices st
 
 -->
 
-The free solution called Centreon IT-100 is licensed for 100 monitored hosts only - called [Free Trial](https://www.centreon.com/free-trial/). Other differences with the commercial editions are listed in [their comparison table](https://www.centreon.com/centreon-editions/).
+The free solution called Centreon IT-100 is licensed for 100 monitored hosts only - their [Free Trial](https://www.centreon.com/free-trial/). Other differences with the commercial editions are listed in [their comparison table](https://www.centreon.com/centreon-editions/).
 
 ## namely
 
@@ -47,11 +47,11 @@ Informations on how Centreon IT works & its specific features.
 
 ### organisation
 
-The solutions can be hosted on site, called `OnPrem` by Centreon, or cloud-based, called `Cloud`.
+Centreon claims their solutions can be hosted on site, called `OnPrem`, or cloud-based, called `Cloud`.
 
 Centreon instances always works with a Central Server, called `centreon-central` used to configure monitoring, display & operate the collected data.
 
-To monitor multiple sites, instances can be deployed & attached to a Central Server, the `Remote Servers`.
+To monitor multiple sites, instances can be deployed & attached to the Central Server, the `Remote Servers`.
 
 Monitored data is gathered using `Pollers`, attached to the Central or a Remote Server.
 
@@ -111,7 +111,7 @@ In the past - until ver. 21.10, they used to create `*.iso` images to install th
 ### connectors & plugins
 
 <!-- https://docs.centreon.com/cloud/monitoring/pluginpacks/ -->
-Data collections can be made by templates called `Monitoring Connectors` who have assets of `Plugins`.
+Data collection performed by Centreon models called `Monitoring Connectors` which have `Plugins` assets.
 
 Plugins have the same function as Nagios ones.
 
@@ -141,7 +141,7 @@ Since there would be to many informations to display (partitionning, specs, infr
 
 ### infrastructure
 
-The same [infrastructure use in the nagios article](https://www.xeylou.fr/posts/nagios-introduction/#infrastructure).
+The same [infrastructure used in the nagios article](https://www.xeylou.fr/posts/nagios-introduction/#infrastructure) will be deployed.
 
 Here is what the used infrastructure looks.
 
@@ -160,7 +160,9 @@ end
 
 wan{WAN} --- router
 router --- switch
-switch --- centreon & linux & win
+switch ---|192.168.122.166| centreon
+switch ---|192.168.122.165| linux
+switch ---|192.168.122.36| win
 linux -.- apache
 
 {{< /mermaid >}}
@@ -171,7 +173,9 @@ Centreon IT will be installed without license on Debian 11.
 
 I made an installation script available on [Github](https://github.com/xeylou/centreon-it-overview/deb11-centreon-install.sh).
 
-To run it, run the following commands.
+This script installs Centreon IT from Centreon's apt repositories & install a secured mysql server through mariadb.
+
+To execute it, run the following commands.
 
 ```bash
 mkdir testing && cd testing
@@ -180,9 +184,36 @@ chmod +x debian-centreon-install.sh
 ./debian-centreon-install.sh
 ```
 
-This script installs Centreon IT from Centreon's apt repositories & instll a mysql server through mariadb.
+Installation can be resumed going on the Centreon web interface `https://192.168.122.166`.
 
-Installation can be resume by going on the server web interface.
+![](325/00.png)
+![](325/01.png)
+
+More dependencies than the ones loaded here could be presented as `Not loaded` for debugging.
+
+![](325/02.png)
+![](325/03.png)
+![](325/04.png)
+
+Creation of a admin account for the Centreon interface.
+
+![](325/05.png)
+
+Connexion to the db server. The root password was asked by the script when installing.
+
+Creation of a db user since no anonymous connexion are allowed. *(security reasons: not doing querries with an admin account)*
+
+![](325/06.png)
+![](325/07.png)
+![](325/08.png)
+![](325/09.png)
+![](325/10.png)
+
+Login created step `5Admin information`.
+
+![](325/11.png)
+
+<!-- dans database information, root password was creating during my script installation process -->
 
 ### monitoring
 ## close
