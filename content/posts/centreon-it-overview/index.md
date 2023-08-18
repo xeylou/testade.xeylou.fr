@@ -152,18 +152,18 @@ graph TD
 subgraph lan[LAN]
 router{Router}
 switch[Switch]
-centreon(Centreon Central Server)
-linux(Linux Host)
-win(Windows Host)
+centreon(Centreon Central Server<br><font color="#a9a9a9">192.168.122.166</font>)
+linux(Linux Host<br><font color="#a9a9a9">192.168.122.164</font>)
+win(Windows Host<br><font color="#a9a9a9">192.168.122.36</font>)
 apache(Apache Server)
 end
 
-wan{WAN} --- router
-router --- switch
-switch ---|192.168.122.166| centreon
-switch ---|192.168.122.165| linux
-switch ---|192.168.122.36| win
-linux -.- apache
+wan{WAN}---router
+router---switch
+switch---centreon
+switch---linux
+switch---win
+linux-.-apache
 
 {{< /mermaid >}}
 
@@ -201,7 +201,7 @@ Creation of a admin account for the Centreon interface.
 
 Connexion to the db server. The root password was asked by the script when installing.
 
-Creation of a db user since no anonymous connexion are allowed. *(security reasons: not doing querries with an admin account)*
+Creation of a db user to perform data querries - not with the admin one.
 
 ![](325/06.png)
 ![](325/07.png)
@@ -213,9 +213,43 @@ Login created step `5Admin information`.
 
 ![](325/11.png)
 
-<!-- dans database information, root password was creating during my script installation process -->
+After the installation, the poller installed with the Central server will not work.
+
+***IMAGE POLLER MARCHE PAS***
+
+Additionnal steps are needed to start it to start monitoring.
+
+***METTRE IMAGE EXPORT IN FILE***
+
+After that, run the following commands, keep their order without modifying them.
+
+```bash
+systemctl restart cbd centengine
+systemctl restart gorgoned
+systemctl start snmptrapd centreontrapd
+systemctl start snmpd
+```
 
 ### monitoring
+
+Centreon recommends using their snmp implementation plugins to gather metrics - *cpu load, memory usage etc.*
+
+On wanted monitored host, snmp should be installed and working.
+
+<!-- 
+
+prendre plugin pollers
+
+systemctl restart cbd centengine centreon
+
+
+
+apt install -y snmp
+nano /etc/snmp/snmp.conf
+
+-->
 ## close
-<!-- https://thehackernews.com/2021/02/hackers-exploit-it-monitoring-tool.html -->
-<!-- https://www.wired.com/story/sandworm-centreon-russia-hack/ -->
+<!-- https://thehackernews.com/2021/02/hackers-exploit-it-monitoring-tool.html
+https://www.wired.com/story/sandworm-centreon-russia-hack/ 
+nagios a une page sur ses cve connues, que je n'ai pas trouvé sur centreon https://www.nagios.com/products/security/
+c'est dur de trouver un problème sur centreon car beaucoup trop de choses à gérer... -->

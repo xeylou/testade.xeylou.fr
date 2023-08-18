@@ -1,5 +1,5 @@
 ---
-title: "introduction to nagios"
+title: "nagios introduction"
 date: 2023-07-25
 draft: false
 tags: ["gnu/linux", "monitoring", "open-source", "windows"]

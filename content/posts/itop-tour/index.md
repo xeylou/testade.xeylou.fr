@@ -1,18 +1,18 @@
 ---
-title: "combodo itop walk-through"
+title: "combodo itop tour"
 date: 2023-08-05
 draft: false
 tags: ["gnu/linux", "monitoring", "open-source"]
 series: ["Exploring Monitoring Solutions"]
 series_order: 2
-slug: "itop-walkthrough"
+slug: "itop-tour"
 ---
 
 <!-- prologue -->
 
 {{< lead >}}
-walk-throughing combodo itop & creating a  
-living it service delivery infrastructure
+combodo itop tour & creating a living  
+it service delivery infrastructure
 {{< /lead >}}
 
 <!-- article -->

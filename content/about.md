@@ -15,7 +15,7 @@ showAuthor: false
 
 My interests are oriented in **networks & telecommunications**, enjoying learning new technos on bare metal, using embedded or virtualization (gns3, packet tracer).
 
-I've been a linux enthusiast for years, having over **3 years of layer 2-7 administration of gnu/linux distributions** for daily use (rhel, debian, alpine, arch, nixos).
+I've been a linux enthusiast for years, having over **3 years of layer 2-7 administration of gnu/linux** distributions for daily use (rhel, debian, alpine, arch, nixos).
 
 I have a **strong background in virtualization & containerization** using qemu/kvm, proxmox, gns3, cisco pt, docker + compose & k8s.
 
