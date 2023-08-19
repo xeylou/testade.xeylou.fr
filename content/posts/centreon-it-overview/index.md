@@ -213,15 +213,33 @@ Login created step `5Admin information`.
 
 ![](325/11.png)
 
-After the installation, the poller installed with the Central server will not work.
+After the installation, the Central server poller is not working.
 
-***IMAGE POLLER MARCHE PAS***
+Additionnal steps are required to start monitoring.
 
-Additionnal steps are needed to start it to start monitoring.
+![](325/12.png)
 
-***METTRE IMAGE EXPORT IN FILE***
+Go to the poller section to see it.
+
+![](325/13.png)
+![](325/14.png)
+
+Need to click on `Export configuration`.
+
+![](325/15.png)
+
+Select the `Central` poller.
+
+![](325/16.png)
+
+Check `Move Export File`.
+
+![](325/17.png)
+
+Then `Export`.
 
 After that, run the following commands, keep their order without modifying them.
+
 
 ```bash
 systemctl restart cbd centengine
@@ -230,11 +248,17 @@ systemctl start snmptrapd centreontrapd
 systemctl start snmpd
 ```
 
+Then the poller starts working.
+
+![](325/18.png)
+
+*(the red circle at top left, to the right of Pollers logo disappears later)*
+
 ### monitoring
 
 Centreon recommends using their snmp implementation plugins to gather metrics - *cpu load, memory usage etc.*
 
-On wanted monitored host, snmp should be installed and working.
+On wanted monitored host, snmp should be configured and working.
 
 <!-- 
 
