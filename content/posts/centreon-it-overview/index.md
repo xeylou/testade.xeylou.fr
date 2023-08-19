@@ -71,10 +71,10 @@ poller3((Poller))
 poller4((Poller))
 poller5((Poller))
 
-central --- remote0 & remote1 & remote2
-remote0 --- poller0 & poller1
-remote1 --- poller2 & poller3
-remote2 --- poller4 & poller5
+central---remote0 & remote1 & remote2
+remote0---poller0 & poller1
+remote1---poller2 & poller3
+remote2---poller4 & poller5
 {{< /mermaid >}}
 
 The `Centreon Cloud` architecture does away with Remote Servers, as Pollers are connected to the Central Server via the cloud - using a vpn.
@@ -258,15 +258,15 @@ Then the poller starts working.
 
 Centreon recommends using their snmp implementation plugins to gather metrics - *cpu load, memory usage etc.*
 
-On wanted monitored host, snmp should be configured and working.
+Plugins can be added using the web interface or by using the system package manager (dnf or rhel based distros & apt for the debian family).
+
+On wanted monitored hosts, snmp must be configured and working.
 
 <!-- 
 
 prendre plugin pollers
 
 systemctl restart cbd centengine centreon
-
-
 
 apt install -y snmp
 nano /etc/snmp/snmp.conf
