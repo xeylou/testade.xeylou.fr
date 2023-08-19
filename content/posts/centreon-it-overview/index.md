@@ -39,7 +39,7 @@ Quotation is based on the number of equipment devices being monitored. Prices st
 
 -->
 
-The free solution called Centreon IT-100 is licensed for 100 monitored hosts only - their [Free Trial](https://www.centreon.com/free-trial/). Other differences with the commercial editions are listed in [their comparison table](https://www.centreon.com/centreon-editions/).
+The free solution called Centreon IT-100 is licensed for 100 monitored hosts only - their [Free Trial](https://www.centreon.com/free-trial/). Other differences with the commercial editions are listed in their [comparison table](https://www.centreon.com/centreon-editions/).
 
 ## namely
 
@@ -137,13 +137,15 @@ A stand-alone central server is used under 500 hosts. Pollers every 500 hosts ar
 
 For production use, it would be a good idea to think about scalability.
 
-Since there would be to many informations to display (partitionning, specs, infrastructure), i let you refer to their [infrastructure sizes charts](https://docs.centreon.com/docs/installation/prerequisites/#characteristics-of-the-servers).
+Since there would be too much information to display (partitionning, specs, infrastructure), i let you refer to their [infrastructure sizes charts](https://docs.centreon.com/docs/installation/prerequisites/#characteristics-of-the-servers).
 
 ### infrastructure
 
-The same [infrastructure used in the nagios article](https://www.xeylou.fr/posts/nagios-introduction/#infrastructure) will be deployed.
+An infrastructure similar to that used in the [nagios article](https://www.xeylou.fr/posts/nagios-introduction/#infrastructure) will be deployed.
 
-Here is what the used infrastructure looks.
+Following the [requirements](#requirements) - *partially since it is not for production use*, a stand-alone Central server will be deployed with its poller. 
+
+Here is what the used infrastructure looks like.
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
@@ -153,9 +155,10 @@ subgraph lan[LAN]
 router{Router}
 switch[Switch]
 centreon(Centreon Central Server<br><font color="#a9a9a9">192.168.122.166</font>)
-linux(Linux Host<br><font color="#a9a9a9">192.168.122.164</font>)
+linux(Debian Host<br><font color="#a9a9a9">192.168.122.164</font>)
 win(Windows Host<br><font color="#a9a9a9">192.168.122.251</font>)
-apache(Apache Server)
+mariadb[(MariaDB server)]
+poller((Poller))
 end
 
 wan{WAN}---router
@@ -163,7 +166,7 @@ router---switch
 switch---centreon
 switch---linux
 switch---win
-linux-.-apache
+centreon-.-mariadb & poller
 
 {{< /mermaid >}}
 
@@ -171,37 +174,41 @@ linux-.-apache
 
 Centreon IT will be installed without license on Debian 11.
 
-I made an installation script available on [Github](https://github.com/xeylou/centreon-it-overview/deb11-centreon-install.sh).
+I made an installation script available on [Github](https://github.com/xeylou/centreon-overview/deb11-centreon-install.sh).
 
-This script installs Centreon IT from Centreon's apt repositories & install a secured mysql server through mariadb.
+This script installs Centreon IT from added Centreon's apt repositories & install a secured mysql server through mariadb.
 
 To execute it, run the following commands.
 
 ```bash
 mkdir testing && cd testing
-wget https://github.com/xeylou/centreon-it-overview/deb11-centreon-install.sh
+wget https://github.com/xeylou/centreon-overview/deb11-centreon-install.sh
 chmod +x debian-centreon-install.sh
 ./debian-centreon-install.sh
 ```
 
-Installation can be resumed going on the Centreon web interface `https://192.168.122.166`.
+Installation can be resumed going on the Centreon web interface `http://192.168.122.166`.
+
+*(cannot highlight forms natively, so i specify the changes, otherwise i just do next, install or finish)*
 
 ![](325-debian-snmp/00.png)
 ![](325-debian-snmp/01.png)
 
-More dependencies than the ones loaded here could be presented as `Not loaded` for debugging.
+More dependencies than the ones loaded could be presented as `Not loaded` for debugging (if not using the script).
 
 ![](325-debian-snmp/02.png)
 ![](325-debian-snmp/03.png)
 ![](325-debian-snmp/04.png)
 
-Creation of a admin account for the Centreon interface.
+Creation of an admin account for the Centreon interface.
 
 ![](325-debian-snmp/05.png)
 
-Connexion to the db server. The root password was asked by the script when installing.
+Connexion to the db server. The root password was asked & created by the script at the end.
 
-Creation of a db user to perform data querries - not with the admin one.
+Used `localhost` (so 127.0.0.1 or ::1) for the db server ip address, since its hosted on the same host as the future centreon central server.
+
+Creation of a db user to perform data querries - for security purposes, not doign them with an admin one.
 
 ![](325-debian-snmp/06.png)
 ![](325-debian-snmp/07.png)
@@ -209,9 +216,11 @@ Creation of a db user to perform data querries - not with the admin one.
 ![](325-debian-snmp/09.png)
 ![](325-debian-snmp/10.png)
 
-Login created step `5Admin information`.
+Login created step `5 Admin information`.
 
 ![](325-debian-snmp/11.png)
+
+This is the after-loggin page.
 
 After the installation, the Central server poller is not working.
 
@@ -258,14 +267,13 @@ Then the poller starts working.
 
 Centreon recommends using their snmp implementation plugins to gather metrics - *cpu load, memory usage etc.*
 
-Using the snmp protocol garantees windows or linux based hosts configured with it will be monitored, since the protocol is universal.
+Usage of the snmp protocol garantees the monitoring to work as intended since the protocol is universal - rather than installing an agent.
 
 Plugins can be added using the web interface or by using the system package manager (dnf for rhel based distros & apt for the debian family).
 
+Here is the installation of the needed snmp plugins using the web interface.
+
 ![](325-debian-snmp/19.png)
-
-Using the web interface.
-
 ![](325-debian-snmp/20.png)
 
 Adding the linux snmp plugin clicking `+`.
@@ -294,10 +302,8 @@ nano /etc/snmp/snmp.conf
 ### linux host
 
 {{< alert icon="circle-info">}}
-**Note** I've explained what were done with snmp rather than just *throwing you my script* as you may need this explications to monitor other devices like switches or routers. *(which doesn't mean i haven't [made one](http://github.com/xeylou/centreon-overview))*
+**Note** I've explained what were done with snmp rather than just *throwing you my script* as you may need this explainations to monitor other devices like switches or routers. *(which doesn't mean i haven't [made one](http://github.com/xeylou/centreon-overview))*
 {{< /alert >}}
-
-Debian will be the linux host monitored.
 
 For our needs, according to the [debian snmp page](https://wiki.debian.org/SNMP), a repo needs to be added to `/etc/apt/source.list`.
 
@@ -336,22 +342,23 @@ https://blog.foulquier.info/tutoriels/supervision/mise-en-place-d-une-supervisio
 After that, the needed packages can be installed.
 
 ```bash
-apt-get install snmp snmptrapd snmp-mibs-downloader
+apt update
+apt install -y snmp snmptrapd snmp-mibs-downloader
 ```
 
 Checking if the snmp service is running properly.
 
 ```bash
-systemctl status snmp
+systemctl status snmpd
 ```
 
 If not, it needs to be started.
 
 ```bash
-systemctl start snmp
+systemctl start snmpd
 ```
 
-Before making changes to the snmpd configuration file `/etc/snmp/snmpd.conf`, a backup is preferable.
+Before making changes to the snmp daemon configuration file `/etc/snmp/snmpd.conf`, a backup is always welcome.
 
 ```bash
 cp /etc/snmp/snmpd.conf{,.old}
@@ -399,22 +406,24 @@ snmpwalk -v2c 192.168.122.164 -c public
 
 If it does, a lot of text will be displayed rather than this output: *Timeout: No Response from 192.168.122.164*.
 
-*(if it can helps you later: this command retrieves records from mib by going through each oid running automatic getnext requests, so you don't need a command for each oid or node, on snmp ver. 2c asked with "public" community)*
+*(if you are working with snmp layer: this command retrieves records from mib by going through each oid running automatic getnext requests, so you don't need a command for each oid or node, on snmp ver. 2c asked with "public" community)*
 
 ### windows host
 
 The windows host is a windows server.
 
-The snmp protocol will be enabled on it, authorizing only the centron-central to communicate via the `public` community.    
+The snmp protocol will be enabled on it, authorizing only the centron-central to communicate via a community named `public`.
 
 On the Server Manager window.
+
+*(here i can nicely highlight the forms)*
 
 ![](325-winsrv-snmp/00.png)
 ![](325-winsrv-snmp/01.png)
 ![](325-winsrv-snmp/02.png)
 ![](325-winsrv-snmp/03.png)
 
-Select the hostname the wanted windows server.
+Select the hostname of the windows server.
 
 ![](325-winsrv-snmp/04.png)
 
@@ -429,12 +438,9 @@ Search for the `SNMP Service` & enable `SNMP WMI Provider`.
 Right after that go `Next`.
 
 ![](325-winsrv-snmp/08.png)
-
-`Install` the services.
-
 ![](325-winsrv-snmp/09.png)
 
-The snmp service needs to be configured in the Server Manager windows.
+The snmp service needs to be configured in the Server Manager window.
 
 ![](325-winsrv-snmp/10.png)
 
@@ -447,7 +453,7 @@ Add a `community`, here public, the same as the one configured on the debian hos
 
 `Read Only` is preferable because nothing has to be changed, just the metrics to be gathered.
 
-The Centreon server needs to be trusted.
+The Centreon server needs to be trusted by entering its ip address.
 
 ![](325-winsrv-snmp/15.png)
 
@@ -484,13 +490,13 @@ Click on `Add`.
 
 ![](325-centreon-add/02.png)
 
-Filling with the informations in [debian host](#linux-host).
+Filling with the informations for [debian host](#linux-host) & some arbitraty ones.
 
 ![](325-centreon-add/03.png)
 
 `Save`.
 
-*(the Default equals Yes for the three cases)*
+*(the Default equals Yes for the two cases)*
 
 ![](325-centreon-add/04.png)
 ![](325-centreon-add/05.png)
@@ -501,11 +507,15 @@ Doing the same for the [windows host](#windows-host) informations.
 
 The host are added, should looks like so.
 
+The pollers need to actualize their configuration files to starts monitoring the hosts.
+
 ![](325-centreon-add/07.png)
 ![](325-centreon-add/08.png)
+
+*(note the red Yes on Conf Changed)*
 ![](325-centreon-add/09.png)
 
-Export the configuration in a file for pollers (done in the same way as at the ending of the [centreon installation](#installation)).
+Export the configuration in a file for pollers ***but this time also restart them***.
 
 ![](325-centreon-add/10.png)
 
@@ -524,7 +534,7 @@ Although it is marked as critical, it doesn't shows up like so in the services s
 
 ### adding services
 
-More services can be added to monitor on the hosts by adding them into the centreon interface.
+More services can be monitored by adding them into the centreon interface.
 
 ![](325-add-services/00.png)
 ![](325-add-services/01.png)
@@ -532,7 +542,7 @@ More services can be added to monitor on the hosts by adding them into the centr
 Click on `Add`.
 ![](325-add-services/02.png)
 
-Services to monitor can be add according to what plugins are installed in the Centreon server.
+Services to monitor can be added according to what plugins are installed in the Centreon server.
 
 The sheet with an eye is a small documentation on the command arguments, parameters, etc. 
 
@@ -540,12 +550,12 @@ The sheet with an eye is a small documentation on the command arguments, paramet
 
 The Default options are Yes in the three cases.
 
-**An then export the configuration for the pollers.**
-*(to avoid putting a third times the captures how to do it)*
+An then export the configuration & restart the pollers to make changes take effect, like did at the end of [adding hosts](#adding-hosts).  
+*(to avoid putting a third time the captures how to do it)*
 
 ### debugging
 
-Passives checks commands can be seen, that helped me a lot for debugging.
+Passives checks commands can be seen, helping a lot for debugging.
 
 It can also helps for active monitoring without dealing with the Centreon interface.
 
@@ -572,22 +582,24 @@ systemctl status snmptrapd
 
 *(btw the centreon service has never been active...)*
 
-There are many more services to understand or check to understand a problem at the beginning.
+There are many more services to know & check to understand a problem at the beginning.
 
 In Nagios, for the same kind of interface (checking hosts services) you just have the nagios service to check for errors.
 
-For centreon, the gathering, the processing, the display parts & more are seperate codes.
+For centreon, the gathering, the processing, the display parts & more are seperate ones.
 
 It's better seperating parts of codes for debugging or reliability, but having a single service that reports all problems can be pleasant (or just not so many services).
 
-I got hard times to find were a problem could come from sometimes, since the numbers of potential services problem was huge for me.
+I got hard times to find were a problem could come from sometimes, since the numbers of potential services problem was huge.
+
+I also understand that centreon as more features (graphs etc.) than nagios base, not xi.
 
 Centreon uses nagios plugins, in the same directory as nagios does by default...
 
-Nagios has a [page dedicated to CVEs](https://www.nagios.com/products/security/) to prove their concern & patches. There may be one, but i haven't found a "security issues page" for Centreon.
+Nagios has a [page dedicated to CVEs](https://www.nagios.com/products/security/) to prove their concern & patches. There may be one, but i haven't found a "security concern" or issues page" for Centreon.
 
 That's disappointing since monitoring systems needs to be very aware of their security.
 
-Centreon systems were also targetted by russian attackers ([article 1](https://thehackernews.com/2021/02/hackers-exploit-it-monitoring-tool.html) [article 2](https://www.wired.com/story/sandworm-centreon-russia-hack/)).
+Centreon systems were also targetted by russian attackers ([article 1](https://thehackernews.com/2021/02/hackers-exploit-it-monitoring-tool.html), [article 2](https://www.wired.com/story/sandworm-centreon-russia-hack/)).
 
-It is a very good idea to display the command used to check a service, i think i hadn't seen that for nagios.
+It is a very good idea to display the command used to check a service, i think i hadn't seen that in nagios.
