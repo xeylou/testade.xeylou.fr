@@ -19,6 +19,14 @@ contains personal info about writing
 
 - never use caps in titles (look at page title)
 
+{{< button href="https://ninite.com/" target="_blank" >}}
+OUVRIR LIEN DANS NOUVEL ONGLET
+{{< /button >}}
+
+{{< button href="https://ninite.com/" target="_target" >}}
+OUVRIR LIEN, POUR DOWNLOAD
+{{< /button >}}
+
 ### be a part of a series
 
 see code above

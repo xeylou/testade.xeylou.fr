@@ -21,6 +21,8 @@ it service delivery infrastructure
 
 As with Nagios, i dived into Combodo iTop solution.
 
+Even though it is not a host monitoring solution, it can be a part of a monitoring infrastructure.
+
 I had harder time getting into it due to the notions to lean & to consider, inside & outside itop to use it properly.
 <!-- I had a harder time getting into it because there are more notions to learn & to consider, outside & inside itop, to use it properly. -->
 
