@@ -24,7 +24,7 @@ https://www.baeldung.com/linux/ssh-tunneling-and-proxying
 
 ## introduction
 
-here i expose my uses of ssh & some advanced notions about it
+here i expose my usages of ssh & some advanced notions about it
 
 <!-- https://www.ssh.com/academy/ssh/openssh#what-is-openssh? -->
 i'll speak about the ssh protocol as the openssh implementation
@@ -43,17 +43,17 @@ secure shell - ssh, is a very versatile protocol but generally used to access a 
 
 the first time connecting to a remote ssh server, w/ or w/out a private key, you have the server public key fingerprint prompted asking you if you trust it or not
 
-if yes, it is paste in `$HOME/.ssh/known_hosts` w/ the associate ip address & encryption protocol; its trusted by the local machine
+if yes, it is paste in `~/.ssh/known_hosts` w/ the associate ip address & encryption protocol; its trusted by the local machine
 
 ### modifications
 
 on the ssh server side, connexions behaviour can be modified in `/etc/ssh/sshd_config`
 
-*sshd stands for the ssh daemon*
+*sshd stands for ssh daemon*
 
 basic ssh setup let you connect to an ssh host entering an username & a password beside root
 
-to make the modifications take changes, restart the sshd service
+for the changes to take effect, restart the sshd service
 
 ```bash
 systemctl restart sshd
@@ -65,22 +65,24 @@ systemctl restart sshd
 
 - check if the root login is disabled (yes by default)
 
-- using [ssh keys](#keys) (authentication) + username & password (authorization) or [certificates](#certificates)
+- using [ssh keys](#keys) (authentication) + username & password (authorisation) or [certificates](#certificates)
 
 - use differents keys to access different servers
 
-- using `~/.ssh/config` to manage easily keys & remote servers
+- use `~/.ssh/config` to manage easily keys & remote servers
+
+- use a [passphrase](#passphrases) for your private keys
 
 ### keys
 
-the server has a public key that everyone can see, only you have the private key to connect to the server; public key -> the lock, private key -> the *key...*
+the server has a public key that everyone can see, only you have the private key to connect to the server; public key -> the lock, private key -> *the key...*
 
-private & ssh keys are generate simultaneously, various algorithms could be choosen
+private & ssh keys are generated  simultaneously, various algorithms could be choosen
 
-their default location are `~/.ssh` - *perfectly fine with it*
+keys default location is `~/.ssh` - *perfectly fine with it*
 
 ```bash
-ssh-keygen
+ssh-keygen # to generate your keys
 ```
 *-C can be used to add a comment to a key, -t choose the algorithm*
 <!-- ed25519 -->
@@ -102,12 +104,14 @@ passphrases can be added to private ssh keys, preventing the usage of the key if
 
 `~/.ssh/config` serve the ssh client to manage its remote hosts
 
+*or `/etc/ssh/sshd_config`*
+
 ```bash
 host remotename
     Hostname remotehost
     User username
     Port sshport
-    IdentityKey pathtoprivatekey
+    IdentityKey /path/to/privatekey
 ```
 
 after that config, no need to restart a service
@@ -138,7 +142,7 @@ scp -r username@remotehost:/remote/path .
 ```
 synchronising files from a remote host using `rsync`
 ```bash
-rsync username@remotehost:/remote/path .
+rsync username@remotehost:/remote/path/to/file .
 rsync -r username@remotehost:/remote/path .
 ```
 ### to remote host
@@ -158,26 +162,47 @@ rsync -r directoryname username@remote-host:/remote/path
 ### mount remote folder
 mount a remote directory on local system w/ sshfs (ssh file system) 
 ```bash
-apt install -y sshfs
+apt install -y sshfs # depends on your package manager
 mkdir mount-dir
 ```
 mount the remote directory in the created folder
 ```bash
 sshfs username@remote-host:/remote/path mount-dir
 ```
-modifications in the folder will also be done in `remote-host:/remote/path`
+changes in the folder will also be made in `remote-host:/remote/path`
+
 to unmount it
 ```bash
 umount mount-dir
 ```
 ### sftp
-ssh file transfer protocol, or secure file transfer protocol, using a gui like filezilla may be better for more advanced file transfer applications
+<!-- https://phoenixnap.com/kb/sftp-commands -->
+ssh file transfer protocol, or secure file transfer protocol
+
+can be used with the `sftp` command to open a remote shell
+
+```bash
+sftp username@remotehost
+```
+can navigate with `pwd`, `ls`, `cd` & use `get` or `put` to gather or send ressources
+
+```bash
+get filename
+put filename
+```
+or
+
+```bash
+get /path/to/remote/file /path/to/local/directory
+put /path/to/local/file /path/to/remote/directory
+```
+a gui like filezilla for easier transfer applications can be done
 ## x11 forwarding
 use remote app gui on local host
 ### config remote server
 run with root or sudoer
 ```bash
-apt install -y xauth # to forward x11 packets
+apt install -y xauth # to forward x11 packets, depends pkgs manager
 ```
 allowing x11 fowarding in `/etc/ssh/sshd_config` by removing `#`
 ```bash {linenos=inline, hl_lines=["4"], linenostart=87}
@@ -202,16 +227,16 @@ https://www.ssh.com/academy/ssh/tunneling-example
 -->
 to access specific ressources, vpns expose an entire network which cannot be relevant for security reasons
 
-ssh tunneling encapsulate layer 3-7 network traffic between 2 hosts over ssh
+ssh tunneling encapsulate a layer 3-7 traffic between 2 hosts over ssh
 
-ssh encryption is added to the communication - *so that if a unsecured is used by the application, it is encrypted*
+ssh encryption is added to the communication - *so that if an unsecured communication is used by the application, it is encrypted*
 
 it can also be use to bypass firewall restrictions by fowarding ports
 
 uncontrolled or unmonitored tunnels can be used as backdoors, for data exfiltration, bouncing attacks & more
 ### local fowarding
 <!-- https://www.youtube.com/watch?v=x1yQF1789cE -->
-forward a port from the ssh client to the ssh server (launched from the ssh client)
+forward a port from a ssh client to a ssh server (launched from the ssh client)
 
 extremely usefull to access a remote service denyied by a firewall, it needs the remote host to be accessible with ssh 
 
@@ -234,28 +259,23 @@ ssh -N -L 8080:127.0.0.1:5000 pi@192.168.1.12
 ```
 *-N prevents from running an active ssh session*
 
-all traffic (http requests) sent to localhost:8080 on your machine will be forwarded to the raspberry pi's 5000 port - responses sended back to you
+all traffic (http requests) sent to localhost:8080 on local machine will be forwarded to raspberry pi's 5000 port - responses sended back to you
 
 <!-- using 0.0.0.0 pour la première adresse, tu autorises tout le monde à venir dessus -->
-the `LocalForward` variable can be edited in `/etc/ssh/sshd_config` to add a local forwarding permanently
+`LocalForward` variable can be edited in the [config file](#config-file) to avoid putting it every connexion
 
-<!-- 
-
-
+<!--
 NOTE PERSO
 
 N'IMPORT QUEL IP, PAR EXEMPLE CELLE DU ROUTEUR
 QUE LE REMOTE HOST A ACCES, IL PEUT FORWARD VERS
 ELLES
-
-
-
- -->
+-->
 
 ### reverse ssh tunnels
 <!-- https://www.youtube.com/watch?v=TZ6W9Hi9YJw 
 https://www.youtube.com/watch?v=aOmIqUs0fbY -->
-remote ssh tunnels or ssh remote forwarding
+also called remote ssh tunnels or ssh remote forwarding
 
 forward a port on a remote host (ssh server) to a port on a local machine (ssh client)
 
@@ -315,7 +335,7 @@ can be called ssh jump servers, ssh proxies or ssh agent forwarding
 
 a single server accessible via ssh from the internet to redirect ssh sessions to others hosts
 
-usefull to centralise & secure ssh connexion in a corporate network to reduce the "attack surface" to just one machine
+usefull to centralise & secure ssh connexions in a corporate network to reduce the "attack surface" to just one machine
 
 [teleport](https://goteleport.com/) is an opensource solution if not using openssh
 
@@ -344,9 +364,9 @@ https://superuser.com/questions/1005015/ssh-sock-proxy-vs-vpn
 ssh -J bastionaddress username@remotehost
 ```
 
-`-J` parameter can be avoid by configuring the `ProxyJump` permanently in `~/.ssh/config`
+`-J` parameter can be avoided by configuring the `ProxyJump` permanently in [config file](#config-file)
 
-*parameters saw in [config file](#config-file) can be added to it*
+*parameters saw in [config file](#config-file) can be added too*
 
 ```bash
 Host remotehost
@@ -388,7 +408,7 @@ MAIS AUSSI DAUTRES SERVICES TEMPS QUE LE PROXY Y A ACCES
 https://www.tecmint.com/restrict-ssh-user-to-directory-using-chrooted-jail/
 -->
 
-change root (chroot) changes appareant root directory for the running user to a root directory called chrooting jail
+change root (chroot) changes appareant root directory for the running user to a root directory called a chrooting jail
 
 ssh support chrooting: restricting an ssh session to a directory
 
@@ -413,11 +433,11 @@ ssh use tofu *trust on first use*, it trusts the ssh server the first time conne
 
 if targetted by a man-in-the-middle attack, you could be at risk using ssh connexion
 
-dnssec has many features to improve standard & old dns protocol, one of which is: dns answers are not tampered
+dnssec has many features to improve the standard & old dns protocol, one of which is: dns answers are not tampered
 
-*it is possible that an attacker can hijack ssh connexion & create valid dnssec responses, but less likely*
+*it is possible that an attacker can hijack ssh connexions & create valid dnssec responses, but less likely*
 
-use `ssh-keygen` as usual w/ an url & a `.` at its end to stop the domain (not be repeated twice)
+use `ssh-keygen` as usual w/ an url using dnssec & a `.` at its end to stop the domain for beeing repeated twice
 ```bash
 ssh-keygen subdomain.domainwithdnssec.tld.
 ```

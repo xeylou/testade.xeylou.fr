@@ -36,7 +36,7 @@ By downloading an installer externally, the chances to install the wrong softwar
 
 Software updates are individuals, each software must search for its update - *background apps, when the computer starts etc.*
 
-Nor the Windows Update or the Microsoft Store will check for your external installed software updates.
+Nor the Windows Update or the Microsoft Store will check for the external installed software updates.
 
 ### uninstallation
 
@@ -44,7 +44,7 @@ Most of the time, software can be found in the control panel or the apps section
 
 However, software installed in non common path are not listed alongside those.
 
-Dependencies installed to use them usually stay after uninstalling the software - *look at programs installed in the control panel, how many are wanted or used...*
+Dependencies installed to use them usually remain after uninstalling the software - *how many programs in the control panel are wanted or used...*
 
 ## some improving
 
@@ -54,13 +54,13 @@ The software are trusted because approved & listed by Microsoft.
 
 Software are searched & directly downloaded, no risks to download & execute a malicious program found online.
 
-The software installed from the Microsoft Store can be all updates at once, no background apps etc.
+The software installed from the Microsoft Store can be all updated at once, no background apps etc.
 
 However, the ms store apps list doesn't cover all the wanted users apps.
 
 ## real improvement
 
-Windows, knowning how software are handled on linux, created their [package manager](https://learn.microsoft.com/en-us/windows/package-manager/#understanding-package-managers).
+Windows, maybe knowning how software are handled on linux, created their [package manager](https://learn.microsoft.com/en-us/windows/package-manager/#understanding-package-managers).
 
 Package managers are tools used to install & manage software & their packages.
 
@@ -74,7 +74,7 @@ A package manager is a simpler & cleaner way to manage your system software & up
 
 Package managers can be found for different purposes.
 
-Here are some of them, their purposes, how to install & used them.
+Here are some of them, how to install & use them.
 
 ### smooth transition
 
@@ -82,12 +82,12 @@ To switch into a package manager easily, all installed apps can be found in the 
 
 Certain other apps can be found in the `Settings` -> `Applications`.
 
-Either, this command can be launched in an admin Terminal to list your installed apps - *games not include, just the epic launcher etc.*
+Either, this command can be launched in an admin Terminal to list your installed apps - *games not include, just the launchers*
 
 ```powershell
 Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table –AutoSiz
 ```
-Or exported to a file
+Export the list to a file
 ```powershell
 Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table –AutoSize > C:\programs.txt
 ```
@@ -154,16 +154,22 @@ Most used package manager in windows, appeared before winget in 2011: chocolatey
 
 More packages are in chocolatey, they are moderated & doesn't contain malware or bloatware.
 
-Chocolatey is more open, more software widely used but not verified by windows are present in chocolatey.
+Chocolatey is more open, more widely used software are present, those who are not verified yet by windows.
 
 A single powershell command can install chocolatey, runned as admin.
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
+Chocolatey has a strong & native gui called `chocolateygui` to avoid using commandline.
+
+```bash
+choco install chocolateygui
+```
+
 The commands are similar to [winget](#winget) with the `choco` command.
 
-> i personally use it when i got to be on windows & find it more convenient to use, also for new users because of its native graphical interface `choco install chocolateygui`
+> i personally use chocolatey when i got to be on windows & find it more convenient to use, also for new users because of its native gui
 
 To list local installed software
 ```powershell
@@ -175,18 +181,16 @@ To upgrade all packages
 choco upgrade all
 ```
 
-And the ultimate command entirely remove a software (those commands do the same).
-
+And the ultimate command to remove a software with its dependencies if not use by other ones (those commands are the same).
 
 ```powershell
 choco uninstall package --removedependencies
 choco uninstall package -x
 ```
-> if other software use the removed one dependencies, chocolatey doesn't uninstall them & tells you it didn't.
-
+> if an other software uses the removed one dependencies, chocolatey doesn't uninstall them & tells you it didn't.
 
 ## bonus macos
 
 The macos software management is different from the windows one.
 
-Although, [homebrew](https://brew.sh/) has the same role as [chocolatey](#chocolatey) does for windows.
+Although, [homebrew](https://brew.sh/) has the same role as [chocolatey](#chocolatey) does for macos.
