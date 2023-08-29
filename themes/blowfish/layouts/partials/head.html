@@ -1,4 +1,13 @@
 <head>
+  <style>
+    ::-moz-selection { /* Code for Firefox */
+      background: #888181;
+    }
+    
+    ::selection {
+      background: #888181;
+    }
+  </style>
   <meta name="darkreader-lock">
   <meta charset="utf-8" />
   {{ with .Site.Language.Params.htmlCode | default .Site.LanguageCode }}
