@@ -185,7 +185,6 @@ Download the latest NCPA agent installer
 Here are the simple following steps for the install.
 
 ![](ncpa-w11-install-screenshots/00.png)
-![](ncpa-w11-install-screenshots/00-0.png)
 ![](ncpa-w11-install-screenshots/01.png)
 ![](ncpa-w11-install-screenshots/02.png)
 ![](ncpa-w11-install-screenshots/03.png)
@@ -198,6 +197,7 @@ Here are the simple following steps for the install.
 ![](ncpa-w11-install-screenshots/05.png)
 ![](ncpa-w11-install-screenshots/06.png)
 ![](ncpa-w11-install-screenshots/07.png)
+![](ncpa-w11-install-screenshots/08.png)
 
 ### debian host
 
@@ -346,11 +346,11 @@ systemctl restart nagios
 
 Once logged into the nagios web interface, the hosts status can be see in the `Hosts` section of the `Current Status`.
 
-![](nagios-web-interface-screenshots/00.png)
+![](ncpa-w11-install-screenshots/09.png)
 
 The services status are available in the `Services` one.
 
-![](nagios-web-interface-screenshots/01.png)
+![](ncpa-w11-install-screenshots/10.png)
 
 *(the configuration files used was made by me & available on my [Github](https://github.com/xeylou/nagios-introduction))*
 
