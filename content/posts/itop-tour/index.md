@@ -437,7 +437,7 @@ The itop server installation can be done running the following commands.
 
 ```bash
 mkdir itop_install && cd itop_install
-wget https://github.com/xeylou/itop-tour/install-scripts/debian-itop-install.sh
+wget https://github.com/xeylou/itop-tour/debian-itop-install.sh
 chmod +x debian-itop-install.sh
 ./debian-itop-install.sh
 ```
@@ -446,7 +446,7 @@ Here to install the mysql server.
 
 ```bash
 mkdir mysql_install && cd mysql_install
-wget https://github.com/xeylou/itop-tour/install-scripts/debian-mysql-install.sh
+wget https://github.com/xeylou/itop-tour/debian-mysql-install.sh
 chmod +x debian-mysql-install.sh
 ./debian-mysql-install.sh
 ```

@@ -184,6 +184,8 @@ Download the latest NCPA agent installer
 
 Here are the simple following steps for the install.
 
+*(highlighted forms are clicked/changed values)*
+
 ![](ncpa-w11-install-screenshots/00.png)
 ![](ncpa-w11-install-screenshots/01.png)
 ![](ncpa-w11-install-screenshots/02.png)
