@@ -354,8 +354,6 @@ The services status are available in the `Services` one.
 
 ![](ncpa-w11-install-screenshots/10.png)
 
-*(the configuration files used was made by me & available on my [Github](https://github.com/xeylou/nagios-introduction))*
-
 ## close
 
 I found the [nagios documentation](https://www.nagios.org/documentation/) quite well explained (using & compiling nagios from source) although sometimes obsolete *- relating to discontinued stuff* or frustrating *- some requirements missing from current repos*.
