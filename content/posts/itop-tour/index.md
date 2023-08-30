@@ -431,13 +431,13 @@ The `Company A` is providing an apache web server from their LAN as a service & 
 I made an installation scripts for itop community & for a mysql server according to itop requirements.  
 *(yes, i could saved a lot of time not doing this, but foss)*
 
-Both scripts are interactive & made for debian *- tested on debian 11 & 12*, source code is on [Github](https://github.com/xeylou/itop-walkthrough).
+Both scripts are interactive & made for debian *- tested on debian 11 & 12*, source code is on [Github](https://github.com/xeylou/itop-tour).
 
 The itop server installation can be done running the following commands.
 
 ```bash
 mkdir itop_install && cd itop_install
-wget https://github.com/xeylou/itop-walkthrough/debian-itop-install.sh
+wget https://github.com/xeylou/itop-tour/install-scripts/debian-itop-install.sh
 chmod +x debian-itop-install.sh
 ./debian-itop-install.sh
 ```
@@ -446,7 +446,7 @@ Here to install the mysql server.
 
 ```bash
 mkdir mysql_install && cd mysql_install
-wget https://github.com/xeylou/itop-walkthrough/debian-mysql-install.sh
+wget https://github.com/xeylou/itop-tour/install-scripts/debian-mysql-install.sh
 chmod +x debian-mysql-install.sh
 ./debian-mysql-install.sh
 ```
@@ -457,47 +457,47 @@ The installation can be resumed at `http://192.168.122.212`.
 
 *(highlighted forms are clicked/changed values)*
 
-![](350/00.png)
-![](350/01.png)
+![](install-screenshots-350/00.png)
+![](install-screenshots-350/01.png)
 The warning says the used php version (latest) is not tested for this itop version by Combodo. *(not appening with debian 11 because its repositories has an older php version)*
-![](350/02.png)
-![](350/03.png)
-![](350/04.png)
-![](350/05.png)
-![](350/06.png)
+![](install-screenshots-350/02.png)
+![](install-screenshots-350/03.png)
+![](install-screenshots-350/04.png)
+![](install-screenshots-350/05.png)
+![](install-screenshots-350/06.png)
 The `Server Name` is *localhost* because the itop instance  & the mysql server are on the same host *- can be replaced by the ip address of the external mysql server if using the seperate solution*.
 
 The `Login` & the `Password` was created during the `debian-mysql-install.sh` script process *- asked at the beginning -*.
-![](350/07.png)
+![](install-screenshots-350/07.png)
 The database name found was also created during the installation process.
-![](350/08.png)
-![](350/09.png)
+![](install-screenshots-350/08.png)
+![](install-screenshots-350/09.png)
 `Person C` will have admin privilieges for this itop instance, since it is the `Technical Manager`. (*can add more admins after*)
 
 The `Language` set is for this user only.
-![](350/10.png)
+![](install-screenshots-350/10.png)
 Here the `Default Language` for all users can be changed. Can also be changed by individual users after deploying.
-![](350/11.png)
-![](350/12.png)
-![](350/13.png)
-![](350/14.png)
+![](install-screenshots-350/11.png)
+![](install-screenshots-350/12.png)
+![](install-screenshots-350/13.png)
+![](install-screenshots-350/14.png)
 Since the `Company A` acts as a service provider, the second option is chose. The first option should be kept if delivering IT services to company departements.
-![](350/15.png)
-![](350/16.png)
+![](install-screenshots-350/15.png)
+![](install-screenshots-350/16.png)
 Simple Ticket Management can be chose to get rid of `SLTs` & `SLAs`.
-![](350/17.png)
-![](350/18.png)
-![](350/19.png)
+![](install-screenshots-350/17.png)
+![](install-screenshots-350/18.png)
+![](install-screenshots-350/19.png)
 The Customer Portal is the itop interface but reagenced for users tickets. If not chose, tickets should be created using command-lines method or the rest api.
-![](350/20.png)
-![](350/21.png)
-![](350/22.png)
-![](350/23.png)
-![](350/24.png)
-![](350/25.png)
-![](350/26.png)
-![](350/27.png)
-![](350/28.png)
+![](install-screenshots-350/20.png)
+![](install-screenshots-350/21.png)
+![](install-screenshots-350/22.png)
+![](install-screenshots-350/23.png)
+![](install-screenshots-350/24.png)
+![](install-screenshots-350/25.png)
+![](install-screenshots-350/26.png)
+![](install-screenshots-350/27.png)
+![](install-screenshots-350/28.png)
 
 ### cmdb confirguration
 
@@ -517,13 +517,13 @@ The itsm is following the cmdb configuration: users created, teams, organization
 
 `External User` profile for the `iTop User` object have a dashboard to create requests according to purchased services.
 
-![](350/29.png)
-![](350/31.png)
-![](350/32.png)
+![](install-screenshots-350/29.png)
+![](install-screenshots-350/31.png)
+![](install-screenshots-350/32.png)
 
 The user can change his `Phone` number, `Location` according to his company's locations in the cmdb, the language to use or his profile picture.
 
-![](350/33.png)
+![](install-screenshots-350/33.png)
 
 It can also rename his function inside the company or change his password.
 
