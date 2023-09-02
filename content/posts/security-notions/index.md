@@ -15,6 +15,7 @@ variety of security notions
 {{< /lead >}}
 
 <!-- sources
+
 https://www.headmind.com/fr/epp-edr-ndr-xdr-revolution-cyberdefense/
 https://www.esecurityplanet.com/threats/xdr-emerges-as-a-key-next-generation-security-tool/
 https://syscomgs.com/en/solutions/it-security-solutions/endpoint-security-ngav-edr/
@@ -35,6 +36,7 @@ https://en.opensuse.org/SDB:Encrypted_filesystems?ref=itsfoss.com
 https://itsfoss.com/luks/
 https://www.nakivo.com/blog/3-2-1-backup-rule-efficient-data-protection-strategy/
 https://www.office1.com/blog/traditional-antivirus-vs-edr-vs-next-gen-antivirus
+
 -->
 
 <!-- article -->
