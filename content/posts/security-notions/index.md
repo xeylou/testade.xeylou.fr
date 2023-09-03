@@ -85,7 +85,7 @@ risks refer to the possible implication of the damage or loss of assets and data
 
 i wanted to put attacks beside `threat` because attacks are always intentional compared to threats
 
-an attack is always malicious & want to cause damages whereas threats sometimes don't
+an attack is always malicious & wants to cause damages whereas threats sometimes don't
 
 classification for those are seperated, e.g: human threat compared to viruses
 
@@ -97,7 +97,7 @@ creating a threat model can be used for other purposes - *for privacy -* to clar
 
 #### endpoint
 
-endpoints are the farrest devices on a network comming from outside, can be hosts or servers
+endpoints are the farrest devices on a network comming from the outside, can be hosts or servers
 
 <!--
 ## threats/attacks
@@ -113,19 +113,19 @@ here is my personal list of little-known threats or attacks i liked do reseach o
 
 ## endpoint protection
 
-are covered various protection for endpoints/hosts according to many types of threats & attacks
+are covered various protections for endpoints/hosts according to many types of threats & attacks
 
 i only wrote about relevent & still active protection notions (not hips for example)
 
 ### hardware side
 
 #### fde
-
-on the hardware side, `full-disk encryption` is a very good practice to preserve security & privacy for mobile hosts
+<!-- https://www.howtogeek.com/237232/what-is-a-tpm-and-why-does-windows-need-one-for-disk-encryption/ -->
+on the hardware side, `full-disk encryption` is a very good practice to preserve security & privacy for portable devices
 
 having `Luks` for all kinds of needs & `BitLocker` for windows OSs
 
-the better & common way to do fde is using the tpm chip
+the better & common way to do fde is using the tpm chip (trusted platform module) to generates the encryption keys & keeping part of it to itself
 
 additionnaly for luks, it uses a master key asked before the boot sequence using a passphrase hash
 
@@ -135,13 +135,13 @@ to minimise data loss, the threat model could implement a `data loss prevention`
 
 a usefull data loss model could be the 3-2-1 backup strategy
 
-- 3 copies of the data *(or more)*
+- 3 copies of the data - *(or more)*
 - 2 backups on different storage media - *this one really help...*
 - 1 backup copy offsite - *can be cloud, nas, etc.*
 
-for personnal use, backuping on two different medias (e.g: a nas & a drive) could be enough, but please do not underestimate the value of backups in production use
+for personnal use, backuping on two different medias (e.g: a nas & a disk or cloud) could be enough, but please do not underestimate the value of backups in production use
 
-once an host has been infected or show signs to, doing a quick & tested restoration is very usefull - *shame when you do a restore but it can't be restored*
+once an host has been infected or is showing signs to, doing a quick & tested restoration is very usefull - *test backups before restoration*
 
 ### software side
 
@@ -149,31 +149,31 @@ once an host has been infected or show signs to, doing a quick & tested restorat
 
 authorisation can be associated to permissions
 
-in eather ways, a good practice is to always let the minimal permissions to the users
+a good practice is to always let the minimal permissions to the users, only what they are intended to do
 
 that can be a part of the `threat model`: who can access which ressources
 
-in other words, when an user is compromised -> what can it access, what is at risk
+in other words, when an user is compromised -> what can it access, what became at risk
 
-disabling the root account is a good idea for most hosts & servers, prefering sudoer or accorded user permissions
+disabling the root account is also a good idea for most hosts & servers, prefering sudoer or proper accorded user permissions
 
-as always, make sure to use good passwords, for [ssh using keys or certificates](https://xeylou.fr/posts/ssh)
+as always, good passwords are always preferated & for the [ssh protocol use keys or certificates](https://xeylou.fr/posts/ssh)
 
 #### authentication
 
-using a login & a password, you cannot verify the person accessing a ressource, only the user 
+using a login & a password cannot verify the person accessing a ressource behind the user 
 
-since then came human intervention to garantee the person accessing the ressource
+since then, human intervention has guaranteed the identity of the person accessing the resource
 
-back then, simple questions where asked to know if the intended person using the login waas the one intended: name of the person dog, where did he was born, etc.
+back then, simple questions where asked to know if the intended person using the credentials was the one intended - *e.g name of the person dog, where did he was born, etc.*
 
-this authentication method was highly subjected to doxing
+this authentication method was highly subjected to doxing - *searching public informations about someone*
 
-now, 2fa comes in, widely present, authentication part is living on the person's phone
+nowadays, 2fa is used, living on the inteded person's phone or an dedicated hardware device (yubikey)
 
-2fa can take form of push notifications (malicious ones can be injected), sms verifications (warning sim swapping) or authenticators codes using totp
+2fa can take the form of push notifications (malicious ones can be injected), sms verifications (warning sim swapping attack method) or authenticators codes using totp
 
-mfa (multifactor athentication) can also be applied
+mfa (multifactor athentication) can also be cho se
 
 ### os/software side
 
@@ -181,31 +181,29 @@ mfa (multifactor athentication) can also be applied
 
 <!-- https://www.crowdstrike.com/cybersecurity-101/endpoint-protection-platforms/ -->
 
-endpoint protection platform is the suite of technos used to protect endpoints  
+endpoint protection platform define the suite of technos used to protect endpoints  
 
 #### ng-av/edr
 
-av (antivirus) & ngav (next gen antivirus) or edr (endpoint detection & response) are commonly used technos to protect endpoints
+av (antivirus), ngav (next gen antivirus) or edr (endpoint detection & response) are commonly used technos to protect endpoints
 
-*all the sources i found was saying different things, so i putted together ng-avs & edrs, i am wondering if that is not just marketing for the same solutions*
+*sources i found said different things, so i put ng-avs & edrs together, i wonder if their names are not just a marketing thing for the same solutions*
 
 "legacy avs" are based in signature recognition to stop known malware
 
-an individual hash can be generated for each file, standard avs compare them to a list of malware they have to know if a file is one or not
+an individual hash could be generated for each file, standard avs compare them to a list of malware hash they have to know if a file is one or not
 
-new or yet unknown malwares could not be discovered
+that's only works againt file-based attack, new or yet unknown malwares could not be discovered too
 
 <!-- that also introduce the notion of `false positive` if a non-malicious file is flagged by an av... -->
 
-variations of a malware (malformed sinature trick) can be done, so its bypass the check since it is not in the db
+variations of a malware (malformed sinature trick) can be done, so its bypass the check since it is not in the signature db
 
-ngav use behaviour detection on top of the signature recognition, if an activity is suspicious -> the file created it can be put un quarantine
+ngav use behaviour detection on top of the signature recognition, if a software/program/services activity is suspicious -> the file or its activity can be put un quarantine or deleted
 
-some may introduce ai, i guess for machine learning although
+some may introduce ai, i guess for machine learning although av & ngav are already well ressources hungry
 
-av & ngav are ressources hungry
-
-be aware that more than one av could lead to more ressource usage & the avs to try cancel each other, since they are accessing & seeing each other activities
+be aware that more than one av could lead to more ressource usage & them trying to cancel each other, since they are accessing same files & seeing each other activities
 
 <!--
 #### hips
@@ -214,62 +212,62 @@ host intrusion prevention system
 
 ## networks solutions
 
-networks solutions are preferable to stop malicious traffic (the malware from incoming) before accessing the endpoints
+networks solutions are preferable so the threat or the attack is stopped before accessing the endpoints
 
 #### firewall
 
 firewalling protects networks from unwanted traffic by a set of pre-programmed rules
 
-also provide a network segmentation, seperation of the lan (local area network) into smaller ones w/ their dedicated rules
+it can also provide a network segmentation, seperation of the lan (local area network) into smaller ones w/ their dedicated rules
 
 *not to compare w/ software firewalls who applies rules to an host only*
 
 #### proxy
 
-proxy servers could be you intermediate to access the internet in your lan - *not mentionning vpn*
+proxy servers could be an intermediate to access the internet in a lan
 
-very usefull to reduce a network attack surface 
+very usefull to reduce a network attack surface since all the traffic is going through
 
-since all the traffic is going through, it can monitor it or gather metrics
+it can monitor traffic or gather metrics
 
-it also provide sort of firewalling since you are restricted by what the proxy permit you to go
+it also provide sort of firewalling since you are restricted by what the proxy permit you to access to
 
-also great for privacy since your host is not directly exposed
+it is also great for privacy since hosts are not directly exposed
 
-*many use of proxies or "proxy servers can be found doing research*
+*many use of proxies can be found doing research*
 
 #### ids & ips
 <!-- https://www.okta.com/identity-101/ids-vs-ips/ -->
 
-intrusion detection system & intrusion protection system are the "avs of network" - *i call them*
+intrusion detection systems & intrusion protection systems are the "avs of network" - *i call them*
 
 the ids analyse real-time traffic for signature matching known attacks or suspicious behaviour
 
-it can make alerts related to it & according to the threat model, call the ips to stop the traffic related to it or push an alert to let the secops team choose
+it can make alerts related to it & according to the threat model: call the ips to stop the traffic related to it or push an alert to let the secops team
 
 #### soc
 <!-- https://www.ibm.com/topics/security-operations-center -->
 
-the security operations center - *found it can be called isoc (information...)*
-
-*the masterpiece to have, centralising & thinking*
+the security operations center - *found it can be called isoc (information...)* - is the masterpiece to have, centralising & thinking
 
 socs unifiy & coordinate security tools (edr, firewall, proxy, etc.) to a main dashboard
 
-extremely useful to correlate informations & choose actions
+extremely useful to correlate informations & choose appropriate actions
 
-it use all other solutions ressources to monitor, maybe detect & respond (alert or do an action)
+it use all other solutions ressources to monitor, detect & respond to an alert
 
 for some socs, they can: shutdown endpoints or disconnect them, reroute their traffic, run avs scan, etc.
 
 people are present at full-time to maintain the socs since it is a very important protection mesure (ciso, analysts, devops/secdevops...)
 
+it is one of of the most usefull security solution when it comes to automates, monitoring & responding
+
 #### ndr/xdr
 network detection & response and extended detection & response
 
-ndr monitor network layer 2-7 osi traffic, no agent on the endpoints
+ndr monitors network layer 2-7 osi traffic, no agent on the endpoints
 
-xdr tend to gather more informations, on endpoints by installing agents for example
+xdr tend to gather more informations, by for example installing agents on endpoints to gather data
 
 xdr seems to be more corporate solutions & focus on properitaty
 
@@ -286,7 +284,7 @@ data gathered by the firewalls, network appliances, ids... can be gathered by th
 
 the siem is: collecting, aggregating, identifying, categorising, analysing incidents or events
 
-siem needs continuous learning by the security team or by ai (machine learning) to keep categorising data
+siem needs continuous learning by the security team or by ai (machine learning) to keep categorising the data well
 
 these data are send to the soc next
 
