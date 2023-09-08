@@ -26,5 +26,3 @@ I do a work-study as an Network & System Administrator for a french IT service d
 ### Freetime
 
 Exploring & creating Github repos about IT related stuff.
-
-Goign nowhere.
