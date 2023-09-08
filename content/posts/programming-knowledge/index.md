@@ -1,7 +1,7 @@
 ---
 title: "coding & languages knowledge"
 date: 2023-09-03
-draft: true
+draft: false
 tags: [ "coding" ]
 slug: "coding-knowledge"
 ---
