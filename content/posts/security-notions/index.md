@@ -1,7 +1,7 @@
 ---
 title: "security notions"
 date: 2023-09-01
-draft: true
+draft: false
 tags: [ "monitoring", "security" ]
 slug: "security-analysis-hosts"
 description: "taking a tour & understanding a variety of security notions"
