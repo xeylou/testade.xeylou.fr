@@ -24,70 +24,70 @@ exporte pas les jeux (epic games, origin...)
 
 ## software management
 
-Highlighting gaps & problems from the non software management in windows.
+highlighting gaps & problems from the non software management in windows
 
 ### installation
 
-To install a software in windows, an installer needs to be searched in a browser, downloaded (`.exe`, `.msi`...) & executed to download the wanted software.
+to install a software in windows, an installer needs to be searched in a browser, downloaded (`.exe`, `.msi`...) & executed to download the wanted software
 
-By downloading an installer externally, the chances to install the wrong software, install additional ones or a malware is increased.
+by downloading an installer externally, the chances to install a wrong software, install additional ones or a malware is increased
 
 ### updates 
 
-Software updates are individuals, each software must search for its update - *background apps, when the computer starts etc.*
+software updates are individuals, each software must search for its update - *background apps, when the computer starts etc.*
 
-Nor the Windows Update or the Microsoft Store will check for the external installed software updates.
+nor the Windows Update or the Microsoft Store will check for the external installed software updates
 
 ### uninstallation
 
-Most of the time, software can be found in the control panel or the apps section of the windows settings.
+most of the time, software can be found in the control panel or the apps section of the windows settings
 
-However, software installed in non common path are not listed alongside those.
+however, software installed in non common path are not listed alongside those
 
-Dependencies installed to use them usually remain after uninstalling the software - *how many programs in the control panel are wanted or used...*
+dependencies installed to use them usually remain after uninstalling the software - *how many programs in the control panel are not used...*
 
 ## some improving
 
-The Microsoft Store improves the software management in windows.
+the Microsoft Store has improved the software management in windows
 
-The software are trusted because approved & listed by Microsoft.
+the software are trusted because approved & listed by Microsoft
 
-Software are searched & directly downloaded, no risks to download & execute a malicious program found online.
+software are searched & directly downloaded, no risks to download additional software or execute a malicious program online
 
-The software installed from the Microsoft Store can be all updated at once, no background apps etc.
+the software installed from the Microsoft Store can be all updated at once, no background apps etc
 
-However, the ms store apps list doesn't cover all the wanted users apps.
+however, the ms store apps list doesn't cover all the wanted users apps
 
 ## real improvement
 
-Windows, maybe knowning how software are handled on linux, created their [package manager](https://learn.microsoft.com/en-us/windows/package-manager/#understanding-package-managers).
+windows, maybe knowning how software are handled on linux, created their [package manager](https://learn.microsoft.com/en-us/windows/package-manager/#understanding-package-managers)
 
-Package managers are tools used to install & manage software & their packages.
+package managers are tools used to install & manage software & their packages
 
-Linux users use them to quickly install software, update their system, their software & packages whenever they want, and also uninstall software including unused dependencies.
+linux users use them to quickly install software, update their system, their software & packages whenever they want, and also uninstall software including unused dependencies
 
-A package manager is a simpler & cleaner way to manage your system software & updates.
+a package manager is a simpler & cleaner way to manage your system software & updates
 
 > packages managers can also be used in companies to avoid installing software one by one on hundred PCs, run grouped updates, install specific ver. of a software & more
 
 ## windows package managers
 
-Package managers can be found for different purposes.
+package managers can be found for different purposes
 
-Here are some of them, how to install & use them.
+here are some of them, how to install & use them
 
 ### smooth transition
 
-To switch into a package manager easily, all installed apps can be found in the `Control Pannel`, under `Programs`, `Uninstall Programs`.
+to switch into a package manager easily, all installed apps can be found in the `Control Pannel`, under `Programs`, `Uninstall Programs`
 
-Certain other apps can be found in the `Settings` -> `Applications`.
+certain other apps can be found in the `Settings` -> `Applications`
 
-Either, this command can be launched in an admin Terminal to list your installed apps - *games not include, just the launchers*
+either, this command can be launched in an admin. terminal to list installed apps - *games not include, just the launchers*
 
 ```powershell
 Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table –AutoSiz
 ```
-Export the list to a file
+export the list to a file
 ```powershell
 Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table –AutoSize > C:\programs.txt
 ```
@@ -96,39 +96,39 @@ Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uni
 Invoke-WebRequest -Uri https://github.com/microsoft/winget-cli/releases/download/v1.5.2201/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle -OutFile .\MicrosoftDesktopAppInstaller_8wekyb3d8bbwe.msixbundle
 -->
 
-Winget is the windows package manager shipped with windows 11 - *can be installed in windows 10 using a command*.
+winget is the windows package manager shipped with windows 11 - *can be installed in windows 10 using a command*
 
-Adobe products & other microsoft trusted software can be installed quickly & securely through it.
+adobe products & other microsoft trusted software can be installed quickly & securely through it
 
-With `vlc` for example, instead of opening a web browser, searching vlc, downloading the installer, executing it, clicking next...  
-Open a Terminal or a Powershell & run.
+with `vlc` for example, instead of opening a web browser, searching vlc, downloading the installer, executing it, clicking next...  
+open a Terminal or a Powershell & run
 ```powershell
 winget install vlc
 ```
 > multiple software can be installed at once, to install gimp & vlc for example `winget install gimp vlc`
 
-Winget can search wanted packages, example with `gimp`.
+winget can search wanted packages, example with `gimp`
 ```powershell
 winget search gimp
 ```
 
-List installed packages.
+list installed packages
 ```powershell
 winget list
 ```
 
-Uninstall one or more packages.
+uninstall one or more packages
 ```powershell
 winget uninstall vlc gimp
 ```
 
-Upgrade one or all packages at once.
+upgrade one or all packages at once
 ```powershell
 winget upgrade --id Adobe.Acrobat.Reader.64-bit
 winget upgrade --all
 ```
 
-Configuration can be exported if moving from a pc to an other.
+configuration can be exported if moving from a pc to an other
 ```powershell
 winget export packages.json
 winget import packages.json
@@ -136,61 +136,63 @@ winget import packages.json
 
 ### ninite
 <!-- https://blog.logrocket.com/6-best-package-managers-windows-beyond/#ninite -->
-Leaving the command line, ninite aims to install & update your software all at once using a `.exe`.
+leaving the command line, ninite aims to install & update software all at once using a `.exe`
 
-Very usefull after a windows installation to download all your software at once if you didn't have winget at first.
+very usefull after a windows installation to download all your software at once if you didn't have winget at first
 
-Running it more than once will update the selected software.
+running it more than once will update the selected software
 
-On their website, software to download can be choose, from that it will generate a `.exe` to install them.
+on their website, software to download can be choose, from that it will generate a `.exe` to install them
 
 {{< button href="https://ninite.com/" target="_blank" >}}
-Select software & "Get Your Ninite"
+select software to install & "Get Your Ninite"
 {{< /button >}}
 
 ### chocolatey
 
-Most used package manager in windows, appeared before winget in 2011: chocolatey is a more open package manager.
+most used package manager in windows, appeared before winget in 2011: chocolatey is a more open package manager
 
-More packages are in chocolatey, they are moderated & doesn't contain malware or bloatware.
+more packages are in chocolatey, they are moderated & doesn't contain malware or bloatware
 
-Chocolatey is more open, more widely used software are present, those who are not verified yet by windows.
+chocolatey is more open, more widely used software are present than in winget, those who are not verified yet by windows
 
-A single powershell command can install chocolatey, runned as admin.
+a single powershell command can install chocolatey, runned as admin
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
-Chocolatey has a strong & native gui called `chocolateygui` to avoid using commandline.
+chocolatey has a strong & native gui called `chocolateygui` to avoid using commandline
 
 ```bash
 choco install chocolateygui
 ```
 
-The commands are similar to [winget](#winget) with the `choco` command.
+using it, all software can be upgraded at once, & its telling you an error if it can't (standard installers don't)
 
-> i personally use chocolatey when i got to be on windows & find it more convenient to use, also for new users because of its native gui
+the commands are similar to [winget](#winget) with the `choco` command
 
-To list local installed software
+> i personally use chocolatey when i got to be on windows host & find it more convenient to use, also for new users because of its native gui
+
+list local installed software
 ```powershell
 choco list --local
 ```
 
-To upgrade all packages
+upgrade all packages
 ```powershell
 choco upgrade all
 ```
 
-And the ultimate command to remove a software with its dependencies if not use by other ones (those commands are the same).
+and the ultimate command to remove a software with its dependencies if not use by other ones *- those commands are the same*
 
 ```powershell
 choco uninstall package --removedependencies
 choco uninstall package -x
 ```
-> if an other software uses the removed one dependencies, chocolatey doesn't uninstall them & tells you it didn't.
+> if an other software uses the removed one dependencies, chocolatey doesn't uninstall them & tells you it didn't
 
 ## bonus macos
 
-The macos software management is different from the windows one.
+the macos software management is different from the windows one
 
-Although, [homebrew](https://brew.sh/) has the same role as [chocolatey](#chocolatey) does for macos.
+although, [homebrew](https://brew.sh/) has the same role as [chocolatey](#chocolatey) does for windows
