@@ -155,17 +155,17 @@ that can be a part of the `threat model`: who can access which ressources
 
 in other words, when an user is compromised -> what can it access, what became at risk
 
-disabling the root account is also a good idea for most hosts & servers, prefering sudoer or proper accorded user permissions
+disabling the root account is also a good idea for most hosts, prefering sudoer or proper accorded user permissions
 
 as always, good passwords are always preferated & for the [ssh protocol use keys or certificates](https://xeylou.fr/posts/ssh)
 
 #### authentication
 
-using a login & a password cannot verify the person accessing a ressource behind the user 
+using a login & a password cannot verify the identity of the person accessing a ressource behind a user 
 
 since then, human intervention has guaranteed the identity of the person accessing the resource
 
-back then, simple questions where asked to know if the intended person using the credentials was the one intended - *e.g name of the person dog, where did he was born, etc.*
+back then, simple questions where asked to know if the intended person using the credentials was the one intended - *e.g name of the person's dog, where did he was born, etc.*
 
 this authentication method was highly subjected to doxing - *searching public informations about someone*
 
@@ -173,7 +173,7 @@ nowadays, 2fa is used, living on the inteded person's phone or an dedicated hard
 
 2fa can take the form of push notifications (malicious ones can be injected), sms verifications (warning sim swapping attack method) or authenticators codes using totp
 
-mfa (multifactor athentication) can also be cho se
+mfa (multifactor athentication) can also be choose
 
 ### os/software side
 
@@ -181,38 +181,38 @@ mfa (multifactor athentication) can also be cho se
 
 <!-- https://www.crowdstrike.com/cybersecurity-101/endpoint-protection-platforms/ -->
 
-endpoint protection platform define the suite of technos used to protect endpoints  
+`endpoint protection platform` define the suite of technos used to protect endpoints  
 
 #### ng-av/edr
 
-av (antivirus), ngav (next gen antivirus) or edr (endpoint detection & response) are commonly used technos to protect endpoints
+av *antivirus*, ngav *next gen antivirus* or edr *endpoint detection & response* are commonly used technos to protect endpoints
 
 *sources i found said different things, so i put ng-avs & edrs together, i wonder if their names are not just a marketing thing for the same solutions*
 
 "legacy avs" are based in signature recognition to stop known malware
 
-an individual hash could be generated for each file, standard avs compare them to a list of malware hash they have to know if a file is one or not
+an individual hash could be generated for each file, standard avs compare them to a list of malicious files hash they have to know if a file is one or not
 
 that's only works againt file-based attack, new or yet unknown malwares could not be discovered too
 
 <!-- that also introduce the notion of `false positive` if a non-malicious file is flagged by an av... -->
 
-variations of a malware (malformed sinature trick) can be done, so its bypass the check since it is not in the signature db
+variations of a malware (malformed sinature trick) can also be done, so its bypass the check since it is not in the signature db
 
 ngav use behaviour detection on top of the signature recognition, if a software/program/services activity is suspicious -> the file or its activity can be put un quarantine or deleted
 
-some may introduce ai, i guess for machine learning although av & ngav are already well ressources hungry
+some may introduce sandboxing, ai *- i guess for machine learning* although av & ngav are already well ressources hungry
 
-be aware that more than one av could lead to more ressource usage & them trying to cancel each other, since they are accessing same files & seeing each other activities
+be aware that more than one av could lead to more ressource usage & them trying to cancel each other, since they are accessing same files & seeing each other activity
 
 <!--
 #### hips
 host intrusion prevention system
 -->
 
-## networks solutions
+## network solutions
 
-networks solutions are preferable so the threat or the attack is stopped before accessing the endpoints
+network solutions are preferable so the threat or the attack is stopped before accessing the endpoints
 
 #### firewall
 
@@ -239,16 +239,16 @@ it is also great for privacy since hosts are not directly exposed
 #### ids & ips
 <!-- https://www.okta.com/identity-101/ids-vs-ips/ -->
 
-intrusion detection systems & intrusion protection systems are the "avs of network" - *i call them*
+*intrusion detection systems* & *intrusion protection systems* are the "avs of network" - *as i call them*
 
 the ids analyse real-time traffic for signature matching known attacks or suspicious behaviour
 
-it can make alerts related to it & according to the threat model: call the ips to stop the traffic related to it or push an alert to let the secops team
+it can make alerts related to it & according to the threat model: call the ips to stop the traffic related to it or push an alert for the the secops team
 
 #### soc
 <!-- https://www.ibm.com/topics/security-operations-center -->
 
-the security operations center - *found it can be called isoc (information...)* - is the masterpiece to have, centralising & thinking
+the *security operations center* - *found it can be called isoc for information...* - is the masterpiece to have, centralising & thinking
 
 socs unifiy & coordinate security tools (edr, firewall, proxy, etc.) to a main dashboard
 
@@ -258,16 +258,16 @@ it use all other solutions ressources to monitor, detect & respond to an alert
 
 for some socs, they can: shutdown endpoints or disconnect them, reroute their traffic, run avs scan, etc.
 
-people are present at full-time to maintain the socs since it is a very important protection mesure (ciso, analysts, devops/secdevops...)
+people are present at full-time to maintain the socs since it is a very important protection mesure (ciso, analysts, devops/secdevops persons...)
 
-it is one of of the most usefull security solution when it comes to automates, monitoring & responding
+it is one of the most usefull security solution when it comes to automates, monitoring & responding
 
 #### ndr/xdr
-network detection & response and extended detection & response
+*network detection & response* and *extended detection & response*
 
 ndr monitors network layer 2-7 osi traffic, no agent on the endpoints
 
-xdr tend to gather more informations, by for example installing agents on endpoints to gather data
+xdr tend to gather more informations, by installing agents on endpoints to gather data for example
 
 xdr seems to be more corporate solutions & focus on properitaty
 
@@ -276,17 +276,17 @@ ndr can be implemented solo but xdr may cause friction if it's not the only prot
 #### siem
 <!-- https://www.microsoft.com/en-us/security/business/security-101/what-is-siem -->
 
-security information & event manager
+*security information & event manager*
 
 oftenly used w/ a soc, it is the helper of the security teams
 
-data gathered by the firewalls, network appliances, ids... can be gathered by the siem & filtered since all their informations isn't always relevant
+data gathered by the firewalls, network appliances, ids... can be filtered by the siem since all their informations aren't always relevant
 
-the siem is: collecting, aggregating, identifying, categorising, analysing incidents or events
+the siem is: collecting, aggregating, identifying, categorising & analysing incidents or events
 
 siem needs continuous learning by the security team or by ai (machine learning) to keep categorising the data well
 
-these data are send to the soc next
+the data is next sent to the soc next
 
 #### soar
 <!-- 
@@ -294,13 +294,13 @@ https://www.microsoft.com/en-us/security/business/security-101/what-is-soar
 https://swimlane.com/blog/siem-soar/ 
 -->
 
-security orchestration, automation & response
+*security orchestration, automation & response*
 
 seems to go a step further than the siem
 
-looks like an inbetween of a soc & a siem but with an advantage to the soc: the automation - *in the name...*
+looks like an inbetween of a soc & a siem but with an advantage to the soc: the automation - *it's in the name...*
 
-it automates and orchestrates time-consuming, manual tasks for the secops, so they can speed up on response time
+it automates and orchestrates time-consuming manual tasks of the secops, so they can speed up on response time
 
 <!-- ## other
 ### incident metrics -->
