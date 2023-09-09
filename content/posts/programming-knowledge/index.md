@@ -69,6 +69,7 @@ it is much simpler to use since the developper can focus on the algebra, arithme
 when comparing the performance of low & high-level languages for the same task, low-level ones is much faster: it require little interpretation by the computer
 
 ## paradigm
+<!-- https://www.youtube.com/watch?v=HlgG395PQWw -->
 ### imperatives
 #### object-oriented
 #### procedural

@@ -24,7 +24,7 @@ https://www.baeldung.com/linux/ssh-tunneling-and-proxying
 
 ## introduction
 
-here i expose my usages of ssh & some advanced notions about it
+here i expose my ssh usages & some advanced notions about it
 
 <!-- https://www.ssh.com/academy/ssh/openssh#what-is-openssh? -->
 i'll speak about the ssh protocol as the openssh implementation
@@ -41,19 +41,19 @@ secure shell - ssh, is a very versatile protocol but generally used to access a 
 - use port tcp/22 by default
 - use asymetric cryptography
 
-the first time connecting to a remote ssh server, w/ or w/out a private key, you have the server public key fingerprint prompted asking you if you trust it or not
+the first time accessing a remote ssh host, its public key fingerprint is prompted to know if you are accessing the wanted host - security reasons, MitM, asking you if you trust it or not 
 
-if yes, it is paste in `~/.ssh/known_hosts` w/ the associate ip address & encryption protocol; its trusted by the local machine
+if yes, the fingerprint is paste in `~/.ssh/known_hosts` w/ the associate ip address & encryption protocol; its trusted by the local machine
 
 ### modifications
 
 on the ssh server side, connexions behaviour can be modified in `/etc/ssh/sshd_config`
 
-*sshd stands for ssh daemon*
+*(sshd stands for ssh daemon)*
 
-basic ssh setup let you connect to an ssh host entering an username & a password beside root
+basic ssh setup let you connect to a host entering an username & a password beside root
 
-for the changes to take effect, restart the sshd service
+if modifications is made, for the changes to take effect: the sshd service needs to be restarted
 
 ```bash
 systemctl restart sshd
@@ -65,11 +65,11 @@ systemctl restart sshd
 
 - check if the root login is disabled (yes by default)
 
-- using [ssh keys](#keys) (authentication) + username & password (authorisation) or [certificates](#certificates)
+- using [ssh keys](#keys) or [certificates](#certificates) (authentication) + username & password (authorisation)
 
 - use differents keys to access different servers
 
-- use `~/.ssh/config` to manage easily keys & remote servers
+- use `~/.ssh/config` to easily manage keys & remote hosts
 
 - use a [passphrase](#passphrases) for your private keys
 
@@ -77,17 +77,25 @@ systemctl restart sshd
 
 the server has a public key that everyone can see, only you have the private key to connect to the server; public key -> the lock, private key -> *the key...*
 
-private & ssh keys are generated  simultaneously, various algorithms could be choosen
+private & public keys are generated simultaneously, various encryption algorithms could be choosen
 
-keys default location is `~/.ssh` - *perfectly fine with it*
+private keys default location is `~/.ssh` - *perfectly fine with it*
+
+w/ openssl, this command brings forms to fill to create a public & private key pair
 
 ```bash
-ssh-keygen # to generate your keys
+ssh-keygen # to generate keys
 ```
-*-C can be used to add a comment to a key, -t choose the algorithm*
+> to automate or create many at once w/out filling the forms:  
+>
+> `-C` can be used to add a comment to a key  
+`-t` to choose the encryption algorithm - rsa by default  
+`-b` number of bytes, the more the better encryption  
+`-f` the location, usefull when creating many keys at once  
+`-N ""` specify a passphrase, replace what's inside `""`
 <!-- ed25519 -->
 
-add a public key to a remote host, after running the `ssh-keygen` command
+pushing a public key to a remote host, after running the `ssh-keygen` command
 
 ```bash
 ssh-copy-id -i path/to/key.pub username@remotehost
@@ -104,17 +112,15 @@ passphrases can be added to private ssh keys, preventing the usage of the key if
 
 `~/.ssh/config` serve the ssh client to manage its remote hosts
 
-*or `/etc/ssh/sshd_config`*
-
 ```bash
-host remotename
+host abitraryname
     Hostname remotehost
     User username
     Port sshport
     IdentityKey /path/to/privatekey
 ```
 
-after that config, no need to restart a service
+after changes, no need to restart a service
 
 ```bash
 ssh remotename
@@ -123,15 +129,46 @@ ssh remotename
 ### certificates
 <!-- https://smallstep.com/blog/use-ssh-certificates/
 https://goteleport.com/blog/how-to-configure-ssh-certificate-based-authentication/ -->
-works the same way tls/ssl does for https
+works in the same way tls/ssl does for https
 
-use to scale ssh access because having data like an expiration date and permissions
+used to scale ssh, usefull to create a limited time access
 
-***A CONTINUER***
+after creating a public & a private key (saw in [keys](#keys)), those can be signed w/ a Certificate Authority (CA) certificate
+
+```bash
+ssh-keygen -s hostca -I hostname.domain.tld -h -n hostname.domain.tld -V +52w key.pub
+```
+> `-s hostca` specify the file name of the CA private key  
+`-I hostname.domain.tld` the certificate's identity  
+`-h` specify its an host certificate, not an user one  
+`-n hostname.domain.tld` url to access the future host  
+`-V +52w` certificates's validity period (52 weeks)  
+
+*(a passphrase can be asked)*
+
+`key-cert.pub` should be generated
+
+to use it on a local machine, paste the the ca & the public key to the `/etc/ssh` folder on the remote host for example
+
+edit in the `/etc/ssh/sshd_config` file:
+
+```bash
+HostCertificate /etc/ssh/key-cert.pub
+```
+
+the remote host now present a certificate to anyone who connects
+
+to the client side, trust the ca in `$HOME/.ssh/know_hosts
+
+```bash
+@cert-authority *.domain.tld ssh-rsa <hostca.pub content>
+```
+
+
 ## file transfering
 <!-- https://linuxhandbook.com/transfer-files-ssh/ -->
 ways to transfer ressources to & from a remote host
-### from remote host
+### from a remote host
 gather a file from a remote host
 ```bash
 scp username@remotehost:/remote/path/to/file .
@@ -145,7 +182,7 @@ synchronising files from a remote host using `rsync`
 rsync username@remotehost:/remote/path/to/file .
 rsync -r username@remotehost:/remote/path .
 ```
-### to remote host
+### to a remote host
 send a file to a remote host 
 ```bash
 scp filename username@remotehost:/remote/path
@@ -159,7 +196,7 @@ scp -r directoryname username@remotehost:/remote/path
 rsync filename username@remote-host:/remote/path
 rsync -r directoryname username@remote-host:/remote/path
 ```
-### mount remote folder
+### mount a remote folder
 mount a remote directory on local system w/ sshfs (ssh file system) 
 ```bash
 apt install -y sshfs # depends on your package manager
@@ -169,7 +206,7 @@ mount the remote directory in the created folder
 ```bash
 sshfs username@remote-host:/remote/path mount-dir
 ```
-changes in the folder will also be made in `remote-host:/remote/path`
+changes in the `mount-dir` will also be made in `remote-host:/remote/path`
 
 to unmount it
 ```bash
@@ -196,7 +233,7 @@ or
 get /path/to/remote/file /path/to/local/directory
 put /path/to/local/file /path/to/remote/directory
 ```
-a gui like filezilla for easier transfer applications can be done
+a gui like filezilla for an easier transfer experience (gui) can be done
 ## x11 forwarding
 use remote app gui on local host
 ### config remote server
@@ -229,9 +266,9 @@ to access specific ressources, vpns expose an entire network which cannot be rel
 
 ssh tunneling encapsulate a layer 3-7 traffic between 2 hosts over ssh
 
-ssh encryption is added to the communication - *so that if an unsecured communication is used by the application, it is encrypted*
+ssh encryption is added to the communication - *so that if an unsecured communication is used, it is encrypted*
 
-it can also be use to bypass firewall restrictions by fowarding ports
+it can also be used to bypass firewall restrictions by fowarding ports
 
 uncontrolled or unmonitored tunnels can be used as backdoors, for data exfiltration, bouncing attacks & more
 ### local fowarding
@@ -245,19 +282,21 @@ extremely usefull to access a remote service denyied by a firewall, it needs the
 graph LR
 a(local machine)
 b(firewall)
-c(remote server)
+c(remote host)
 
 a---b
 b-->c
 {{< /mermaid >}}
 
-let's say you have a raspberry pi at `192.168.1.12` w/ ssh access via `pi` user hosting a web server locally on its `5000` port & you want to access locally through your machine 
+let's say you have a raspberry pi at `192.168.1.12` (remote host) w/ ssh access via the `pi` user 
+
+it shosting a web server locally on its `5000` port & you want to access it locally through your machine 
 ```bash
 ssh -N -L 127.0.0.1:8080:127.0.0.1:5000 pi@192.168.1.12
 ssh -N -L 8080:127.0.0.1:5000 pi@192.168.1.12
 
 ```
-*-N prevents from running an active ssh session*
+> `-N` prevents from running an active ssh session
 
 all traffic (http requests) sent to localhost:8080 on local machine will be forwarded to raspberry pi's 5000 port - responses sended back to you
 
@@ -281,7 +320,7 @@ forward a port on a remote host (ssh server) to a port on a local machine (ssh c
 
 initialised by the remote server
 
-used to access a service, hosted on a local network, from another network (or internet)
+used to access a service hosted on a remote local network, from another network (or internet)
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
@@ -341,11 +380,11 @@ usefull to centralise & secure ssh connexions in a corporate network to reduce t
 
 #### advices
 
-- only the ssh port is accessible for incomming connexions
+- only the ssh port should be accessible for incomming connexions
 - the ssh port is changed from 22
-- root user disabled
+- root user is disabled
 - be very aware of the security implementations
-- prevent users to ssh into the bastion itself
+- prevent users to use an ssh active session into the bastion itself
 
 #### other purposes
 
@@ -369,10 +408,10 @@ ssh -J bastionaddress username@remotehost
 *parameters saw in [config file](#config-file) can be added too*
 
 ```bash
-Host remotehost
+Host arbitraryname
    ProxyJump bastionaddress
 ```
-creation of an ssh user that cannot connect into ssh to the ssh bastion itself called `bastionuser`
+creation of an ssh user that cannot ssh into the bastion itself, called `bastionuser` in `/etc/ssh/sshd_config`
 
 give this user to anyone using the bastion
  ```bash
@@ -408,15 +447,17 @@ MAIS AUSSI DAUTRES SERVICES TEMPS QUE LE PROXY Y A ACCES
 https://www.tecmint.com/restrict-ssh-user-to-directory-using-chrooted-jail/
 -->
 
-change root (chroot) changes appareant root directory for the running user to a root directory called a chrooting jail
+change root (chroot) method changes appareant root directory for the running user to a root directory called a chrooting jail
 
-ssh support chrooting: restricting an ssh session to a directory
+usefull when giving access to untrusted or unmonitored users
+
+ssh support chrooting by restricting an ssh session to a directory
 
 you can [create a fancy one manually](https://www.tecmint.com/restrict-ssh-user-to-directory-using-chrooted-jail/) but it is very long, for each user
 
 [rssh](https://linux.die.net/man/1/rssh) is a simpler way to do so
 
-create a new user with `/usr/bin/rssh` shell
+create a new user with the `/usr/bin/rssh` shell
 ```bash
 useradd -m -d /home/chrooteduser -s /usr/bin/rssh chrooteduser
 passwd chrooteduser
@@ -431,7 +472,9 @@ works for sftp & scp
 <!-- https://dataswamp.org/~solene/2023-08-05-sshfp-dns-entries.html -->
 ssh use tofu *trust on first use*, it trusts the ssh server the first time connecting to it
 
-if targetted by a man-in-the-middle attack, you could be at risk using ssh connexion
+so if someone tried to impersonate the remote host identity or the host change, its fingerprint will be different & a warning will pop up saying that's not the wanted server
+
+if targetted by a man-in-the-middle attack the first connexion, you could be at risk using ssh connexion
 
 dnssec has many features to improve the standard & old dns protocol, one of which is: dns answers are not tampered
 
