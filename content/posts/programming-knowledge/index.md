@@ -1,7 +1,7 @@
 ---
 title: "coding & languages knowledge"
 date: 2023-09-03
-draft: false
+draft: true
 tags: [ "coding" ]
 slug: "coding-knowledge"
 ---
@@ -23,7 +23,7 @@ here i merge knowledge to expose some coding & programming languages concepts
 
 i won't be talking about programming, just coding & languages related stuff
 
-coding is the way to implement things, learning how things works, e.g coding sorting algorithm - *insertion, selection, merge sort, etc.*
+coding is the way to implement things, learning how things works, e.g coding sorting algorithms - *insertion, selection, merge sort, etc.*
 
 programming is the creation of something new: to sort in python, it is common to use the `sort` method when creating a software or an app
 
@@ -44,7 +44,7 @@ learning a low-level programming language makes you learn a lot about how compon
 
 they are use to directly control computer's operational semantics & provide little or no abstraction of programming ideas
 
-since they are dealing w/ the hardware, the code can change from a computer to another depending of the cpu architecture for example
+since they are dealing w/ the hardware, the code can change from a computer to another depending of hardware specification or architecture
 
 they are oftenly non human-readable & have a relatively slow learning curve
 
@@ -56,20 +56,22 @@ they are commonly use to write kernels & drivers
 
 ### high-level
 <!-- https://www.webopedia.com/definitions/high-level-language/ -->
-closer to human language, high-level languages are a goal for developping software
+closer to human language, high-level languages are for developping software
 
-they help the developer by avoiding the need to manually give each instruction to components
+they help developers by avoiding to manually give instructions directly to components
 
-instead, they use pre-built `methods` & `variables` to make the coding experience faster & simpler
+they make the coding experience faster & simpler for every day use or application
 
-variables creation is straightforward & methods do manipulation on them w/out seeing the components
+<!-- variables creation is straightforward & methods do manipulation on them w/out seeing the components -->
 
-it is much simpler to use since the developper can focus on the algebra, arithmetic or the algorithms
+it is much simpler to use since the developper can focus on the algebra, arithmetic or the algorithms... what he wants to do
 
-when comparing the performance of low & high-level languages for the same task, low-level ones is much faster: it require little interpretation by the computer
+when comparing the performance of low & high-level languages for the same task, low-level ones are much faster: it require little interpretation by the computer
 
 ## paradigm
 <!-- https://www.youtube.com/watch?v=HlgG395PQWw -->
+
+imperative & declarative are the two main paradigms
 ### imperatives
 #### object-oriented
 #### procedural
@@ -122,7 +124,7 @@ https://stackoverflow.com/questions/176011/python-list-vs-array-when-to-use
 <!-- pour les deux en dessous prendre exemple de c & c++ -->
 ### heritage
 ### polymorphism
-### paradigm    
+### paradigm
 ### heuristic
 ### data structure
 ### libraries
