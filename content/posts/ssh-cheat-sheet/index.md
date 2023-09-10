@@ -3,7 +3,7 @@ title: "ssh explored"
 date: 2023-08-19
 draft: false
 tags: ["cheat-sheet"]
-slug: "ssh"
+slug: "ssh-cheat-sheet"
 ---
 
 <!-- sources

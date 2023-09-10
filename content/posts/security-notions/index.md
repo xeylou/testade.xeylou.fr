@@ -3,7 +3,7 @@ title: "security notions"
 date: 2023-09-01
 draft: false
 tags: [ "monitoring", "security" ]
-slug: "security-analysis-hosts"
+slug: "security-notions"
 description: "taking a tour & understanding a variety of security notions"
 ---
 
