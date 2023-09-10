@@ -113,11 +113,11 @@ passphrases can be added to private ssh keys, preventing the usage of the key if
 `~/.ssh/config` serve the ssh client to manage its remote hosts
 
 ```bash
-host abitraryname
+Host abitraryname
     Hostname remotehost
     User username
     Port sshport
-    IdentityKey /path/to/privatekey
+    IdentityFile /path/to/privatekey
 ```
 
 after changes, no need to restart a service
