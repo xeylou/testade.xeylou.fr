@@ -1,7 +1,7 @@
 ---
 title: "security notions"
 date: 2023-09-01
-draft: false
+draft: true
 tags: [ "monitoring", "security" ]
 slug: "security-notions"
 description: "taking a tour & understanding a variety of security notions"
@@ -248,19 +248,13 @@ it can make alerts related to it & according to the threat model: call the ips t
 #### soc
 <!-- https://www.ibm.com/topics/security-operations-center -->
 
-the *security operations center* - *found it can be called isoc for information...* - is the masterpiece to have, centralising & thinking
+the *security operations center* - *found it can be called isoc for information security operations center* - is the structure (people, , room, devices...) where logs are centralized & correlated
 
-socs unifiy & coordinate security tools (edr, firewall, proxy, etc.) to a main dashboard
+people are present at full-time to maintain the soc since it is a very important protection mesure (cisco *chief information security officer*,analysts, devops/secdevops persons...)
 
-extremely useful to correlate informations & choose appropriate actions
+the soc integrate various technos such as [siem](#siem) or [soar](#soar)
 
-it use all other solutions ressources to monitor, detect & respond to an alert
-
-for some socs, they can: shutdown endpoints or disconnect them, reroute their traffic, run avs scan, etc.
-
-people are present at full-time to maintain the socs since it is a very important protection mesure (ciso, analysts, devops/secdevops persons...)
-
-it is one of the most usefull security solution when it comes to automates, monitoring & responding
+the soc team makes decisions to act on soc feedback according to the logs activity
 
 #### ndr/xdr
 *network detection & response* and *extended detection & response*
@@ -278,15 +272,13 @@ ndr can be implemented solo but xdr may cause friction if it's not the only prot
 
 *security information & event manager*
 
-oftenly used w/ a soc, it is the helper of the security teams
+offenly used in a soc environment, it gather, centralize & organize all logs from varius devices
 
-data gathered by the firewalls, network appliances, ids... can be filtered by the siem since all their informations aren't always relevant
+logs gathered by the firewalls, network appliances, ids... can be filtered by the siem since all their informations aren't always relevant
 
 the siem is: collecting, aggregating, identifying, categorising & analysing incidents or events
 
-siem needs continuous learning by the security team or by ai (machine learning) to keep categorising the data well
-
-the data is next sent to the soc next
+the siem needs continuous learning by the security team or by ai (machine learning) to keep categorising the data well
 
 #### soar
 <!-- 
@@ -296,9 +288,7 @@ https://swimlane.com/blog/siem-soar/
 
 *security orchestration, automation & response*
 
-seems to go a step further than the siem
-
-looks like an inbetween of a soc & a siem but with an advantage to the soc: the automation - *it's in the name...*
+seems to go a step further than the siem, taking advantage of the automation
 
 it automates and orchestrates time-consuming manual tasks of the secops, so they can speed up on response time
 
