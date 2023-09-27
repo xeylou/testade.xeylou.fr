@@ -249,7 +249,7 @@ nano /etc/bind/adehu.com
 $TTL 86400
 $ORIGIN adehu.com.
 
-@ IN SOA r303-deb12-bind1.adehu.com. guest.adehu.com. (
+@ IN SOA adehu.com. admin.adehu.com. (
 2023092702 ; serial
 21600 ; refresh
 10800 ; retry
@@ -451,7 +451,7 @@ nano /etc/bind/adehu.com
 $TTL 86400
 $ORIGIN adehu.com.
 
-@ IN SOA r303-deb12-bind1.adehu.com. guest.adehu.com. (
+@ IN SOA adehu.com. admin.adehu.com. (
 2023092702 ; serial
 21600 ; refresh
 10800 ; retry
