@@ -1,6 +1,7 @@
 ---
 title: "security notions"
 date: 2023-09-01
+lastmod: 2023-09-24
 draft: false
 tags: [ "monitoring", "security" ]
 slug: "security-notions"
