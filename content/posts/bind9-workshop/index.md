@@ -2,7 +2,7 @@
 title: "bind9 workshop"
 date: 2023-09-27
 draft: false
-tags: [ "french", "gnu/linux", "dns"]
+tags: [ "french", "gnu/linux", "dns" ]
 slug: "bind9-workshop"
 ---
 
@@ -17,15 +17,13 @@ dns bind9 pour le module r303
 
 ## introduction
 
-les deux premiers tp sont sur l'installation d'une infrastructure dns avec bind9
+les deux premiers tp portent sur l'installation d'une infrastructure dns avec des serveurs bind9
 
-je n'ai pas fait les notions "transversales" -> qui ne servent pas directement pour ce que l'on fait : gestion des logs & acl
+je n'ai pas fait les notions "transversales" : gestion des logs & les acl
 
-tout est fonctionnel & fonctionne la première fois, c'est un workshop -> vous pouvez tout copier coller mais comprennez
+essayez de comprendre ce qu'il se fait, lire vraiment attentivement plutôt que de le refaire en copiant & en collant
 
-j'espère aussi vous apprendre d'autres choses en cours de route 
-
-pour nous le qcm sur bind9 & postfix est le 18 ou le 19 octobre, ça portera sur des notions de cours, td, tp
+pour nous le qcm sur bind9 & postfix sera le 18 ou le 19 octobre, sur des notions de cours, td, tp
 
 pas de points négatifs, pas de choix multiples -> une seule réponse possible
 
@@ -34,8 +32,6 @@ pas de points négatifs, pas de choix multiples -> une seule réponse possible
 j'utilise 3 vm debian 12 : `r303-deb12-host1`, `r303-deb12-bind1` & `r303-deb12-bind2`
 
 le réseau local des vm est le `192.168.122.0/24` avec leur passerelle par défaut en `192.168.122.1`
-
-j'ai tout résumé dans le schéma ci dessous
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
@@ -57,20 +53,20 @@ bind1 -.- srv-bind
 bind2 -.- srv-bind2
 {{< /mermaid >}}
 
-j'utilise debian d'habitude & mr. billon veut nous faire accèder en ssh à ces vm, & ne pas utiliser l'environnement de bureau des ubuntu
+j'utilise debian d'habitude & mr. le prof veut nous faire accèder en ssh à ces vm, & ne pas utiliser l'environnement de bureau des ubuntu
 
 ## configuration initiale
 
 pour éviter d'avoir `root@debian` sur toutes les vm en ssh, je change leur `hostname` pour avoir `root@serveur-bind-1` par exemple
 
-lors des manipulations en terminal, ça m'évite de me tromper entre qui est qui, ça évite de rentrer une commande dans la mauvaise vm ._.
+lors des manipulations en terminal, ça évite de se tromper entre qui est qui & de rentrer une commande dans la mauvaise vm
 
 {{< alert icon="circle-info">}}
 **Note** commande effectuée en permission root sur les 3 vm en changeant *nouveau_hostname*
 {{< /alert >}}
 
 ```bash
-hostnamectl set-hostname nouveau_hostname && reboot
+hostnamectl set-hostname nouveau_hostname && logout
 ```
 
 <!-- ### configuration des IPs -->
@@ -176,8 +172,6 @@ après ça je peux juste faire `ssh host1` qui sera l'équivalent de `ssh root@1
 
 j'utiliserai le nom de domaine `adehu.com`
 
-son choix n'est pas important car il ne sortira pas du réseau local *- pas besoin d'une autorité de certification ou autre*
-
 on accède au shell du serveur bind
 
 ```bash
@@ -198,9 +192,11 @@ ce qui est l'inverse de -> j'ai ce nom de domaine, donne-moi son ip associée
 
 dans la zone inverse, on va mettre les mêmes enregistrements que ceux dans adehu.com, mais à l'envers du coup
 
-on va aussi définir que ce serveur dns (bind1) est le serveur primaire/principal/maitre pour ces zones dns
+on va aussi définir que ce serveur dns (bind1) est le serveur principal pour ces zones dns
 
 dans le fichier de gestion des zones `/etc/bind/named.conf`, on définit notre zone dns & sa zone inverse
+
+*même si la bonne pratique voudrait qu'il include notre fichier de conf.*
 
 ```bash
 nano /etc/bind/named.conf
@@ -232,13 +228,14 @@ zone "122.168.192.in-addr.arpa" {
 };
 ```
 
-> `type master`: ce dns est le principal/primaire/maitre de cette zone dns  
-> on fait référence à des fichiers qui seront la configuration de ces zones
+on fait référence à des fichiers qui seront la configuration de ces zones
+
+`type master`: ce dns est le principal de cette zone dns
+
 
 on peut aussi vérifier la syntaxe du fichier après l'enregistrement
 
 ```bash
-named-checkconf
 named-checkconf /etc/bind/named.conf
 ```
 
@@ -267,10 +264,20 @@ r303-deb12-bind2 IN A 192.168.122.4
 bind1 IN CNAME r303-deb12-bind1
 bind2 IN CNAME r303-deb12-bind2
 ```
-> `IN NS` on fait le record d'un serveur dns (pour cette zone il y a deux serveurs dns)  
-> on rajoute un . à la fin des fqdn pour indiquer leur fin (sinon ils répètent leur domain.tld)  
-> `IN A` pour les dns définis, faut bien leur ip (A pour ipv4)  
-> `IN CNAME` les serveurs bind seront accessibles via `bindX.adehu.com` 
+
+la directive `$ORIGIN` est là pour indiquer le domaine si un hôte est pas totalement défini
+
+`@ IN SOA` pour accorder qui a l'autorité sur cette zone (ici bind1) avec sa config.
+
+`IN NS` on fait le record d'un serveur dns (pour cette zone il y a deux serveurs dns)
+
+je rajoute un . à la fin des fqdn pour indiquer leur fin (sinon ils répètent leur domain.tld)
+
+`guest.adehu.com. IN NS r303-deb12-bind2` on définit un sous domaine & on le délègue à bind2 -> si tu veux aller sur ce sous-domaine, va contacter lui. par contre faudra lui renseigner
+
+`IN A` pour les dns définis, faut bien leur ip (A pour ipv4)
+
+`IN CNAME` les serveurs bind seront accessibles via `bindX.adehu.com`
 
 
 les valeurs chiffrées je ne les ai pas sorti de mon chapeau mais de ce tableau d'équivalence (secondes -> instances de temps)
@@ -300,17 +307,17 @@ $TTL 86400
 ```
 > `IN PTR` le nombre au début = dernier octet de l'ip voulue, on enregistre un pointeur (ptr) vers tel machine
 
-on vérifie la syntaxe de tout ce beau monde
+on vérifie la syntaxe
 
 ```bash
 named-checkzone adehu.com /etc/bind/adehu.com
 named-checkzone adehu.com.inverse /etc/bind/adehu.com.inverse
 ```
 
-on peut maintenant redémarrer le service bind9 pour prendre en compte les modifications
+redémarrer le service bind9 pour prendre en compte les modifications
 
 ```bash
-systemctl restart bind9 && systemctl restart named
+systemctl restart bind9
 ```
 
 {{< alert cardColor="#e63946" iconColor="#1d3557" textColor="#f1faee" >}}
@@ -325,9 +332,9 @@ nano /etc/resolv.conf
 nameserver 192.168.122.3
 ```
 
-puis après on "s'amuse" à tout vérifier
+vérifier l'installation
 
-*tous les tests en dessous fonctionnent*
+*tous les tests en dessous fonctionnaient*
 ```bash
 # pour tester un domaine: dig domain.tld
 dig adehu.com
@@ -348,11 +355,11 @@ nslookup 192.168.122.4
 
 je vais partager la gestion de la zone `adehu.com` au deuxième serveur dns `r303-deb12-bind2`, le serveur bind1 sera le serveur dns primaire (master) & bind2 le secondaire (secondary)
 
+on autorise le transfert de la zone `adehu.com` vers le serveur bind2 `r303-deb12-bind2`
+
 {{< alert icon="circle-info">}}
 **Note** sur r303-deb12-bind1
 {{< /alert >}}
-
-on autorise le transfert de la zone `adehu.com` vers le serveur bind2 `r303-deb12-bind2`
 
 ```bash
 nano /etc/bind/named.conf
@@ -392,6 +399,8 @@ systemctl restart bind9
 
 on doit informer le deuxième serveur bind qu'il a cette zone avec `r303-deb12-bind1` en serveur dns maitre
 
+j'ajoute aussi le sous domaine qu'il lui a été attribué
+
 {{< alert icon="circle-info">}}
 **Note** sur r303-deb12-bind2
 {{< /alert >}}
@@ -400,7 +409,7 @@ on doit informer le deuxième serveur bind qu'il a cette zone avec `r303-deb12-b
 nano /etc/bind/named.conf
 ```
 
-```txt {linenos=inline, hl_lines=[14, 16, 20, 22]}
+```txt {linenos=inline, hl_lines=[14, 16, 20, 22, "24-30"]}
 // This is the primary configuration file for the BIND DNS server named.
 //
 // Please read /usr/share/doc/bind9/README.Debian for information on the
@@ -423,6 +432,10 @@ zone "122.168.192.in-addr.arpa" {
   type slave;
   file "/etc/bind/adehu.com.inverse";
   masters { 192.168.122.3; };
+
+zone "guest.adehu.com" IN {
+  type master;
+  file "/etc/bind/guest.adehu.com";
 };
 ```
 
@@ -431,6 +444,8 @@ on lui renseigne les zones
 ```bash
 nano /etc/bind/adehu.com
 ```
+
+*c'est le même que l'autre*
 
 ```txt {linenos=table}
 $TTL 86400
@@ -458,6 +473,8 @@ y compris la zone inverse
 nano /etc/bind/adehu.com.inverse
 ```
 
+*c'est le même que l'autre*
+
 ```txt {linenos=table}
 $TTL 86400
 
@@ -474,7 +491,33 @@ $TTL 86400
 12 IN PTR r303-deb12-bind2
 ```
 
-on applique les modifications de tout ça
+vu qu'on a délegué un sous-domaine ici, il faut l'indiquer
+
+```bash
+nano /etc/bind/guest.adehu.com
+```
+
+```txt {linenos=table}
+$TTL 86400
+$ORIGIN guest.adehu.com.
+
+@ IN SOA guest.adehu.com. guest.adehu.com. (
+2023092702 ; serial
+21600 ; refresh
+10800 ; retry
+43200 ; expire
+10800 ) ; minimum
+
+@ IN NS r303-deb12-bind2.guest.adehu.com.
+adehu.com. IN NS bind1.adehu.com.
+adehu.com. IN NS bind2.adehu.com.
+bind1.adehu.com. IN A 192.168.122.3
+bind4.adehu.com. IN A 192.168.122.4
+r303-deb12-bind2 IN A 192.168.122.4
+bind2 IN CNAME r303-deb12-bind2
+```
+
+on applique les modifications
 
 ```bash
 named-checkzone adehu.com /etc/bind/adehu.com
@@ -488,11 +531,11 @@ pour le tester sur la machine host1
 nslookup adehu.com 192.168.122.4
 ```
 
-## mr. billon s'il vous plait
+<!-- ## mr. billon s'il vous plait
 
 - délégation de zone/sous-domaine?
 
-<!-- ***faire touch bind.log si je fais fichier log***
+***faire touch bind.log si je fais fichier log***
 
 par defaut aussi bind ecrit ses logs dans /var/log/named
 
