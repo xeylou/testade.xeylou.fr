@@ -293,7 +293,7 @@ nano /etc/bind/adehu.com.inverse
 ```txt {linenos=table}
 $TTL 86400
 
-@ IN SOA r303-deb12-bind1.adehu.com. admin.adehu.com. (
+@ IN SOA adehu.com. admin.adehu.com. (
 2023092701 ; serial
 21600 ; refresh
 10800 ; retry
@@ -478,7 +478,7 @@ nano /etc/bind/adehu.com.inverse
 ```txt {linenos=table}
 $TTL 86400
 
-@ IN SOA r303-deb12-bind1.adehu.com. admin.adehu.com. (
+@ IN SOA adehu.com. admin.adehu.com. (
 2023092702& ; serial
 21600 ; refresh
 10800 ; retry
