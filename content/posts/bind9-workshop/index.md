@@ -2,7 +2,7 @@
 title: "bind9 workshop"
 date: 2023-09-27
 draft: false
-tags: [ "french", "gnu/linux", "dns" ]
+tags: [ "dns", "french", "gnu/linux", "workshop" ]
 slug: "bind9-workshop"
 ---
 
@@ -249,20 +249,20 @@ nano /etc/bind/adehu.com
 $TTL 86400
 $ORIGIN adehu.com.
 
-@ IN SOA adehu.com. admin.adehu.com. (
+@ IN SOA bind1.adehu.com. admin.adehu.com. (
 2023092702 ; serial
 21600 ; refresh
 10800 ; retry
 43200 ; expire
 10800 ) ; minimum
 
-@ IN NS r303-deb12-bind1.adehu.com.
-@ IN NS r303-deb12-bind2.adehu.com.
-guest.adehu.com. IN NS r303-deb12-bind2
-r303-deb12-bind1 IN A 192.168.122.3
-r303-deb12-bind2 IN A 192.168.122.4
-bind1 IN CNAME r303-deb12-bind1
-bind2 IN CNAME r303-deb12-bind2
+@ IN NS bind1.adehu.com.
+@ IN NS bind2.adehu.com.
+guest.adehu.com. IN NS bind2
+bind1 IN A 192.168.122.3
+bind2 IN A 192.168.122.4
+srv-bind1 IN CNAME bind1
+srv-bind2 IN CNAME bind2
 ```
 
 la directive `$ORIGIN` est là pour indiquer le domaine si un hôte est pas totalement défini
@@ -293,17 +293,17 @@ nano /etc/bind/adehu.com.inverse
 ```txt {linenos=table}
 $TTL 86400
 
-@ IN SOA adehu.com. admin.adehu.com. (
+@ IN SOA bind1.adehu.com. admin.adehu.com. (
 2023092701 ; serial
 21600 ; refresh
 10800 ; retry
 43200 ; expire
 10800 ) ; minimum
 
-@ IN NS r303-deb12-bind1.
-@ IN NS r303-deb12-bind2.
-11 IN PTR r303-deb12-bind1
-12 IN PTR r303-deb12-bind2
+@ IN NS bind1.
+@ IN NS bind2.
+11 IN PTR bind1
+12 IN PTR bind2
 ```
 > `IN PTR` le nombre au début = dernier octet de l'ip voulue, on enregistre un pointeur (ptr) vers tel machine
 
@@ -451,20 +451,20 @@ nano /etc/bind/adehu.com
 $TTL 86400
 $ORIGIN adehu.com.
 
-@ IN SOA adehu.com. admin.adehu.com. (
+@ IN SOA bind1.adehu.com. admin.adehu.com. (
 2023092702 ; serial
 21600 ; refresh
 10800 ; retry
 43200 ; expire
 10800 ) ; minimum
 
-@ IN NS r303-deb12-bind1.adehu.com.
-@ IN NS r303-deb12-bind2.adehu.com.
-guest.adehu.com. IN NS r303-deb12-bind2
-r303-deb12-bind1 IN A 192.168.122.3
-r303-deb12-bind2 IN A 192.168.122.4
-bind1 IN CNAME r303-deb12-bind1
-bind2 IN CNAME r303-deb12-bind2
+@ IN NS bind1.adehu.com.
+@ IN NS bind2.adehu.com.
+guest.adehu.com. IN NS bind2
+bind1 IN A 192.168.122.3
+bind2 IN A 192.168.122.4
+srv-bind1 IN CNAME bind1
+srv-bind2 IN CNAME bind2
 ```
 
 y compris la zone inverse
@@ -478,17 +478,17 @@ nano /etc/bind/adehu.com.inverse
 ```txt {linenos=table}
 $TTL 86400
 
-@ IN SOA adehu.com. admin.adehu.com. (
+@ IN SOA bind1.adehu.com. admin.adehu.com. (
 2023092702& ; serial
 21600 ; refresh
 10800 ; retry
 43200 ; expire
 10800 ) ; minimum
 
-@ IN NS r303-deb12-bind1.
-@ IN NS r303-deb12-bind2.
-11 IN PTR r303-deb12-bind1
-12 IN PTR r303-deb12-bind2
+@ IN NS bind1.
+@ IN NS bind2.
+11 IN PTR bind1
+12 IN PTR bind2
 ```
 
 vu qu'on a délegué un sous-domaine ici, il faut l'indiquer
@@ -508,13 +508,12 @@ $ORIGIN guest.adehu.com.
 43200 ; expire
 10800 ) ; minimum
 
-@ IN NS r303-deb12-bind2.guest.adehu.com.
+@ IN NS bind2.guest.adehu.com.
 adehu.com. IN NS bind1.adehu.com.
 adehu.com. IN NS bind2.adehu.com.
 bind1.adehu.com. IN A 192.168.122.3
-bind4.adehu.com. IN A 192.168.122.4
-r303-deb12-bind2 IN A 192.168.122.4
-bind2 IN CNAME r303-deb12-bind2
+bind2.adehu.com. IN A 192.168.122.4
+srv-bind2 IN CNAME bind2
 ```
 
 on applique les modifications
