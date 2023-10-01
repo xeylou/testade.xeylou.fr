@@ -21,7 +21,7 @@ utilisation avec dovecot & thunderbird
 
 je continue l'avancée des workshops avec un serveur mail postfix pour l'envoi & la réception de mails
 
-il pourra être utilisé via mail agent avec utilisateurs gnu/linux ou virtuels
+il pourra être utilisé avec utilisateurs gnu/linux ou virtuels
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
@@ -68,6 +68,9 @@ iface enp1s0 inet static
 address 192.168.122.10/24
 gateway 192.168.122.1
 ```
+```bash
+systemctl restart networking
+```
 
 <!-- <mark>very important words</mark>
 
@@ -75,7 +78,7 @@ H<sub>2</sub>O
 
 X<sup>2</sup> -->
 
-installation paquet postfix & mailutils pour envoie/réception de mails entre utilisateurs
+installation paquet postfix & mailutils pour envoi/réception de mails entre utilisateurs
 
 ```bash
 apt install -y postfix mailutils
@@ -85,7 +88,7 @@ apt install -y postfix mailutils
 
 *pour que postfix propose de prendre un nom de domaine, qui sera finalement utilisé pour les mails*
 
-si installation bien déroulée -> service postfix actif
+si installation bien déroulée : service postfix actif
 
 ```bash
 systemctl status postfix
@@ -133,9 +136,7 @@ inet_protocols = ipv4
 > `mydestination` domaines acceptés d'échange  
 > `recipient_delimiter` truc@$mydomain & truc+random@$mydomain == les mêmes (pourriel)
 
-*recipient_delimiter faut le laisser en vide ou laisser le +*
-
-*mydestination changé le deuxième, est-ce qu'il avait eu un bug car précisé au lieu de réutiliser variable*
+<!-- *mydestination changé le deuxième, est-ce qu'il avait eu un bug car précisé au lieu de réutiliser variable* -->
 
 vérification syntaxique après édition
 
@@ -143,13 +144,13 @@ vérification syntaxique après édition
 postfix check
 ```
 
-redémarrage du service pour application des modifications
+redémarrage du service pour appliquer les modifications
 
 ```bash
 systemctl restart postfix
 ```
 
-création de deux gnu/linux users
+création de deux users gnu/linux
 
 {{< alert icon="circle-info">}}
 **Note**  mot de passe contingeant à l'authentification...
@@ -186,9 +187,9 @@ vérification de la réception du mail
 ls ~/Maildir/new/ | wc -l
 ```
 
-`1` si un nouveau mail car fichier dans `~/Maildir/new/`
+`1` si nouveau mail car fichier dans `~/Maildir/new/`
 
-dossier `~/Maildir` car défini dans `/etc/postfix/main.cf`
+dossier `~/Maildir` défini dans `/etc/postfix/main.cf`
 
 ### dovecot
 
@@ -223,7 +224,7 @@ précision de tout laisser passer en clair
 disable_plaintext_auth = no
 ```
 
-définition des méchanismes d'authentification (login obsolète mais toujours utilisé)
+définition des méchanismes d'authentification (`login` obsolète mais toujours utilisé)
 
 ```bash {linenos=inline, hl_lines=[5], linenostart=96}
 # Space separated list of wanted authentication mechanisms:
@@ -251,16 +252,10 @@ nano /etc/dovecot/conf.d/10-mail.conf
 mail_location = maildir:~/Maildir
 ```
 
-modification de la gestion des logs *a été utile*
+modification de la gestion des logs *- a été utile*
 
 ```bash
 nano /etc/dovecot/conf.d/10-logging.conf
-```
-
-application des modifications
-
-```bash
-systemctl restart dovecot
 ```
 
 ```bash {linenos=inline, hl_lines=[3, 13], linenostart=5}
@@ -278,7 +273,6 @@ log_path = /var/log/dovecot.log
 # facilities are supported.
 syslog_facility = mail
 ```
-
 ```bash {linenos=inline, hl_lines=[2], linenostart=39}
 # Log unsuccessful authentication attempts and the reasons why they failed.
 auth_verbose = yes
@@ -289,6 +283,7 @@ auth_verbose = yes
 # queries.
 auth_debug = yes
 ```
+application des modifications
 
 ```bash
 systemctl restart dovecot
@@ -323,7 +318,7 @@ useradd -g vmail -u 5000 vmail -d /opt/messagerie -m
 > `-d` son répertoire utilisateur/home `~`  
 > `-m` créer son `~` si inexistant  
 
-indication à postfix du `vmail` & du `/opt/messagerie` pour la gestion des boites aux lettres
+indication à postfix de `vmail` & repertoire `/opt/messagerie` pour la gestion des boites aux lettres
 
 ```bash
 nano /etc/postfix/main.cf
@@ -520,9 +515,9 @@ nano /etc/dovecot/conf.d/10-master.conf
   }
 ```
 
-**sûr qu'il faut pas décommenter le premier mode?**
+<!-- **sûr qu'il faut pas décommenter le premier mode?** -->
 
-définition mot de passe des vusers
+définition du hash des mots de passe des vusers
 
 ```bash
 doveadm pw -s CRAM-MD5
@@ -531,7 +526,7 @@ doveadm pw -s CRAM-MD5
 Retype new password:  
 {CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
 
-coller dans `/etc/dovecot/dovecot.users` défini depuis `/etc/dovecot/conf.d/auth-static.conf.ext`
+collé dans `/etc/dovecot/dovecot.users` défini `/etc/dovecot/conf.d/auth-static.conf.ext`
 
 définition mots de passe vusers
 
@@ -605,7 +600,7 @@ named-checkconf /etc/bind/named.conf.local
 nano /etc/bind/rzo.lan
 ```
 
-```bash {linenos=table}
+```bash {linenos=inline, hl_lines=["1-16"]}
 $TTL 86400
 $ORIGIN rzo.lan.
 
@@ -628,7 +623,7 @@ bind1 IN CNAME ns
 nano /etc/bind/rzo.lan.inverse
 ```
 
-```txt {linenos=table}
+```txt {linenos=inline, hl_lines=["1-12"]}
 $TTL 86400
 
 @ IN SOA ns.rzo.lan. admin.rzo.lan. (
@@ -652,7 +647,7 @@ named-checkzone rzo.lan.inverse /etc/bind/rzo.lan.inverse
 systemctl restart bind9
 ```
 
-test sur une machine extérieure *après modification dns*
+test sur machine extérieure *- après modification dns*
 
 ```bash
 dig ns.rzo.lan
@@ -667,7 +662,7 @@ dig -x 192.168.122.10
 apt install -y thunderbird
 ```
 
-`xeylou` virtual account
+connexion utilisateur virtuel `xeylou`
 
 ![](thunderbird/thunderbird-00.png)
 ![](thunderbird/thunderbird-01.png)
@@ -677,23 +672,22 @@ apt install -y thunderbird
 ![](thunderbird/thunderbird-05.png)
 ![](thunderbird/thunderbird-06.png)
 
-`testing` virtual account
+pareil pour `testing`
 
 ![](thunderbird/thunderbird-10.png)
 ![](thunderbird/thunderbird-11.png)
 ![](thunderbird/thunderbird-12.png)
 ![](thunderbird/thunderbird-13.png)
 
-sending email
+envoi du premier mail
 
 ![](thunderbird/thunderbird-07.png)
 
-if no error like this (it cannot find the recipiend address)
+envoi effectué si pas d'erreur de ce type
 
 ![](thunderbird/thunderbird-09.png)
 
-the sended mails can be also seen on postfix
-
+mails peuvent être visualisés sur vm postfix
 ```bash
 ls /opt/messagerie/rzo.lan/xeylou/Maildir/.Sent/cur/
 ```
