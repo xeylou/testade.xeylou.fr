@@ -19,15 +19,15 @@ utilisation avec dovecot & thunderbird
 
 *meilleure lecture en mode sombre, coin haut droit*
 
-je continue l'avancée des workshops avec serveur mail postfix pour envoi & réception de mails
+je continue l'avancée des workshops avec un serveur mail postfix pour l'envoi & la réception de mails
 
-pourra être utilisé via dovecot avec utilisateurs gnu/linux ou virtuels
+il pourra être utilisé via mail agent avec utilisateurs gnu/linux ou virtuels
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
 graph TD
 subgraph 192.168.122.0/24
-postfix[r303-deb12-poostfix<br><font color="#a9a9a9">192.168.122.10</font>]
+postfix[r303-deb12-postfix<br><font color="#a9a9a9">192.168.122.10</font>]
 bind9[r303-deb12-bind9<br><font color="#a9a9a9">192.168.122.11</font>]
 thunderbird[r303-deb12-client<br><font color="#a9a9a9">192.168.122.12</font>]
 pstf(Service Postfix)
@@ -37,12 +37,12 @@ gw{NAT<br><font color="#a9a9a9">192.168.122.1</font>}
 end
 
 wan{WAN}
-wan---gw
-gw---postfix & bind9
-gw---thunderbird
-postfix-.-pstf
-bind9-.-bind
-thunderbird-.-clients
+wan --- gw
+gw --- postfix & bind9
+gw --- thunderbird
+postfix -.- pstf
+bind9 -.- bind
+thunderbird -.- clients
 {{< /mermaid >}}
 
 ## vm postfix
@@ -251,9 +251,44 @@ nano /etc/dovecot/conf.d/10-mail.conf
 mail_location = maildir:~/Maildir
 ```
 
-*pas de modification dans la gestion des logs `/etc/dovecot/conf.d/10-logging.conf`*
+modification de la gestion des logs *a été utile*
+
+```bash
+nano /etc/dovecot/conf.d/10-logging.conf
+```
 
 application des modifications
+
+```bash
+systemctl restart dovecot
+```
+
+```bash {linenos=inline, hl_lines=[3, 13], linenostart=5}
+# Log file to use for error messages. "syslog" logs to syslog,
+# /dev/stderr logs to stderr.
+log_path = /var/log/dovecot.log
+
+# Log file to use for informational messages. Defaults to log_path.
+#info_log_path = 
+# Log file to use for debug messages. Defaults to info_log_path.
+#debug_log_path = 
+
+# Syslog facility to use if you're logging to syslog. Usually if you don't
+# want to use "mail", you'll use local0..local7. Also other standard
+# facilities are supported.
+syslog_facility = mail
+```
+
+```bash {linenos=inline, hl_lines=[2], linenostart=39}
+# Log unsuccessful authentication attempts and the reasons why they failed.
+auth_verbose = yes
+```
+
+```bash {linenos=inline, hl_lines=[2], linenostart=50}
+# Even more verbose logging for debugging purposes. Shows for example SQL
+# queries.
+auth_debug = yes
+```
 
 ```bash
 systemctl restart dovecot
@@ -385,4 +420,280 @@ postfix check
 ```
 
 ### modification dovecot
-*3.7*
+
+utilisation des comptes virtuels avec authentification correcte
+
+modification de la méthode d'accès
+
+```bash
+nano /etc/dovecot/conf.d/10-auth.conf
+```
+
+```bash {linenos=inline, hl_lines=[6], linenostart=5}
+# Disable LOGIN command and all other plaintext authentications unless
+# SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP
+# matches the local IP (ie. you're connecting from the same computer), the
+# connection is considered secure and plaintext authentication is allowed.
+# See also ssl=required setting.
+disable_plaintext_auth = yes
+```
+
+ajout d'une méthode d'authentification sécurisée
+
+```bash {linenos=inline, hl_lines=[5], linenostart=96}
+# Space separated list of wanted authentication mechanisms:
+#   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp
+#   gss-spnego
+# NOTE: See also disable_plaintext_auth setting.
+auth_mechanisms = cram-md5 plain login
+```
+
+ajout du fichier `auth-static.conf.ext` dans la configuration
+
+```bash {linenos=inline, hl_lines=[1, 6], linenostart=122}
+#!include auth-system.conf.ext
+#!include auth-sql.conf.ext
+#!include auth-ldap.conf.ext
+#!include auth-passwdfile.conf.ext
+#!include auth-checkpassword.conf.ext
+!include auth-static.conf.ext
+```
+
+définition emplacement liste utilisateurs virtuels + mots de passe
+
+```bash
+nano /etc/dovecot/conf.d/auth-static.conf.ext
+```
+
+```bash {linenos=inline, hl_lines=[1, "4-6", 8, "11-13"], linenostart=16}
+passdb {
+#  driver = static
+#  args = password=test
+  driver = passwd-file
+  args = username_format=%u /etc/dovecot/dovecot.users
+}
+
+userdb {
+#  driver = static
+#  args = uid=vmail gid=vmail home=/home/%u
+  driver = static
+  args = uid=vmail gid=vmail home=/opt/messagerie/%d/%n/ allow_all_users=yes
+}
+```
+
+informations user `vmail` pour récupération mails
+
+```bash
+nano /etc/dovecot/conf.d/10-mail.conf
+```
+
+```bash {linenos=inline, hl_lines=["4-5", 10], linenostart=105}
+# System user and group used to access mails. If you use multiple, userdb
+# can override these by returning uid or gid fields. You can use either numbers
+# or names. <doc/wiki/UserIds.txt>
+mail_uid = 5000
+mail_gid = 5000
+
+# Group to enable temporarily for privileged operations. Currently this is
+# used only with INBOX when either its initial creation or dotlocking fails.
+# Typically this is set to "mail" to give access to /var/mail.
+mail_privileged_group = vmail
+```
+
+définition autorisations pour lister utilisateurs
+
+```bash
+nano /etc/dovecot/conf.d/10-master.conf
+```
+
+```bash {linenos=inline, hl_lines=["3-4", "7-11"], linenostart=100}
+  unix_listener auth-userdb {
+    #mode = 0666
+    user = vmail
+    group = vmail
+  }
+
+  unix_listener /var/spool/postfix/private/auth {
+    mode = 0666
+    user = postfix
+    group = postfix
+  }
+```
+
+**sûr qu'il faut pas décommenter le premier mode?**
+
+définition mot de passe des vusers
+
+```bash
+doveadm pw -s CRAM-MD5
+```
+> Enter new password:  
+Retype new password:  
+{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+
+coller dans `/etc/dovecot/dovecot.users` défini depuis `/etc/dovecot/conf.d/auth-static.conf.ext`
+
+définition mots de passe vusers
+
+```bash
+nano /etc/dovecot/dovecot.users
+```
+
+```bash {linenos=inline, hl_lines=["1-3"], linenostart=1}
+xeylou@rzo.lan:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+testing@rzo.lan:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+admin@rzo.lan:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+```
+
+redémarrage des deux services
+
+```bash
+systemctl restart postfix
+systemctl restart dovecot
+```
+
+vérification de leur fonctionnement
+
+```bash
+systemctl status postfix
+systemctl status dovecot
+```
+
+## vm bind9
+
+installation du paquet bind9 + dépendances
+
+```bash
+apt install -y dbus bind9* dnsutils
+```
+
+modification zones dns dans `etc/bind/named.conf.local`
+
+```bash
+nano /etc/bind/named.conf.local
+```
+
+```bash {linenos=table, hl_lines=["9-17"], linenostart=1}
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "rzo.lan" IN {
+  type master;
+  file "/etc/bind/rzo.lan";
+};
+
+zone "122.168.192.in-addr.arpa" {
+  type master;
+  file "/etc/bind/rzo.lan.inverse";
+};
+```
+
+vérification syntaxique
+
+```bash
+named-checkconf /etc/bind/named.conf.local
+```
+
+édition de celles-ci
+
+```bash
+nano /etc/bind/rzo.lan
+```
+
+```bash {linenos=table}
+$TTL 86400
+$ORIGIN rzo.lan.
+
+@ IN SOA ns.rzo.lan. admin.rzo.lan. (
+2023100101 ; serial
+21600 ; refresh
+10800 ; retry
+43200 ; expire
+10800 ) ; minimum
+
+@ IN NS ns.rzo.lan.
+@ IN MX 10 mail.rzo.lan.
+mail IN A 192.168.122.10
+ns IN A 192.168.122.11
+postfix IN CNAME mail
+bind1 IN CNAME ns
+```
+
+```bash
+nano /etc/bind/rzo.lan.inverse
+```
+
+```txt {linenos=table}
+$TTL 86400
+
+@ IN SOA ns.rzo.lan. admin.rzo.lan. (
+2023100101 ; serial
+21600 ; refresh
+10800 ; retry
+43200 ; expire
+10800 ) ; minimum
+
+@ IN NS ns.
+11 IN PTR ns
+10 IN PTR mail
+```
+
+```bash
+named-checkzone rzo.lan /etc/bind/rzo.lan
+named-checkzone rzo.lan.inverse /etc/bind/rzo.lan.inverse
+```
+
+```bash
+systemctl restart bind9
+```
+
+test sur une machine extérieure *après modification dns*
+
+```bash
+dig ns.rzo.lan
+dig mail.rzo.lan
+dig -x 192.168.122.11
+dig -x 192.168.122.10
+```
+
+## vm thunderbird
+
+```bash
+apt install -y thunderbird
+```
+
+`xeylou` virtual account
+
+![](thunderbird/thunderbird-00.png)
+![](thunderbird/thunderbird-01.png)
+![](thunderbird/thunderbird-02.png)
+![](thunderbird/thunderbird-03.png)
+![](thunderbird/thunderbird-04.png)
+![](thunderbird/thunderbird-05.png)
+![](thunderbird/thunderbird-06.png)
+
+`testing` virtual account
+
+![](thunderbird/thunderbird-10.png)
+![](thunderbird/thunderbird-11.png)
+![](thunderbird/thunderbird-12.png)
+![](thunderbird/thunderbird-13.png)
+
+sending email
+
+![](thunderbird/thunderbird-07.png)
+
+if no error like this (it cannot find the recipiend address)
+
+![](thunderbird/thunderbird-09.png)
+
+the sended mails can be also seen on postfix
+
+```bash
+ls /opt/messagerie/rzo.lan/xeylou/Maildir/.Sent/cur/
+```
