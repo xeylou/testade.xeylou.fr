@@ -369,8 +369,13 @@ définition du domaine virtuel
 ```bash
 nano /etc/postfix/vdomain
 ```
+
+{{< alert icon="circle-info">}}
+**Note** pas le droit être le même que celui dans postfix
+{{< /alert >}}
+
 ```bash {linenos=inline, hl_lines=[1], linenostart=1}
-rzo.lan #
+rzo.private #
 ```
 
 création de messageries virtuelles *accordément `virtual_mailbox_maps`*
@@ -380,9 +385,9 @@ nano /etc/postfix/vmail
 ```
 
 ```bash {linenos=inline, hl_lines=["1-3"], linenostart=1}
-xeylou@rzo.lan rzo.lan/xeylou/
-testing@rzo.lan rzo.lan/testing/
-admin@rzo.lan rzo.lan/admin/
+xeylou@rzo.private rzo.private/xeylou/
+testing@rzo.private rzo.private/testing/
+admin@rzo.private rzo.private/admin/
 ```
 
 définition des alias virtuels pour ces utilisateurs *vu `virtual_alias_maps`*
@@ -391,8 +396,8 @@ définition des alias virtuels pour ces utilisateurs *vu `virtual_alias_maps`*
 nano /etc/postfix/valias
 ```
 ```bash {linenos=inline, hl_lines=["1-3"], linenostart=1}
-root: admin@rzo.lan
-xeylou: xeylou@rzo.lan
+root: admin@rzo.private
+xeylou: xeylou@rzo.private
 ```
 
 création d'un daemon postfix pour dovecot/`vmail`
@@ -535,9 +540,9 @@ nano /etc/dovecot/dovecot.users
 ```
 
 ```bash {linenos=inline, hl_lines=["1-3"], linenostart=1}
-xeylou@rzo.lan:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
-testing@rzo.lan:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
-admin@rzo.lan:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+xeylou@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+testing@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+admin@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
 ```
 
 redémarrage des deux services
@@ -552,6 +557,16 @@ vérification de leur fonctionnement
 ```bash
 systemctl status postfix
 systemctl status dovecot
+```
+
+un des problèmes importants que j'ai eu
+
+> Oct 02 09:01:33 r303-deb12-postfix postfix/pipe[2905]: 940265FD8B: to=<xeylou@rzo.private>, relay=dovecot, delay=0.04, delays=0.02/0/0/0.02, dsn=4.3.0, status=deferred (temporary failure. Command output: lda(xeylou@rzo.private): Error: net_connect_unix(/run/dovecot/stats-writer) failed: Permission denied Can't open log file /var/log/dovecot.log: Permission denied )
+
+correctif
+
+```bash
+chown vmail:vmail /var/log/dovecot.log
 ```
 
 ## vm bind9
@@ -580,6 +595,11 @@ nano /etc/bind/named.conf.local
 zone "rzo.lan" IN {
   type master;
   file "/etc/bind/rzo.lan";
+};
+
+zone "rzo.private" IN {
+  type master;
+  file "/etc/bind/rzo.private";
 };
 
 zone "122.168.192.in-addr.arpa" {
@@ -620,6 +640,29 @@ bind1 IN CNAME ns
 ```
 
 ```bash
+nano /etc/bind/rzo.private
+```
+
+```bash {linenos=inline, hl_lines=["1-16"]}
+$TTL 86400
+$ORIGIN rzo.private.
+
+@ IN SOA ns.rzo.private. admin.rzo.private. (
+2023100201 ; serial
+21600 ; refresh
+10800 ; retry
+43200 ; expire
+10800 ) ; minimum
+
+@ IN NS ns.rzo.private.
+@ IN MX 10 mail.rzo.private.
+mail IN A 192.168.122.10
+ns IN A 192.168.122.11
+postfix IN CNAME mail
+bind1 IN CNAME ns
+```
+
+```bash
 nano /etc/bind/rzo.lan.inverse
 ```
 
@@ -640,6 +683,7 @@ $TTL 86400
 
 ```bash
 named-checkzone rzo.lan /etc/bind/rzo.lan
+named-checkzone rzo.private /etc/bind/rzo.private
 named-checkzone rzo.lan.inverse /etc/bind/rzo.lan.inverse
 ```
 
