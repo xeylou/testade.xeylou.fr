@@ -688,6 +688,7 @@ envoi effectué si pas d'erreur de ce type
 ![](thunderbird/thunderbird-09.png)
 
 mails peuvent être visualisés sur vm postfix
+
 ```bash
 ls /opt/messagerie/rzo.lan/xeylou/Maildir/.Sent/cur/
 ```

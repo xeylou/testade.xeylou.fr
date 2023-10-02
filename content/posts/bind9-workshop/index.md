@@ -9,8 +9,8 @@ slug: "bind9-workshop"
 <!-- prologue -->
 
 {{< lead >}}
-installation d'une infrastructure  
-dns bind9 pour le module r303
+installation d'une 
+infrastructure dns bind9
 {{< /lead >}}
 
 <!-- article -->
