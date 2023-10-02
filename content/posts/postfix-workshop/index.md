@@ -559,6 +559,12 @@ systemctl status postfix
 systemctl status dovecot
 ```
 
+pour débogger
+
+```bash
+journalctl -xfe
+```
+
 un des problèmes importants que j'ai eu
 
 > Oct 02 09:01:33 r303-deb12-postfix postfix/pipe[2905]: 940265FD8B: to=<xeylou@rzo.private>, relay=dovecot, delay=0.04, delays=0.02/0/0/0.02, dsn=4.3.0, status=deferred (temporary failure. Command output: lda(xeylou@rzo.private): Error: net_connect_unix(/run/dovecot/stats-writer) failed: Permission denied Can't open log file /var/log/dovecot.log: Permission denied )
@@ -713,26 +719,24 @@ connexion utilisateur virtuel `xeylou`
 ![](thunderbird/thunderbird-02.png)
 ![](thunderbird/thunderbird-03.png)
 ![](thunderbird/thunderbird-04.png)
-![](thunderbird/thunderbird-05.png)
-![](thunderbird/thunderbird-06.png)
 
 pareil pour `testing`
 
-![](thunderbird/thunderbird-10.png)
-![](thunderbird/thunderbird-11.png)
-![](thunderbird/thunderbird-12.png)
-![](thunderbird/thunderbird-13.png)
+![](thunderbird/thunderbird-00-0.png)
+![](thunderbird/thunderbird-00-1.png)
+![](thunderbird/thunderbird-00-2.png)
+![](thunderbird/thunderbird-00-3.png)
+![](thunderbird/thunderbird-00-4.png)
+![](thunderbird/thunderbird-00-5.png)
 
 envoi du premier mail
 
-![](thunderbird/thunderbird-07.png)
+![](thunderbird/thunderbird-05-0.png)
+![](thunderbird/thunderbird-05-1.png)
+![](thunderbird/thunderbird-05-2.png)
 
-envoi effectué si pas d'erreur de ce type
-
-![](thunderbird/thunderbird-09.png)
-
-mails peuvent être visualisés sur vm postfix
+mail peut être visualisé sur vm postfix/dovecot
 
 ```bash
-ls /opt/messagerie/rzo.lan/xeylou/Maildir/.Sent/cur/
+ls /opt/messagerie/rzo.private/testing/Maildir/.Sent/cur/
 ```
