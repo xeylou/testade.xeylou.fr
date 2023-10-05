@@ -224,12 +224,13 @@ Host GASPARD
   PubKeyAcceptedAlgorithms = ssh-rsa
   IdentityFile "~/.ssh/cisco-ssh"
 ```
+> `KexAlgorithms` changement d'algorithme d'échange de clé pour plus ancien supporté
+`HostKeyAlgorithms` chiffrement proposé par la vm ubuntu
+`PubKeyAcceptedAlgorithms` pareil pour l'équipement
 
-les ciphers vont définir l'algorithme utilisé pour initié la connexion ssh (ne pas transmettre dès le départ en clair)
+les ciphers vont définir l'algorithme utilisé pour sécuriser la connexion ssh (ne pas transmettre en clair dès le départ)
 
 rajout d'une ligne pour en définir un supporté par les switchs
-
-pour se connecter au switch
 
 ```bash {linenos=inline, hl_lines=8}
 Host SW7
@@ -249,7 +250,7 @@ ssh GASPARD
 ssh SW7
 ```
 
-### références
+<!-- ### références
 https://networklessons.com/uncategorized/ssh-public-key-authentication-cisco-ios#Linux
 
 LUI
@@ -257,9 +258,9 @@ https://medium.com/wxit/ssh-public-key-authentication-on-cisco-ios-52064bee5685
 
 https://nsrc.org/workshops/2016/renu-nsrc-cns/raw-attachment/wiki/Agenda/Using-SSH-public-key-authentication-with-Cisco.htm#removing-passwords
 
-https://networklessons.com/uncategorized/ssh-public-key-authentication-cisco-ios#Linux
+https://networklessons.com/uncategorized/ssh-public-key-authentication-cisco-ios#Linux -->
 
-### bonus
+### supplément
 
 vérification concordance des clés
 
