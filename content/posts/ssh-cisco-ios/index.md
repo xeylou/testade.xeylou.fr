@@ -210,6 +210,9 @@ les commandes `ssh GASPARD` ou `ssh SW7` pourront être faites pour se connecter
 ```bash
 nano ~/.ssh/config
 ```
+
+<!-- définir paramètres -->
+
 pour se connecter au routeur
 
 ```bash {linenos=inline}
@@ -235,6 +238,7 @@ Host SW7
   KexAlgorithms = diffie-hellman-group-exchange-sha1
   HostKeyAlgorithms = ssh-rsa
   PubKeyAcceptedAlgorithms = ssh-rsa
+  IdentityFile "~/.ssh/cisco-ssh"
   Ciphers aes256-cbc
 ```
 
