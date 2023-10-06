@@ -205,11 +205,11 @@ Here are the simple following steps for the install.
 
 NCPA will also be used for the debian host so that the check commands syntax will be the same for both host.
 
-I made an installation script for the debian agent, source code is on [Github](https://github.com/xeylou/nagios-introduction/debian-ncpa-install.sh) for debian 11 & 12.
+I made an installation script for the debian agent, source code is on [Github](https://github.com/xeylou/nagios-introduction) for debian 11 & 12.
 
 ```bash
 mkdir testing && cd testing
-wget https://github.com/xeylou/nagios-introduction/debian-ncpa-install.sh
+wget https://raw.githubusercontent.com/xeylou/nagios-introduction/main/debian-ncpa-install.sh
 chmod +x debian-ncpa-install.sh
 ./debian-ncpa-install.sh
 ```
@@ -230,7 +230,7 @@ I made an [installation script for those](https://github.com/xeylou/nagios-intro
 
 ```bash
 mkdir testing && cd testing
-wget https://github.com/xeylou/nagios-introduction/debian-nagios-install.sh
+wget https://raw.githubusercontent.com/xeylou/nagios-introduction/main/debian-nagios-install.sh
 chmod +x debian-nagios-install.sh
 ./debian-nagios-install.sh
 ```

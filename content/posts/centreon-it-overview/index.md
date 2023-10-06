@@ -174,7 +174,7 @@ centreon-.-mariadb & poller
 
 Centreon IT will be installed without license on Debian 11.
 
-I made an installation script available on [Github](https://github.com/xeylou/centreon-it-overview/debian-centreon-install.sh).
+I made an installation script available on [Github](https://github.com/xeylou/centreon-it-overview/blob/main/debian-centreon-install.sh).
 
 This script installs Centreon IT from added Centreon's apt repositories & install a secured mysql server through mariadb.
 
@@ -182,7 +182,7 @@ To execute it, run the following commands.
 
 ```bash
 mkdir testing && cd testing
-wget https://github.com/xeylou/centreon-it-overview/debian-centreon-install.sh
+wget https://raw.githubusercontent.com/xeylou/centreon-it-overview/main/debian-centreon-install.sh
 chmod +x debian-centreon-install.sh
 ./debian-centreon-install.sh
 ```
