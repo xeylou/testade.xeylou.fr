@@ -19,9 +19,9 @@ clés sur équipements cisco
 
 les équipements cisco (switchs, routeurs, asa...) tournent sur une distribution gnu/linux `cisco ios`
 
-sera couvert la configuration & la connexion en ssh à un routeur & un switch via une paire de clés ssh
+sera couvert la configuration & la connexion en ssh à un routeur & à un switch via une paire de clés ssh
 
-la démarche reste la même entre ces équipements
+la démarche reste la même entre ces équipements, vu qu'ils tournent sur cisco ios
 
 ### génération des clés
 
@@ -57,7 +57,7 @@ exemple de sortie de la commande
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVhJRoxzGwIMNyQjbWDWUH5GvcPPipzyp5U1chwNsYWa4KiXgvBh/iVEq+a4kr0I/4jPJJXkjWNeBplLkYAYRIGF8w4CuQPHE0mjRuAzxTtuvFOD6ZaIP+kEWmoLrDCRPorW2y3WV6/fGLuDoLnS6v32qcxTS5bevpy9Iqw8Y4mVRpIHbQsnKNo3HZY5aOC0bxWCZ6m+EVXJnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1 xeylou@UPPA20102
 ```
 
-le contenu effectif de la clé devra être utilisé (sans `ssh-rsa` & le commentaire en fin)
+le contenu effectif de la clé devra être utilisé (sans le `ssh-rsa` au début & le commentaire en fin)
 
 sauvegarde de la clé sans `ssh-rsa` & le commentaire `xeylou@UPPA20102`
 
@@ -65,7 +65,7 @@ sauvegarde de la clé sans `ssh-rsa` & le commentaire `xeylou@UPPA20102`
 cat ~/.ssh/cisco-ssh.pub | sed "s/ssh-rsa //g" | sed "s/ xeylou@UPPA20102//g" > ~/.ssh/cisco-ssh.pub
 ```
 
-contenu de `~/.ssh/cisco-ssh.pub`
+contenu de la clé effective `~/.ssh/cisco-ssh.pub`
 
 ```bash {linenos=inline}
 AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVhJRoxzGwIMNyQjbWDWUH5GvcPPipzyp5U1chwNsYWa4KiXgvBh/iVEq+a4kr0I/4jPJJXkjWNeBplLkYAYRIGF8w4CuQPHE0mjRuAzxTtuvFOD6ZaIP+kEWmoLrDCRPorW2y3WV6/fGLuDoLnS6v32qcxTS5bevpy9Iqw8Y4mVRpIHbQsnKNo3HZY5aOC0bxWCZ6m+EVXJnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1
@@ -125,10 +125,10 @@ username xeylou privilege 15 algorithm-type sha256 secret motdepasse
 ```
 > `privilege 15` mêmes permissions que enable  
 `algorithm-type sha256` choix méthode de chiffrement mot de passe  
-`secret motdepass` définition d'un mot de passe *(optionnel)*
+`secret motdepasse` définition d'un mot de passe *(optionnel)*
 
 
-les lignes virtuelles sont des supports pour accèder à l'interface de commandes cisco à distance
+les lignes virtuelles sont des supports pour accèder à l'interface de commande cisco à distance
 
 les anciennes versions de cisco ios en ont 5 (0-4) sinon 16 (0-15) 
 
@@ -155,16 +155,24 @@ key-string
 ```
 > coller la clé effective ici
 
-<!-- désactivation de l'authentification par mot de passe en ssh
+pour indiquer la fin de la clé
+```bash
+exit
+```
+
+désacitvation de tous les types d'authentification sauf par clé ssh *(publickey)*
+
+<!--
+Public-key authentication method
+
+Keyboard-interactive authentication method
+
+Password authentication method
+-->
 
 ```bash
 no ip ssh server authenticate user password
 no ip ssh server authenticate user keyboard
-``` -->
-puis faire
-
-```bash
-exit
 ```
 
 attribution d'un adresse ip à une des interfaces
@@ -194,8 +202,14 @@ ip ssh pubkey-chain
 username xeylou
 key-string
 ```
+> renseignement contenu effectif de la clé
+```bash
+exit
+no ip ssh server authenticate user password
+no ip ssh server authenticate user keyboard
+```
 
-changement d'interface pour l'accès qui sera un vlan
+configuration interface d'accès qui sera un vlan *ici présents sur tous les ports par défaut*
 
 ```bash
 int vlan 1
@@ -205,18 +219,22 @@ no shut
 
 ### connexion ssh
 
-les commandes `ssh GASPARD` ou `ssh SW7` pourront être faites pour se connecter aux équipements
+configuration des commandes `ssh gaspard` ou `ssh sw7` pour se connecter aux équipements
 
 ```bash
 nano ~/.ssh/config
 ```
 
-<!-- définir paramètres -->
+*fichier de configuration/d'alias des machines clientes ssh*
 
-pour se connecter au routeur
+cisco ios utilise des protocoles obsolètes que openssh refuse d'utiliser par défaut
+
+renseignement de ceux-ci dans la configuration des alias
+
+pour le routeur
 
 ```bash {linenos=inline}
-Host GASPARD
+Host gaspard
   hostname = 192.168.0.1
   user = xeylou
   KexAlgorithms = diffie-hellman-group-exchange-sha1
@@ -224,16 +242,18 @@ Host GASPARD
   PubKeyAcceptedAlgorithms = ssh-rsa
   IdentityFile "~/.ssh/cisco-ssh"
 ```
-> `KexAlgorithms` changement d'algorithme d'échange de clé pour plus ancien supporté
+> `KexAlgorithms` changement d'algorithme d'échange de clé
 `HostKeyAlgorithms` chiffrement proposé par la vm ubuntu
-`PubKeyAcceptedAlgorithms` pareil pour l'équipement
+`PubKeyAcceptedAlgorithms` par l'équipement
+
+manipulation supplémentaire à faire pour le switch
 
 les ciphers vont définir l'algorithme utilisé pour sécuriser la connexion ssh (ne pas transmettre en clair dès le départ)
 
 rajout d'une ligne pour en définir un supporté par les switchs
 
 ```bash {linenos=inline, hl_lines=8}
-Host SW7
+Host sw7
   hostname = 192.168.0.2
   user = xeylou
   KexAlgorithms = diffie-hellman-group-exchange-sha1
@@ -246,8 +266,8 @@ Host SW7
 tentative de connexion depuis vm ubuntu
 
 ```bash
-ssh GASPARD
-ssh SW7
+ssh gaspard
+ssh sw7
 ```
 
 <!-- ### références
@@ -276,7 +296,7 @@ comparable au hash sur la vm ubuntu
 ssh-keygen -l -f $HOME/.ssh/cisco-ssh.key.pub
 ```
 
-définition d'une acl pour accepter uniquemennt les adresses ip locales
+définition d'une acl pour accepter uniquemennt les adresses ip locales à se connecter en ssh
 
 ```bash
 en

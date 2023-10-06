@@ -68,6 +68,10 @@ they help developers by avoiding to manually give instructions to components and
 
 when comparing the performance of a low-level & a high-level language for the same task, the low-level one will be much faster: it requires little interpretation by the computer
 
+all high-level languages require their code to be understandable by the computer, since they are human readable at first
+
+an `interpreter` handle the translation of this code to bytecode
+
 ## paradigm
 <!--
 https://www.youtube.com/watch?v=HlgG395PQWw
@@ -78,7 +82,7 @@ https://www.youtube.com/watch?v=B1p5OlO5tWg
 
 paradigms are the concepts used to structure & to think about code
 
- <!-- followed by a programming language, the way your code will be structured -->
+<!-- followed by a programming language, the way your code will be structured -->
 
 two main paradigms substain: imperative & declarative *oftenly called "functional"*
 
@@ -175,7 +179,7 @@ programming model
 parallel computing  
 execution model  
 <!-- https://en.wikipedia.org/wiki/List_of_programming_languages_by_type -->
-all high-level languages add-ons require the code to be understandable by the computer, in its computer language
+
 ### interpreted
 
 donne des erreurs lors de l'exécution
