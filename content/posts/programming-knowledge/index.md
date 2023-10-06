@@ -1,7 +1,7 @@
 ---
 title: "programming knowledge"
 date: 2023-09-03
-draft: false
+draft: true
 tags: [ "coding", "programming", "languages" ]
 slug: "programming-knowledge"
 ---
@@ -17,17 +17,17 @@ explaining some coding
 
 ## introduction
 
-i've been coding & programming for over 3 years now & i think i am safe to say i know a thing or two
+i've been coding & programming for about 3 years now & i think i am safe to say i know a thing or two
 
 i merged knowledge & research to expose some coding & programming concepts
 
 i won't be talking about development, just coding & progamming related stuff *- see below*
 
-coding is the way to implement things, giving instructions to computers to learn how things works, e.g. coding sorting algorithms
+coding is the way to implement things, giving instructions to computers & learn how things works, e.g. coding sorting algorithms
 
-programming is the way to use coding skills to create something or solve a problem, e.g. programming a reservation planning
+programming is the way to use coding skills to create something or solve a problem using coding experience, e.g. programming a reservation planning
 
-development (*by developpers obviously*) regroup the the process of conceiving, programming, documenting, testing or debugging a solution, e.g. developping a webapp
+development (*by developpers obviously*) regroup processes like evaluating, conceiving, programming, documenting, testing, etc. a solution, e.g. developping a webapp
 
 ## languages levels
 
@@ -36,31 +36,33 @@ programming languages can be seperated in various ways, one of which is their pr
 ### low-level
 <!-- https://www.javatpoint.com/what-is-a-low-level-language -->
 
-low-level languages aim to be near computer language to manipulate its hardware
+low-level languages aim to be near computer language
 
-their code give computer hardware instructions to perform manipulations using its components
+their code give computer hardware instructions to perform manipulations on its components
 
-learning a low-level programming language makes you learn a lot about how components & their communications works
+practicing a low-level programming language makes you learn a lot about how components & their communications works
 
 <!-- dealing w/ the hardware, they work to control computer's operational semantics & provide little or no abstraction of programming ideas -->
 
-they are used to directly control computer's operational semantics & provide little or no abstraction of programming ideas
+they are used to control computer's operational semantics & provide little or no abstraction of programming ideas
 
-since they are dealing w/ the hardware, the code can change from a computer to another depending of hardware specification or architecture
+since they are dealing w/ the hardware, the code can change from a computer to another depending of its hardware specification or architecture
 
 they are oftenly non human-readable & have a relatively slow learning curve
 
 those languages also let the programmer a wide control on storage, memory or cpu usage
 
-the assembly language or the machine language/binary code are two types of low-level languages if you want to dive into, e.g. assembler
+the assembly language or the machine language/binary code are two types of low-level languages, e.g. assembler
 
-they are commonly used to write kernels & drivers    
+they are commonly used to write kernels & drivers
 
 ### high-level
 <!-- https://www.webopedia.com/definitions/high-level-language/ -->
 closer to human language, high-level programming languages are for every day coding or programming stuff
 
-they help developers by avoiding to manually give instructions to components and focus on their tasks *(algebra, arithmetic, algorithms...)*
+they help developers by avoiding to manually give instructions to components and focus on their projects 
+
+<!-- *(algebra, arithmetic, algorithms...)* -->
 
 <!-- variables creation is straightforward & methods do manipulation on them w/out seeing the components -->
 
@@ -74,7 +76,7 @@ https://www.youtube.com/watch?v=UOkOA6W-vwc
 https://www.youtube.com/watch?v=B1p5OlO5tWg
 -->
 
-paradigms are the concepts used to structure & think about code
+paradigms are the concepts used to structure & to think about code
 
  <!-- followed by a programming language, the way your code will be structured -->
 
@@ -86,13 +88,13 @@ programming languages can follow one *single paradigm* or more paradigms *multi 
 
 ### imperative
 
-the imperative paradigm is based on instructing the machine how to change its state
+the *imperative paradigm* is based on instructing the machine how to change its state
 
-to do so, the programmer gives explicit instructions to it, the *how*: do X then Y ~ to get Z
+to do so, the programmer gives explicit instructions, the *how*: do X then Y ~ to get Z
 
 #### procedural
 
-the procedural paradigm, is based on the imperative one
+the *procedural paradigm* is based on the imperative one
 
 procedural code instructs the device on how to finish a task in logical given steps (procedures)
 
@@ -104,7 +106,7 @@ it is the most known paradigm, using functions, local or global variables, doing
 
 #### object-oriented
 
-object-oriented paradigm is based on objects, which are a structure that contain data or code
+*object-oriented paradigm* is based on objects, which are a structure that contain data or code
 
 objects are reusable piece of code, like a blueprint, which can have `instances` of it
 
@@ -112,11 +114,11 @@ considering the "Persons" object, each instance of this object would have the sa
 
 *i took back the example of the [itop artcle](https://xeylou.fr/posts/itop-tour)*
 
-`methods` can be called on the instances to modify them or do an action
+`methods` can be called on the instances to modify them or do a specific action
 
 ### declarative
 
-the declarative paradigm describe the *goal*, giving the wanted outcome rather than how to acheive it
+the *declarative paradigm* describe the *goal*, giving the wanted outcome rather than how to acheive it
 
 the programmers giving the *what*: give me Z ~ using X & Y
 
@@ -130,13 +132,13 @@ functions, like in math, can have functions in parameters, & can return a functi
 
 following this idea, to save the state of a function & use it later, there are `closures`
 
-there's plenty to learn here: high order functions, pure functions, currying, monads, etc.
+there is plenty to learn: high order functions, pure functions, currying, monads, etc.
 
-functional programming is a good way to think about data immutability, apart from its unusual approach to code
+functional programming is a good way to think about data immutability, apart from its unusual code approach
 
 ## typing
 
-programming languages has some differences in their way to declare variables too
+programming languages has some differences in their way to declare variables
 
 they can be regrouped as so according to how they type them
 
@@ -169,9 +171,9 @@ python & javascript are two main languages that are dynamically typed
 
 ## bordel
 
-programming model
-parallel computing
-execution model
+programming model  
+parallel computing  
+execution model  
 <!-- https://en.wikipedia.org/wiki/List_of_programming_languages_by_type -->
 all high-level languages add-ons require the code to be understandable by the computer, in its computer language
 ### interpreted
