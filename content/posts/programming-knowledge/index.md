@@ -1,7 +1,7 @@
 ---
 title: "programming knowledge"
 date: 2023-09-03
-draft: true
+draft: false
 tags: [ "coding", "programming", "languages" ]
 slug: "programming-knowledge"
 ---
@@ -67,10 +67,12 @@ they help developers by avoiding to manually give instructions to components and
 when comparing the performance of a low-level & a high-level language for the same task, the low-level one will be much faster: it requires little interpretation by the computer
 
 ## paradigm
-<!-- https://www.youtube.com/watch?v=HlgG395PQWw
+<!--
+https://www.youtube.com/watch?v=HlgG395PQWw
 
 https://www.youtube.com/watch?v=UOkOA6W-vwc
-https://www.youtube.com/watch?v=B1p5OlO5tWg -->
+https://www.youtube.com/watch?v=B1p5OlO5tWg
+-->
 
 paradigms are the concepts used to structure & think about code
 

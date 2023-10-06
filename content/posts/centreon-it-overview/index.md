@@ -5,7 +5,7 @@ draft: false
 tags: ["gnu/linux", "monitoring", "open-source"]
 series: ["Exploring Monitoring Solutions"]
 series_order: 3
-slug: "centreon-overview"
+slug: "centreon-it-overview"
 ---
 
 <!-- prologue -->
@@ -174,7 +174,7 @@ centreon-.-mariadb & poller
 
 Centreon IT will be installed without license on Debian 11.
 
-I made an installation script available on [Github](https://github.com/xeylou/centreon-overview/debian-centreon-install.sh).
+I made an installation script available on [Github](https://github.com/xeylou/centreon-it-overview/debian-centreon-install.sh).
 
 This script installs Centreon IT from added Centreon's apt repositories & install a secured mysql server through mariadb.
 
@@ -182,7 +182,7 @@ To execute it, run the following commands.
 
 ```bash
 mkdir testing && cd testing
-wget https://github.com/xeylou/centreon-overview/debian-centreon-install.sh
+wget https://github.com/xeylou/centreon-it-overview/debian-centreon-install.sh
 chmod +x debian-centreon-install.sh
 ./debian-centreon-install.sh
 ```
@@ -302,7 +302,7 @@ nano /etc/snmp/snmp.conf
 ### linux host
 
 {{< alert icon="circle-info">}}
-**Note** I've explained what were done with snmp rather than just *throwing you my script* as you may need this explainations to monitor other devices like switches or routers. *(which doesn't mean i haven't [made one](http://github.com/xeylou/centreon-overview))*
+**Note** I've explained what were done with snmp rather than just *throwing you my script* as you may need this explainations to monitor other devices like switches or routers. *(which doesn't mean i haven't [made one](http://github.com/xeylou/centreon-it-overview))*
 {{< /alert >}}
 
 For our needs, according to the [debian snmp page](https://wiki.debian.org/SNMP), a repo needs to be added to `/etc/apt/source.list`.
