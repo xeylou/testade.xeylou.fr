@@ -242,9 +242,9 @@ Host gaspard
   PubKeyAcceptedAlgorithms = ssh-rsa
   IdentityFile "~/.ssh/cisco-ssh"
 ```
-> `KexAlgorithms` changement d'algorithme d'échange de clé
-`HostKeyAlgorithms` chiffrement proposé par la vm ubuntu
-`PubKeyAcceptedAlgorithms` par l'équipement
+> `KexAlgorithms` changement d'algorithme d'échange de clé  
+`HostKeyAlgorithms` chiffrement proposé par la vm ubuntu  
+`PubKeyAcceptedAlgorithms` par l'équipement  
 
 manipulation supplémentaire à faire pour le switch
 
