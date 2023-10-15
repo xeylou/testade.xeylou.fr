@@ -1,6 +1,7 @@
 ---
 title: "ssh cisco ios"
 date: 2023-10-03
+# lastmod: 2023-10-15
 draft: false
 tags: [ "french", "gnu/linux", "workshop" ]
 slug: "ssh-cisco-ios"
@@ -9,8 +10,8 @@ slug: "ssh-cisco-ios"
 <!-- prologue -->
 
 {{< lead >}}
-authentification ssh par  
-clés sur équipements cisco
+authentification par  
+clés ssh sur équipements cisco
 {{< /lead >}}
 
 <!-- article -->
@@ -19,9 +20,7 @@ clés sur équipements cisco
 
 les équipements cisco (switchs, routeurs, asa...) tournent sur une distribution gnu/linux `cisco ios`
 
-sera couvert la configuration & la connexion en ssh à un routeur & à un switch via une paire de clés ssh
-
-la démarche reste la même entre ces équipements, vu qu'ils tournent sur cisco ios
+sera couvert la configuration & la connexion en ssh à ces équipements via une paire de clés ssh
 
 ### génération des clés
 
@@ -29,7 +28,7 @@ sera utilisée une vm ubuntu pour la génération des clés ssh
 
 cisco ios supporte uniquement l'algorithme de chiffrement `rsa`
 
-la taille de la clé est personnel (1024, 2048, 4096...)
+la taille de la clé est à votre convenance (1024, 2048, 4096...)
 
 génération d'une paire de clés ssh dans `~/.ssh/` suivant l'algorithme de chiffrement rsa de longueur 4096 bits sans passphrase
 
@@ -38,10 +37,10 @@ ssh-keygen -t rsa -b 4096 -N "" -f "$HOME/.ssh/cisco-ssh"
 ```
 > `-t rsa` choix de l'algorithme de chiffrement  
 `-b 4096` précision longueur de la clé  
-`-c "~/.ssh/cisco-ssh.key"` définition emplacement  
+`-c "~/.ssh/cisco-ssh.key"` définition de leur emplacement  
 `-N ""` indication passphrasse (nulle)
 
-*clé privée `~/.ssh/cisco-ssh` & clé publique `~/.ssh/cisco-ssh.pub`*
+*clé privée `~/.ssh/cisco-ssh`, clé publique `~/.ssh/cisco-ssh.pub`*
 
 la clé publique devra être renseignée sur l'équipement cisco
 
@@ -71,7 +70,7 @@ contenu de la clé effective `~/.ssh/cisco-ssh.pub`
 AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVhJRoxzGwIMNyQjbWDWUH5GvcPPipzyp5U1chwNsYWa4KiXgvBh/iVEq+a4kr0I/4jPJJXkjWNeBplLkYAYRIGF8w4CuQPHE0mjRuAzxTtuvFOD6ZaIP+kEWmoLrDCRPorW2y3WV6/fGLuDoLnS6v32qcxTS5bevpy9Iqw8Y4mVRpIHbQsnKNo3HZY5aOC0bxWCZ6m+EVXJnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1
 ```
 
-la clé publique est en une seule ligne
+cependant, tout est en une seule ligne
 
 cisco ios supporte maximum 254 caractères par ligne de commande
 
@@ -83,8 +82,10 @@ fold -b -w 72 ~/.ssh/cisco-ssh.pub
 
 exemple de sortie de la commande
 
+<!-- AVANT J'AVAIS LAISSE SSH-RSA AU DEBUT -->
+
 ```bash {linenos=inline}
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVh
+AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVh
 JRoxzGwIMNyQjbWDWUH5GvcPPipzyp5U1chwNsYWa4KiXgvBh/iVEq+a4kr0I/4jPJJXkjWNeBplLkYAYRIGF8w4CuQPHE0mjRuA
 zxTtuvFOD6ZaIP+kEWmoLrDCRPorW2y3WV6/fGLuDoLnS6v32qcxTS5bevpy9Iqw8Y4mVRpIHbQsnKNo3HZY5aOC0bxWCZ6m+EVX
 JnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1
@@ -93,12 +94,12 @@ JnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1
 ce sera le contenu à coller dans la configuration de l'équipement
 
 {{< alert icon="circle-info">}}
-**Note**  *pour le copier : selectionner dans le terminal puis* <mark>CTRL + &#8593; + C</mark>
+**Note**  *pour le copier depuis un terminal* <mark>CTRL + &#8593; + C</mark>
 {{< /alert >}}
 
 ### configuration routeur
 
-modèle 2901 configuré comme suivant
+un cisco 2901 configuré comme suivant
 
 ```bash
 enable
@@ -109,7 +110,7 @@ no ip domain-lookup
 
 génération d'une clé rsa de 4096 bits pour initier l'environnement ssh
 
-renseignement d'un domaine contingeant à sa création
+renseignement d'un domaine contingeant à la création
 
 ```bash
 ip domain-name rzo.local
@@ -124,7 +125,7 @@ utilisation de l'algorithme de chiffrement sha256 au lieu de md5 par défaut (25
 username xeylou privilege 15 algorithm-type sha256 secret motdepasse
 ```
 > `privilege 15` mêmes permissions que enable  
-`algorithm-type sha256` choix méthode de chiffrement mot de passe  
+`algorithm-type sha256` choix méthode de chiffrement du mot de passe  
 `secret motdepasse` définition d'un mot de passe *(optionnel)*
 
 
@@ -153,7 +154,7 @@ ip ssh pubkey-chain
 username xeylou
 key-string
 ```
-> coller la clé effective ici
+> coller la clé publique effective ici
 
 pour indiquer la fin de la clé
 ```bash
@@ -188,9 +189,10 @@ no shut
 la configuration ssh est identique
 
 ```bash
-en
-conf t
-hostname GASPARD
+enable
+configure terminal
+hostname SW7
+no ip domain-lookup
 ip domain-name rzo.lan
 crypto key generate rsa modulus 4096
 username xeylou privilege 15 algorithm-type sha256 secret motdepasse
@@ -202,14 +204,14 @@ ip ssh pubkey-chain
 username xeylou
 key-string
 ```
-> renseignement contenu effectif de la clé
+> renseignement du contenu effectif de la clé publique
 ```bash
 exit
 no ip ssh server authenticate user password
 no ip ssh server authenticate user keyboard
 ```
 
-configuration interface d'accès qui sera un vlan *ici présents sur tous les ports par défaut*
+configuration de l'interface d'accès qui sera un vlan *présent sur tous les ports par défaut, pas recommandé*
 
 ```bash
 int vlan 1
@@ -221,11 +223,11 @@ no shut
 
 configuration des commandes `ssh gaspard` ou `ssh sw7` pour se connecter aux équipements
 
+sur l'hôte qui accèdera aux équipements en ssh
+
 ```bash
 nano ~/.ssh/config
 ```
-
-*fichier de configuration/d'alias des machines clientes ssh*
 
 cisco ios utilise des protocoles obsolètes que openssh refuse d'utiliser par défaut
 
@@ -244,11 +246,11 @@ Host gaspard
 ```
 > `KexAlgorithms` changement d'algorithme d'échange de clé  
 `HostKeyAlgorithms` chiffrement proposé par la vm ubuntu  
-`PubKeyAcceptedAlgorithms` par l'équipement  
+`PubKeyAcceptedAlgorithms` pareil par l'équipement  
 
-manipulation supplémentaire à faire pour le switch
+manipulation supplémentaire à faire pour l'alias du switch
 
-les ciphers vont définir l'algorithme utilisé pour sécuriser la connexion ssh (ne pas transmettre en clair dès le départ)
+les ciphers définissent les algorithmes utilisés pour sécuriser la connexion ssh (ne pas transmettre en clair dès le départ)
 
 rajout d'une ligne pour en définir un supporté par les switchs
 
@@ -284,6 +286,8 @@ https://networklessons.com/uncategorized/ssh-public-key-authentication-cisco-ios
 
 vérification concordance des clés
 
+on va générer une empreinte (finderprint) des clés publiques des deux côtés (équipements & machine cliente) pour les comparer savoir si ce sont bien les mêmes
+
 sur les équipements
 
 ```bash
@@ -299,8 +303,8 @@ ssh-keygen -l -f $HOME/.ssh/cisco-ssh.key.pub
 définition d'une acl pour accepter uniquemennt les adresses ip locales à se connecter en ssh
 
 ```bash
-en
-conf t
+enable
+configure terminal
 ip access-list standard SSH_ACL
 permit 192.168.0.0 0.0.0.255
 line vty 0 15
@@ -313,7 +317,7 @@ ajout d'un timeout de 10 minutes (inactivité) *sinon infini*
 exec timeout 10 0
 ```
 
-définition de maximum 3 tentative de connexion *ralentissement bruteforce*
+définition de maximum 3 tentatives de connexion *ralentissement bruteforce*
 
 ```bash
 ip ssh authentication-retries 3

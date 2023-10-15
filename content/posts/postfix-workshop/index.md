@@ -9,17 +9,15 @@ slug: "postfix-workshop"
 <!-- prologue -->
 
 {{< lead >}}
-installation d'un serveur mail mx postfix,
-utilisation avec dovecot & thunderbird
+installation d'un serveur mail mx postfix  
+avec dovecot & utilisation avec thunderbird
 {{< /lead >}}
 
 <!-- article -->
 
 ## introduction
 
-*meilleure lecture en mode sombre, coin haut droit*
-
-je continue l'avancée des workshops avec un serveur mail postfix pour l'envoi & la réception de mails
+je continue l'avancée des workshops avec un serveur mail postfix avec dovecot pour l'envoi & la réception de mails
 
 il pourra être utilisé avec utilisateurs gnu/linux ou virtuels
 
@@ -31,6 +29,7 @@ postfix[r303-deb12-postfix<br><font color="#a9a9a9">192.168.122.10</font>]
 bind9[r303-deb12-bind9<br><font color="#a9a9a9">192.168.122.11</font>]
 thunderbird[r303-deb12-client<br><font color="#a9a9a9">192.168.122.12</font>]
 pstf(Service Postfix)
+dovecot(Service Dovecot)
 bind(Service Bind9)
 clients(Mozilla Thunderbird)
 gw{NAT<br><font color="#a9a9a9">192.168.122.1</font>}
@@ -40,7 +39,7 @@ wan{WAN}
 wan --- gw
 gw --- postfix & bind9
 gw --- thunderbird
-postfix -.- pstf
+postfix -.- pstf & dovecot
 bind9 -.- bind
 thunderbird -.- clients
 {{< /mermaid >}}
@@ -49,7 +48,7 @@ thunderbird -.- clients
 
 modification nom d'hôte
 ```bash
-hostnamectl set-hostname r303-deb12-postfix
+hostnamectl set-hostname r303-deb12-postfix && logout
 ```
 attribution adresse ip statique
 ```bash
@@ -88,7 +87,7 @@ apt install -y postfix mailutils
 
 *pour que postfix propose de prendre un nom de domaine, qui sera finalement utilisé pour les mails*
 
-si installation bien déroulée : service postfix actif
+si installation sans accroc : service postfix actif
 
 ```bash
 systemctl status postfix
@@ -96,7 +95,7 @@ systemctl status postfix
 
 fichier de configuration global postfix `/etc/postfix/main.cf`
 
-commente tout ce qui touche au tls car pas utilisé
+commente tout ce qui touche au tls car pas utilisé ici
 
 ajout informations pour utilisation du service
 
@@ -302,7 +301,7 @@ telnet -l user1 localhost 143
 
 création user `vmail` avec `/opt/messagerie` comme home directory
 
-groupe `vmail` avec group id de 5000
+création groupe `vmail` avec group id de 5000
 
 ```bash
 groupadd -g 5000 vmail
@@ -314,11 +313,11 @@ création du user
 useradd -g vmail -u 5000 vmail -d /opt/messagerie -m
 ```
 > `-g` son groupe  
-> `-u` user id de 5000  
-> `-d` son répertoire utilisateur/home `~`  
+> `-u 5000` user id de 5000  
+> `-d /opt/messagerie` son répertoire utilisateur/home `~`  
 > `-m` créer son `~` si inexistant  
 
-indication à postfix de `vmail` & repertoire `/opt/messagerie` pour la gestion des boites aux lettres
+indication à postfix de `vmail` & du repertoire `/opt/messagerie` pour la gestion des boites aux lettres
 
 ```bash
 nano /etc/postfix/main.cf
@@ -371,14 +370,14 @@ nano /etc/postfix/vdomain
 ```
 
 {{< alert icon="circle-info">}}
-**Note** pas le droit être le même que celui dans postfix
+**Note** pas le droit d'être le même que celui dans postfix
 {{< /alert >}}
 
 ```bash {linenos=inline, hl_lines=[1], linenostart=1}
 rzo.private #
 ```
 
-création de messageries virtuelles *accordément `virtual_mailbox_maps`*
+création de messageries virtuelles *accordément à `virtual_mailbox_maps`*
 
 ```bash
 nano /etc/postfix/vmail
@@ -500,7 +499,7 @@ mail_gid = 5000
 mail_privileged_group = vmail
 ```
 
-définition autorisations pour lister utilisateurs
+définition des autorisations pour lister utilisateurs
 
 ```bash
 nano /etc/dovecot/conf.d/10-master.conf
@@ -531,7 +530,7 @@ doveadm pw -s CRAM-MD5
 Retype new password:  
 {CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
 
-collé dans `/etc/dovecot/dovecot.users` défini `/etc/dovecot/conf.d/auth-static.conf.ext`
+le coller dans `/etc/dovecot/dovecot.users` *défini depuis `/etc/dovecot/conf.d/auth-static.conf.ext`*
 
 définition mots de passe vusers
 
@@ -544,6 +543,8 @@ xeylou@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f
 testing@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
 admin@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
 ```
+
+*les 3 utilisateurs ont le même mot de passe*
 
 redémarrage des deux services
 
@@ -720,7 +721,7 @@ connexion utilisateur virtuel `xeylou`
 ![](thunderbird/thunderbird-03.png)
 ![](thunderbird/thunderbird-04.png)
 
-pareil pour `testing`
+sur une autre VM, mêmes manipulations pour l'utilisateur `testing`
 
 ![](thunderbird/thunderbird-00-0.png)
 ![](thunderbird/thunderbird-00-1.png)
@@ -735,7 +736,7 @@ envoi du premier mail
 ![](thunderbird/thunderbird-05-1.png)
 ![](thunderbird/thunderbird-05-2.png)
 
-mail peut être visualisé sur vm postfix/dovecot
+le mail peut être visualisé sur la vm postfix/dovecot
 
 ```bash
 ls /opt/messagerie/rzo.private/testing/Maildir/.Sent/cur/
