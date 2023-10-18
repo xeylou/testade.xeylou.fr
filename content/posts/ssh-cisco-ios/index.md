@@ -97,7 +97,7 @@ ce sera le contenu à coller dans la configuration de l'équipement
 **Note**  *pour le copier depuis un terminal* <mark>CTRL + &#8593; + C</mark>
 {{< /alert >}}
 
-### configuration routeur
+### configuration sur routeur
 
 un cisco 2901 configuré comme suivant
 
@@ -129,11 +129,11 @@ username xeylou privilege 15 algorithm-type sha256 secret motdepasse
 `secret motdepasse` définition d'un mot de passe *(optionnel)*
 
 
-les lignes virtuelles sont des supports pour accèder à l'interface de commande cisco à distance
+les lignes virtuelles sont des supports pour accéder à l'interface de commande cisco à distance
 
 les anciennes versions de cisco ios en ont 5 (0-4) sinon 16 (0-15) 
 
-configuration des lignes virtuelles pour y accèder uniquement par une connexion en ssh enregistrée sur la base d'utilisateur locale
+configuration des lignes virtuelles pour y accéder uniquement par une connexion en ssh enregistrée sur la base d'utilisateur locale
 
 ```bash
 line vty 0 15
@@ -161,7 +161,7 @@ pour indiquer la fin de la clé
 exit
 ```
 
-désacitvation de tous les types d'authentification sauf par clé ssh *(publickey)*
+désactivation de tous les types d'authentification sauf par clé ssh *(publickey)*
 
 <!--
 Public-key authentication method
@@ -184,7 +184,7 @@ ip address 192.168.0.1 255.255.255.0
 no shut
 ```
 
-### configuration switch
+### configuration sur switch
 
 la configuration ssh est identique
 
@@ -211,7 +211,9 @@ no ip ssh server authenticate user password
 no ip ssh server authenticate user keyboard
 ```
 
-configuration de l'interface d'accès qui sera un vlan *présent sur tous les ports par défaut, pas recommandé*
+configuration de l'interface d'accès qui sera un vlan pour les switchs
+
+*un vlan dédié serait préférable*
 
 ```bash
 int vlan 1
@@ -221,9 +223,9 @@ no shut
 
 ### connexion ssh
 
-configuration des commandes `ssh gaspard` ou `ssh sw7` pour se connecter aux équipements
+configuration des commandes `ssh gaspard` & `ssh sw7` pour se connecter aux équipements
 
-sur l'hôte qui accèdera aux équipements en ssh
+sur l'hôte qui accédera aux équipements
 
 ```bash
 nano ~/.ssh/config
@@ -252,9 +254,9 @@ manipulation supplémentaire à faire pour l'alias du switch
 
 les ciphers définissent les algorithmes utilisés pour sécuriser la connexion ssh (ne pas transmettre en clair dès le départ)
 
-rajout d'une ligne pour en définir un supporté par les switchs
+rajout d'une ligne pour définir un cipher supporté par les switchs
 
-```bash {linenos=inline, hl_lines=8}
+```bash {linenos=inline, hl_lines=8, linenostart=9}
 Host sw7
   hostname = 192.168.0.2
   user = xeylou
@@ -265,7 +267,7 @@ Host sw7
   Ciphers aes256-cbc
 ```
 
-tentative de connexion depuis vm ubuntu
+connexion depuis la vm ubuntu
 
 ```bash
 ssh gaspard
@@ -286,7 +288,7 @@ https://networklessons.com/uncategorized/ssh-public-key-authentication-cisco-ios
 
 vérification concordance des clés
 
-on va générer une empreinte (finderprint) des clés publiques des deux côtés (équipements & machine cliente) pour les comparer savoir si ce sont bien les mêmes
+génération d'une empreinte (fingerprint) des clés publiques des deux côtés (équipements & machine cliente) savoir si elles sont jumelles
 
 sur les équipements
 
@@ -300,7 +302,7 @@ comparable au hash sur la vm ubuntu
 ssh-keygen -l -f $HOME/.ssh/cisco-ssh.key.pub
 ```
 
-définition d'une acl pour accepter uniquemennt les adresses ip locales à se connecter en ssh
+définition d'une acl pour n'autoriser uniquement les adresses ip locales à se connecter en ssh
 
 ```bash
 enable
