@@ -1,9 +1,10 @@
 ---
 title: "ssh cisco ios"
 date: 2023-10-03
-# lastmod: 2023-10-15
 draft: false
-tags: [ "french", "gnu/linux", "workshop" ]
+tags: [ "cisco", "french", "gnu/linux", "workshop" ]
+series: ["r301"]
+series_order: 1
 slug: "ssh-cisco-ios"
 ---
 
