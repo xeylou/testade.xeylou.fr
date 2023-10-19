@@ -109,10 +109,67 @@ sw1 ---|vlan 10| pc1
 sw1 ---|vlan 20| pc2
 {{< /mermaid >}}
 
-exemples simples d'application des différentes [méthodes d'inter-vlan](#méthodes-inter-vlans)
+<!-- exemples simples d'application des différentes [méthodes d'inter-vlan](#méthodes-inter-vlans) -->
+
+<!-- https://www.ccnablog.com/inter-vlan-routing/#:~:text=Configuring%20inter-VLAN%20routing%20using%20router-on-a-stick%201%20Step%201.,4%20Step%204.%20...%205%20Step%205.%20 -->
 
 ## routage simple
 
+comme dit [méthodes d'inter-vlan](#méthodes-dinter-vlans), le routage peut se faire en utilisant des liens physiques
 
+cette méthode n'est pas utilisée car serait beaucoup trop chère (acheter un routeur physique 48 ports ça n'existe pas...)
+
+je l'expose tout de même ici car demandé en td
+
+les notions de routage restent les mêmes, les vlan ayant des adresses réseau différentes -> c'est comme des réseaux physiques
+
+configuration du switch SW1
+
+*les ports d'un siwtch sont UP par défaut*
+
+```bash
+enable
+configure terminal
+hotsname SW1
+no ip domain-lookup
+int g0/0
+switchport access vlan 10
+exit
+int g0/1
+switchport access vlan 20
+exit
+int g0/2
+switchport access vlan 10
+exit
+int g0/3
+switchport access vlan 20
+exit
+end
+```
+
+configuration du routeur R1
+
+```bash
+enable
+configure terminal
+hotsname R1
+no ip domain-lookup
+int g1/0
+ip address 192.168.1.1 255.255.255.0
+no shut
+exit
+int g1/1
+ip address 192.168.2.1 255.255.255.0
+no shut
+exit
+end
+```
+
+après avoir mis une adresse ip à PC1 & PC2 selon leur vlan, ils devraient pouvoir se pinguer entre eux
 
 ## routage on stick
+
+le routage inter-vlan en on stick possède les mêmes caractéristiques que le [simple](#routage-simple)
+
+la seule exception reste l'utilisation d'un lien `trunk` entre le switch & le routeur pour encapsuler les vlan
+
