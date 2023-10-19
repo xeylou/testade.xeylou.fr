@@ -123,29 +123,37 @@ je l'expose tout de même ici car demandé en td
 
 les notions de routage restent les mêmes, les vlan ayant des adresses réseau différentes -> c'est comme des réseaux physiques
 
-configuration du switch SW1
+si l'on se base sur la topologie suivante
 
-*les ports d'un siwtch sont UP par défaut*
+***FAIRE SCHEMA AVEC NOMS DES PORTS + VLAN***
+
+je n'explique pas les commandes suivantes, elles devraient être transparentes
+
+configuration du switch SW1
 
 ```bash
 enable
 configure terminal
 hotsname SW1
 no ip domain-lookup
-int g0/0
+int g0/1
 switchport access vlan 10
 exit
-int g0/1
+int g1/1
 switchport access vlan 20
 exit
-int g0/2
+int g2/1
 switchport access vlan 10
 exit
-int g0/3
+int g3/1
 switchport access vlan 20
 exit
 end
 ```
+
+*les ports d'un switch sont UP par défaut, pas besoin de `no shutdown`*
+
+*pas besoin de la commande `switchport mode access`, les ports le sont par défaut*
 
 configuration du routeur R1
 
@@ -154,22 +162,29 @@ enable
 configure terminal
 hotsname R1
 no ip domain-lookup
-int g1/0
+int g0/0
 ip address 192.168.1.1 255.255.255.0
 no shut
 exit
-int g1/1
+int g1/0
 ip address 192.168.2.1 255.255.255.0
 no shut
 exit
 end
 ```
 
-après avoir mis une adresse ip à PC1 & PC2 selon leur vlan, ils devraient pouvoir se pinguer entre eux
+après l'attribution d'une adresse ip à PC1 & PC2 selon l'adresse réseau de leur vlan, ils pourront se ping
+
+***BOUTON DL FICHIER CORRECTION***
 
 ## routage on stick
 
-le routage inter-vlan en on stick possède les mêmes caractéristiques que le [simple](#routage-simple)
+le routage inter-vlan on stick possède les mêmes propritétés que le [routage inter-vlan simple](#routage-simple)
 
-la seule exception reste l'utilisation d'un lien `trunk` entre le switch & le routeur pour encapsuler les vlan
+l'unique exception étant l'utilisation d'un lien `trunk` pour le passage des vlan entre le switch & le routeur
 
+cela implique au routeur de connaitre les vlan transmis à ses ports, pour configurer une adresse ip à chacun & servir de passerelle
+
+si l'on considère l'infrastructure suivante
+
+***METTRE SCHEMA AVEC PORTS & NOMS DES VLANS***
