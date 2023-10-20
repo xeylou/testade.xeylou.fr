@@ -1,11 +1,11 @@
 ---
 title: "inter-vlan cisco"
 date: 2023-10-18
-draft: true
+draft: false
 tags: [ "cisco", "french" ]
 series: ["r301"]
 series_order: 2
-slug: "inter-vlan"
+slug: "inter-vlan-cisco"
 ---
 
 <!-- prologue -->
@@ -19,9 +19,13 @@ inter-vlan sur équipements cisco
 
 ## introduction
 
-je crée finalement une série d'articles dédiés à r301, le module étant très riche & évalué en pratique
+je crée finalement une série d'articles dédiés à r301, le module abordant du cisco cli évalué en pratique
 
-cet article est dédié à la compréhension & l'étude des principes liés au routage inter-vlan sur des équipements cisco, pas à de la technique ou une utilisation avancée 
+cet article est dédié à la compréhension & l'étude des principes liés au routage inter-vlan sur des équipements cisco, pas à de l'exploration technique ou une utilisation avancée
+
+j'expose uniquement les bases du routage inter-vlan, libre à vous de chercher plus loin dans la pratique
+
+*si vous avez intégré cet article, les tp devraient être triviaux*
 
 ## rappels vlan
 
@@ -37,7 +41,7 @@ l'attribution des vlan à des équipements se fait généralement sur un switch
 
 les ports d'un switch sont associés à des vlans, les machines derrière ces ports sont en conséquent affectées à des vlan sans qu'elles ne le sachent
 
-de ce fait, les machines du vlan `X` auront accès aux autres machines du réseau associées au vlan `X`
+de ce fait, les machines du vlan `X` auront accès uniquement aux autres machines du vlan `X`
 
 *side note: tous les ports des switchs cisco ont un vlan par défaut & natif : le vlan 1, donc tout le monde se voit partout*
 
@@ -53,7 +57,7 @@ cependant, il est parfois nécessaire de faire communiquer des machines apparten
 
 une machine devrait donc se charger de faire passer les trâmes d'un vlan à un autre
 
-le remède à tout ça serait un `routeur`, transférant des trames d'un vlan à un autre, plutôt que d'un réseau à un autre
+le remède à tout ça serait un `routeur`, transférant les trames d'un vlan à un autre, plutôt que d'un réseau à un autre
 
 cela existe & est disponible sur tous les routeurs cisco
 
@@ -61,7 +65,7 @@ leur spécificité étant qu'ils font du routage entre les vlan : du `routage in
 
 ## notions annexes
 
-ces notions seront abordés pour la suite
+cette notion sera abordée pour la suite
 
 un lien peut transporter plusieurs vlans, mais ces vlan ne se verront pas
 
@@ -88,7 +92,7 @@ sw1 ---|vlan 10| pc1
 sw2 ---|vlan 20| pc2
 {{< /mermaid >}}
 
-cependant, selon les réseaux, un bien plus grand nombre de vlan peuvent être amenés à être routés
+cependant, selon les réseaux, un bien plus grand nombre de vlan peuvent être amené à être routé
 
 l'idée de garder un lien par vlan devient alors insensée
 
@@ -125,9 +129,15 @@ les notions de routage restent les mêmes, les vlan ayant des adresses réseau d
 
 si l'on se base sur la topologie suivante
 
-***FAIRE SCHEMA AVEC NOMS DES PORTS + VLAN***
+![image-cisco-intervlan-simple](intervlan-simple.png)
 
-je n'explique pas les commandes suivantes, elles devraient être transparentes
+{{< button href="intervlan-simple.pkt" target="_blank" >}}
+télécharger le fichier packet tracer vierge
+{{< /button >}}
+
+voici les commandes de configurations des équipements présents
+
+j'omets d'expliquer les commandes: elles devraient être transparentes -> mêmes que pour routage simple
 
 configuration du switch SW1
 
@@ -151,7 +161,7 @@ exit
 end
 ```
 
-*les ports d'un switch sont UP par défaut, pas besoin de `no shutdown`*
+*les ports d'un switch sont UP par défaut, pas besoin de la commande `no shutdown`*
 
 *pas besoin de la commande `switchport mode access`, les ports le sont par défaut*
 
@@ -173,18 +183,80 @@ exit
 end
 ```
 
-après l'attribution d'une adresse ip à PC1 & PC2 selon l'adresse réseau de leur vlan, ils pourront se ping
-
-***BOUTON DL FICHIER CORRECTION***
+après l'attribution d'une adresse ip à PC1 & PC2 selon l'adresse réseau de leur vlan + leur, & leur passerelle -> ils pourront se ping
 
 ## routage on stick
 
 le routage inter-vlan on stick possède les mêmes propritétés que le [routage inter-vlan simple](#routage-simple)
 
-l'unique exception étant l'utilisation d'un lien `trunk` pour le passage des vlan entre le switch & le routeur
+l'unique exception étant l'utilisation d'un lien `trunk` pour le passage des vlan
 
-cela implique au routeur de connaitre les vlan transmis à ses ports, pour configurer une adresse ip à chacun & servir de passerelle
+cela implique au routeur de connaitre les vlan transmis par ce lien -> pour se configurer une adresse ip sur chaque vlan & leur servir de passerelle
 
-si l'on considère l'infrastructure suivante
+pour cela, le routeur va découper son interface pour chaque vlan demandé, créant des `sous-interfaces` pour chacun d'entre eux
 
-***METTRE SCHEMA AVEC PORTS & NOMS DES VLANS***
+ces sous-interfaces seront les passerelles des machines pour leur vlan
+
+je considèrerai l'infrastructure suivante
+
+![inter-vlan-on-stick](intervlan-stick.png)
+
+{{< button href="intervlan-stick.pkt" target="_blank" >}}
+télécharger le fichier packet tracer vierge
+{{< /button >}}
+
+configuration R1
+
+```bash
+enable
+configure terminal
+hostname R1
+no ip domain-lookup
+int g0/0
+no shutdown
+exit
+int g0/0.10
+encapsulation dot1Q 10
+ip address 192.168.1.1 255.255.255.0
+no shut
+exit
+int g0/0.20
+encapsulation dot1Q 20
+ip address 192.168.2.1 255.255.255.0
+no shut
+exit
+end
+```
+
+> `int g0/0.10` créer la sous-interface 10 sur port gigabit ethernet 0/0  
+`encapsulation dot1Q 10` utilisera vlan 10 sur cette interface
+
+configuration SW1
+
+```bash
+enable
+configure terminal
+hostname SW1
+no ip domain-lookup
+int g0/1
+switchport mode trunk
+int g1/1
+switchport access vlan 10
+exit
+int g2/1
+switchport access vlan 20
+exit
+end
+```
+
+> pas besoin de créer un vlan avec la commande `vlan 10` par exemple, si inexistant -> il va le créer  
+pas besoin `switchport trunk allowed vlan 10,20` car accepte tout par défaut  
+pas besoin `switchport trunk native vlan 1` non plus
+
+commandes utiles pour débogger
+
+```bash
+show running-config
+show ip route
+show ip interface brief
+```
