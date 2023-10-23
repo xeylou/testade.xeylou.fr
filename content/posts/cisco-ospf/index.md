@@ -1,11 +1,11 @@
 ---
-title: "ospf cisco"
+title: "cisco ospf"
 date: 2023-10-20
 draft: false
 tags: [ "cisco", "french" ]
 series: ["r301"]
 series_order: 3
-slug: "ospf-cisco"
+slug: "cisco-ospf"
 ---
 
 <!-- prologue -->
@@ -86,3 +86,129 @@ ces messages passent par différentes `STATES`, `full` signifiant qu'ils connais
 <!-- area, state (full c'est dernier bon), messages hello -->
 
 <!-- ip ospf cost 999 ou bandwith 64 -->
+
+## configuration
+
+avant de commencer le routage dynamique, les adresses ip doivent être présentes sur les interfaces
+
+suite à cela, la configuration de base de ospf peut commencer
+
+```bash
+router ospf
+```
+> un numéro peut être renseigné `router ospf 1` pour indiquer le numéro de la configuration
+
+pour être identifié sur le réseau ospf, le routeur doit possèder un `id`
+
+sans configuration, celui-ci est l'interface la plus haute configurée (loopback puis interfaces physiques)
+
+cet id peut être changé en une commande, plutôt que de configurer une interface
+
+```bash
+router-id 1.1.1.1
+```
+
+sinon
+
+```bash
+interface loopback 0
+ip address 1.1.1.1 255.255.255.255
+```
+
+les routes seront indiqués avec l'adresse considérée comme passerelle, appartenant à ce routeur
+
+sera aussi renseigné le masque mais en inversé (wildcard) - e.g. 255.255.255.0 -> 0.0.0.255
+
+sera aussi précisée la zone à laquelle appartient la route
+
+suite à ça, reste qu'à indiquer les routes du routeur à ospf
+
+```bash
+network 192.168.0.1 0.0.0.255 area a
+```
+> sous la forme `network <ip interface> <wildcard> area <numéro zone>`
+
+## vérifications
+
+vérifier ses voisins ospf
+
+```bash
+show ospf neighbor
+```
+
+voir si des routes sont crées par ospf
+
+```bash
+show ip route
+```
+> toutes les routes commençant par `O` sont apprises par ospf
+
+regarder les états des messages `HELLO`
+
+```bash
+show ip ospf interface
+```
+
+ou une interface spécifique
+
+```bash
+show ip ospf interface se0/1/0
+```
+
+voir si ospf est actif au niveau des protocoles de routage
+
+```bash
+show ip protocols
+```
+
+deux moyens de changer le coût d'une interface
+
+```bash
+interface se0/1/0
+bandwith 64
+
+interface se0/1/0
+ip ospf cost 10
+```
+
+changer les intervales des messages `HELLO` ou `DEAD`
+
+```bash
+interface se0/1/1
+ip ospf hello-interval 5
+ip ospf dead-interval 20
+```
+
+<!-- ```bash
+enable
+configure terminal
+hostname R3
+no ip domain-lookup
+enable secret class
+line console 0
+password cisco
+login
+exit
+
+do show ospf neighbor
+do show ip ospf interface
+do show ip route ! O -> apprisent par ospf
+do show ip protocols
+
+interface se0/1/1
+ip ospf cost 10
+
+interface se0/1/0
+ip ospf hello-interval 5
+ip ospf dead-interval 20
+
+do show ip ospf interface se0/1/0
+
+int loopback 0
+ip address 1.1.1.1 255.255.255.255
+
+interface g0/0
+bandwith 64 ! 64 Mbits/s
+
+do write ! copy run start
+``` -->

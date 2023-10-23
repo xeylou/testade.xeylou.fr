@@ -5,7 +5,7 @@ draft: false
 tags: [ "cisco", "french" ]
 series: ["r301"]
 series_order: 2
-slug: "inter-vlan-cisco"
+slug: "cisco-inter-vlan"
 ---
 
 <!-- prologue -->
