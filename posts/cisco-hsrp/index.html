@@ -25,7 +25,7 @@ sw1[SW1]
 pc1[PC1]
 pc2[PC2]
 r1 ---|192.168.0.2| sw1
-r3 ---|192.168.0.3| sw1
+r2 ---|192.168.0.3| sw1
 sw1 --- pc1 & pc2
 </div><p>deux routeurs se partagent une adresse ip virtuelle en plus des leurs</p><p>les machines du réseau local utilisent l&rsquo;adresse virtuelle comme passerelle</p><p>hsrp définit un routeur comme <code>actif</code> & l&rsquo;autre comme <code>passif</code></p><p>les routeurs communiquent entre eux pour s&rsquo;avoir qui redirige le traffic de l&rsquo;ip virtuelle</p><p>le routeur passif prendra la redirection si il ne reçoit plus de message du routeur</p><p>si celui-ci renvoie des messages ensuite, il reviendra actif & reprendra la redirection</p><p>le routeur avec la priorité la plus haute sera l&rsquo;actif</p><div id=implémentation class=anchor></div><h2 class="relative group">implémentation
 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#impl%c3%a9mentation aria-label=Anchor>#</a></span></h2><p>R1</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>enable</span>
