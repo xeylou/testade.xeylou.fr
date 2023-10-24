@@ -18,8 +18,8 @@
 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#fonctionnement aria-label=Anchor>#</a></span></h2><p><em>hot standby router protocol</em></p><p>protocole de redondance de passerelle dans un réseau local</p><div class=mermaid align=center>%%{init: {'theme':'dark'}}%%
 graph TD
 subgraph 192.168.0.1
-r1{R1<br><font color=#a9a9a9>192.168.0.1</font>}
-r2{R2<br><font color=#a9a9a9>192.168.0.2</font>}
+r1{R1<br><font color=#a9a9a9>192.168.0.2</font>}
+r2{R2<br><font color=#a9a9a9>192.168.0.3</font>}
 end
 sw1[SW1]
 pc1[PC1]
@@ -45,7 +45,7 @@ sw1 --- pc1 & pc2
 </span></span><span class=line><span class=cl>hostname R2
 </span></span><span class=line><span class=cl>no ip domain-lookup
 </span></span><span class=line><span class=cl>interface fa0/0
-</span></span><span class=line><span class=cl>ip address 192.168.0.2 255.255.255.0
+</span></span><span class=line><span class=cl>ip address 192.168.0.3 255.255.255.0
 </span></span><span class=line><span class=cl>
 </span></span><span class="line hl"><span class=cl>standby <span class=m>100</span> ip 192.168.0.1
 </span></span><span class="line hl"><span class=cl>standby <span class=m>100</span> priority <span class=m>100</span>
