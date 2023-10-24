@@ -33,8 +33,8 @@ protocole de redondance de passerelle dans un réseau local
 %%{init: {'theme':'dark'}}%%
 graph TD
 subgraph 192.168.0.1
-r1{R1<br><font color="#a9a9a9">192.168.0.1</font>}
-r2{R2<br><font color="#a9a9a9">192.168.0.2</font>}
+r1{R1<br><font color="#a9a9a9">192.168.0.2</font>}
+r2{R2<br><font color="#a9a9a9">192.168.0.3</font>}
 end
 
 sw1[SW1]
@@ -94,7 +94,7 @@ configure terminal
 hostname R2
 no ip domain-lookup
 interface fa0/0
-ip address 192.168.0.2 255.255.255.0
+ip address 192.168.0.3 255.255.255.0
 
 standby 100 ip 192.168.0.1
 standby 100 priority 100
