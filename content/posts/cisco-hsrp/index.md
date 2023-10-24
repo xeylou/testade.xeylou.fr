@@ -31,18 +31,18 @@ protocole de redondance de passerelle dans un réseau local
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
-graph LR
-subgraph HSRP (192.168.0.1)
-r1{R1}
-r2{R2}
+graph TD
+subgraph 192.168.0.1
+r1{R1<br><font color="#a9a9a9">192.168.0.1</font>}
+r2{R2<br><font color="#a9a9a9">192.168.0.2</font>}
 end
 
 sw1[SW1]
 pc1[PC1]
 pc2[PC2]
 
-r1 ---|192.168.0.2| sw1
-r2 ---|192.168.0.3| sw1
+r1 --- sw1
+r2 --- sw1
 sw1 --- pc1 & pc2
 {{< /mermaid >}}
 
