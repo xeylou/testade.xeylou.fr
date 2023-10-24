@@ -64,7 +64,7 @@ le routeur avec la priorité la plus haute sera l'actif
 
 R1
 
-```bash
+```bash {hl_lines=["8-10"]}
 enable
 configure terminal
 hostname R1
@@ -81,13 +81,14 @@ end
 
 > `standby 100 ip 192.168.0.1` définition adresse ip virtuelle
 
-> `standby 100 priority 110` numéro de priorité pour ce routeur
-
-> `standby 100 preempt` active la péemption -> si nouveau routeur avec plus haute priorité dans un groupe, il le deviend immédiatement celui actif
+> `standby 100 priority 110` numéro de priorité du routeur configuré
+>
+> optionnel:
+> `standby 100 preempt` active la préemption -> si nouveau routeur avec plus haute priorité dans un groupe, il le devient immédiatement celui actif
 
 R2
 
-```bash
+```bash {hl_lines=["8-10"]}
 enable
 configure terminal
 hostname R2
@@ -95,8 +96,16 @@ no ip domain-lookup
 interface fa0/0
 ip address 192.168.0.2 255.255.255.0
 
-standby 100 ip 192.168.0.2
+standby 100 ip 192.168.0.1
 standby 100 priority 100
 standby 100 preempt
 end
 ```
+
+le routeur R1 a une priorité de `110`, R2 `100`
+
+R1 -> actif, R2 -> passif
+
+pour tester la configuration, vous pouvez `ping -t 192.168.0.1` (ping à l'infini, comme sur distributions gnu/linux)
+
+si lien coupé entre R1 & SW1 : après quelques timeout, les ping reprennent car R2 reprend la redirection

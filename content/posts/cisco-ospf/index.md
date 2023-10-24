@@ -94,9 +94,9 @@ avant de commencer le routage dynamique, les adresses ip doivent être présente
 suite à cela, la configuration de base de ospf peut commencer
 
 ```bash
-router ospf
+router ospf 1
 ```
-> un numéro peut être renseigné `router ospf 1` pour indiquer le numéro de la configuration
+> numéro renseigné `router ospf 1` pour indiquer le numéro de la configuration
 
 pour être identifié sur le réseau ospf, le routeur doit possèder un `id`
 
@@ -124,16 +124,18 @@ sera aussi précisée la zone à laquelle appartient la route
 suite à ça, reste qu'à indiquer les routes du routeur à ospf
 
 ```bash
-network 192.168.0.1 0.0.0.255 area a
+network 192.168.0.1 0.0.0.255 area 1
 ```
 > sous la forme `network <ip interface> <wildcard> area <numéro zone>`
+>
+> `area 1` un chiffre ou un nombre pour identifier la zone
 
 ## vérifications
 
 vérifier ses voisins ospf
 
 ```bash
-show ospf neighbor
+show ip ospf neighbor
 ```
 
 voir si des routes sont crées par ospf
@@ -149,13 +151,13 @@ regarder les états des messages `HELLO`
 show ip ospf interface
 ```
 
-ou une interface spécifique
+pour une interface spécifique
 
 ```bash
 show ip ospf interface se0/1/0
 ```
 
-voir si ospf est actif au niveau des protocoles de routage
+voir si ospf actif au niveau des protocoles de routage
 
 ```bash
 show ip protocols
