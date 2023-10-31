@@ -47,7 +47,7 @@ est un protocole non affilié à cisco, regardant l'état des liens entre les ro
 
 pour ceux qui l'ont vu en terminal, ospf est l'implémentation de l'algorithme de Dijkstra
 
-celui-ci créer un `coup` se basant sur la bande passante *pour éviter la congestion* & sur la disponibilité du lien
+celui-ci créer un `coût` se basant sur la bande passante *pour éviter la congestion* & sur la disponibilité du lien
 
 voici un exemple d'utilisation de ospf
 
@@ -65,11 +65,11 @@ r2 ---|100 Mbits/s| r3
 
 ici, pour aller de R1 à R3, ospf préfèrera passer par R2
 
-le coup d'utilisation de deux liens à 100 Mbits/s étant moins élevé que celui d'un lien à 10 Mbits/s
+le coût d'utilisation de deux liens à 100 Mbits/s étant moins élevé que celui d'un lien à 10 Mbits/s
 
 le protocole rip aurait pris le lien entre R1 & R3, ayant le moins de "sauts" entre les deux
 
-une formule mathématique existe pour calculer les coups, je préfère vous mettre un tableau pour ceux courants
+une formule mathématique existe pour calculer les coûts, je préfère vous mettre un tableau pour ceux courants
 
 <table><thead><tr><th>Bande passante</th><th>Coût OSPF</th></tr></thead><tbody><tr><td>10 Gbits/s</td><td>1</td></tr><tr><td>1 Gbits/s</td><td>1</td></tr><tr><td>100 Mbits/s</td><td>1</td></tr><tr><td>10 Mbits/s</td><td>10</td></tr><tr><td>1544 Kbps (série)</td><td>64</td></tr></tbody></table>
 
