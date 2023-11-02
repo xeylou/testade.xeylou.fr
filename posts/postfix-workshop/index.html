@@ -1,5 +1,5 @@
-<!doctype html><html lang=en dir=ltr class=scroll-smooth data-default-appearance=dark data-auto-appearance=true><head><style>::-moz-selection{color:#555252;background:#b6b6b6}::selection{color:#555252;background:#b6b6b6}</style><meta name=darkreader-lock><meta charset=utf-8><meta http-equiv=content-language content="en"><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><title>postfix workshop &#183; xeylou</title>
-<meta name=title content="postfix workshop &#183; xeylou"><meta name=description content="xeylou's website"><meta name=keywords content="dns,french,gnu/linux,mail,workshop,"><link rel=canonical href=https://xeylou.fr/posts/postfix-workshop/><link type=text/css rel=stylesheet href=/css/main.bundle.min.2241a7bb6e5eeb39f86867591c1f3ee2feca7050c7431a20910d4f22df2c411d9b892710c28ed02bc1fd7e5dcb3dcf04e555e4e7003b553c067d3eb1378dd81f.css integrity="sha512-IkGnu25e6zn4aGdZHB8+4v7KcFDHQxogkQ1PIt8sQR2biScQwo7QK8H9fl3LPc8E5VXk5wA7VTwGfT6xN43YHw=="><script type=text/javascript src=/js/appearance.min.516a16745bea5a9bd011138d254cc0fd3973cd55ce6e15f3dec763e7c7c2c7448f8fe7b54cca811cb821b0c7e12cd161caace1dd794ac3d34d40937cbcc9ee12.js integrity="sha512-UWoWdFvqWpvQERONJUzA/TlzzVXObhXz3sdj58fCx0SPj+e1TMqBHLghsMfhLNFhyqzh3XlKw9NNQJN8vMnuEg=="></script><script defer type=text/javascript id=script-bundle src=/js/main.bundle.min.6a4296a3ed9203be49ac203966fe6cd1e1a38a9313f4e36ab3a7483897f8e78106ef8cdfebfe8e02a55d125beec2f11d6eae1ef9ccfb1fcce310fa515d263add.js integrity="sha512-akKWo+2SA75JrCA5Zv5s0eGjipMT9ONqs6dIOJf454EG74zf6/6OAqVdElvuwvEdbq4e+cz7H8zjEPpRXSY63Q==" data-copy data-copied></script><script src=/js/zoom.min.js></script><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta property="og:title" content="postfix workshop"><meta property="og:description" content="installation d&rsquo;un serveur mail mx postfix"><meta property="og:type" content="article"><meta property="og:url" content="https://xeylou.fr/posts/postfix-workshop/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-09-30T00:00:00+00:00"><meta property="article:modified_time" content="2023-09-30T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="postfix workshop"><meta name=twitter:description content="installation d&rsquo;un serveur mail mx postfix"><script type=application/ld+json>[{"@context":"https://schema.org","@type":"Article","articleSection":"Posts","name":"postfix workshop","headline":"postfix workshop","abstract":"installation d\u0026rsquo;un serveur mail mx postfix","inLanguage":"en","url":"https:\/\/xeylou.fr\/posts\/postfix-workshop\/","author":{"@type":"Person","name":"xeylou"},"copyrightYear":"2023","dateCreated":"2023-09-30T00:00:00\u002b00:00","datePublished":"2023-09-30T00:00:00\u002b00:00","dateModified":"2023-09-30T00:00:00\u002b00:00","keywords":["dns","french","gnu/linux","mail","workshop"],"mainEntityOfPage":"true","wordCount":"1780"}]</script><meta name=author content="xeylou"><link href=https://github.com/xeylou rel=me><link href=mailto:xeylou@proton.me rel=me><script src=/lib/jquery/jquery.slim.min.js integrity></script><script type=module>
+<!doctype html><html lang=en dir=ltr class=scroll-smooth data-default-appearance=dark data-auto-appearance=true><head><style>::-moz-selection{color:#555252;background:#b6b6b6}::selection{color:#555252;background:#b6b6b6}</style><meta name=darkreader-lock><meta charset=utf-8><meta http-equiv=content-language content="en"><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=X-UA-Compatible content="ie=edge"><title>postfix workshop &#183; xeylou</title>
+<meta name=title content="postfix workshop &#183; xeylou"><meta name=description content="xeylou's website"><meta name=keywords content="dns,french,gnu/linux,mail,workshop,"><link rel=canonical href=https://xeylou.fr/posts/postfix-workshop/><link type=text/css rel=stylesheet href=/css/main.bundle.min.2241a7bb6e5eeb39f86867591c1f3ee2feca7050c7431a20910d4f22df2c411d9b892710c28ed02bc1fd7e5dcb3dcf04e555e4e7003b553c067d3eb1378dd81f.css integrity="sha512-IkGnu25e6zn4aGdZHB8+4v7KcFDHQxogkQ1PIt8sQR2biScQwo7QK8H9fl3LPc8E5VXk5wA7VTwGfT6xN43YHw=="><script type=text/javascript src=/js/appearance.min.516a16745bea5a9bd011138d254cc0fd3973cd55ce6e15f3dec763e7c7c2c7448f8fe7b54cca811cb821b0c7e12cd161caace1dd794ac3d34d40937cbcc9ee12.js integrity="sha512-UWoWdFvqWpvQERONJUzA/TlzzVXObhXz3sdj58fCx0SPj+e1TMqBHLghsMfhLNFhyqzh3XlKw9NNQJN8vMnuEg=="></script><script defer type=text/javascript id=script-bundle src=/js/main.bundle.min.6a4296a3ed9203be49ac203966fe6cd1e1a38a9313f4e36ab3a7483897f8e78106ef8cdfebfe8e02a55d125beec2f11d6eae1ef9ccfb1fcce310fa515d263add.js integrity="sha512-akKWo+2SA75JrCA5Zv5s0eGjipMT9ONqs6dIOJf454EG74zf6/6OAqVdElvuwvEdbq4e+cz7H8zjEPpRXSY63Q==" data-copy data-copied></script><script src=/js/zoom.min.js></script><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta property="og:title" content="postfix workshop"><meta property="og:description" content="installation d&rsquo;un serveur mail mx postfix"><meta property="og:type" content="article"><meta property="og:url" content="https://xeylou.fr/posts/postfix-workshop/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-09-30T00:00:00+00:00"><meta property="article:modified_time" content="2023-09-30T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="postfix workshop"><meta name=twitter:description content="installation d&rsquo;un serveur mail mx postfix"><script type=application/ld+json>[{"@context":"https://schema.org","@type":"Article","articleSection":"Posts","name":"postfix workshop","headline":"postfix workshop","abstract":"installation d\u0026rsquo;un serveur mail mx postfix","inLanguage":"en","url":"https:\/\/xeylou.fr\/posts\/postfix-workshop\/","author":{"@type":"Person","name":"xeylou"},"copyrightYear":"2023","dateCreated":"2023-09-30T00:00:00\u002b00:00","datePublished":"2023-09-30T00:00:00\u002b00:00","dateModified":"2023-09-30T00:00:00\u002b00:00","keywords":["dns","french","gnu/linux","mail","workshop"],"mainEntityOfPage":"true","wordCount":"1957"}]</script><meta name=author content="xeylou"><link href=https://github.com/xeylou rel=me><link href=mailto:xeylou@proton.me rel=me><script src=/lib/jquery/jquery.slim.min.js integrity></script><script type=module>
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
   mermaid.initialize({
     startOnLoad: true
@@ -9,7 +9,7 @@
 <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></button><div class="ltr:mr-14 rtl:ml-14 cursor-pointer text-sm text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"><button id=appearance-switcher aria-label="Dark mode switcher" type=button><div class="flex items-center justify-center h-12 dark:hidden"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></div><div class="items-center justify-center hidden h-12 dark:flex"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></div></button></div></nav><div class="flex md:hidden items-center space-x-5 md:ml-12"><span></span>
 <button id=search-button-mobile aria-label=Search class="text-base hover:text-primary-600 dark:hover:text-primary-400" title>
 <span class="relative block icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M505 442.7 405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9.0 208 0S0 93.1.0 208s93.1 208 208 208c48.3.0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9.0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7.0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7.0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg></span></button>
-<button id=appearance-switcher-mobile aria-label="Dark mode switcher" type=button style=margin-right:5px><div class="flex items-center justify-center h-12 dark:hidden"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></div><div class="items-center justify-center hidden h-12 dark:flex"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></div></button></div></div><div class="-my-2 -mr-2 md:hidden"><label id=menu-button for=menu-controller class=block><input type=checkbox id=menu-controller class=hidden><div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentcolor" d="M0 96C0 78.33 14.33 64 32 64H416c17.7.0 32 14.33 32 32 0 17.7-14.3 32-32 32H32C14.33 128 0 113.7.0 96zM0 256c0-17.7 14.33-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32c-17.67.0-32-14.3-32-32zM416 448H32c-17.67.0-32-14.3-32-32s14.33-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32z"/></svg></span></div><div id=menu-wrapper style=padding-top:5px class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50"><ul class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none ltr:text-right rtl:text-left max-w-7xl"><li><span class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentcolor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></span></li><li class=mt-1><a href=/posts/ class="flex items-center"><p class="text-bg font-bg text-gray-500 hover:text-gray-900" title=Posts>Posts</p></a></li><li class=mt-1><a href=/now/ class="flex items-center"><p class="text-bg font-bg text-gray-500 hover:text-gray-900" title=Now>Now</p></a></li><li class=mt-1><a href=/about/ class="flex items-center"><p class="text-bg font-bg text-gray-500 hover:text-gray-900" title=About>About</p></a></li></ul></div></label></div></div><script>(function(){var e=$(".main-menu"),t=window.location.pathname;e.find('a[href="'+t+'"]').each(function(e,t){$(t).children("p").addClass("active")})})()</script></div></div><script>window.addEventListener("scroll",function(){var t=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0,n=document.getElementById("menu-blur");n.style.opacity=t/300})</script><div class="relative flex flex-col grow"><main id=main-content class=grow><article><header id=single_header class="mt-5 max-w-prose"><h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">postfix workshop</h1><div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden"><div class="flex flex-row flex-wrap items-center">&lt;time datetime="2023-09-30 00:00:00 &amp;#43;0000 UTC">2023-09-30&lt;/time>&lt;span class="px-2 text-primary-500">&amp;middot;&lt;/span>&lt;span title="Reading time">9 mins&lt;/span></div><div class="flex flex-row flex-wrap items-center"></div><div class="flex flex-row flex-wrap items-center"><span style=margin-top:.5rem class=mr-2 onclick='window.open("/tags/dns/","_self")'><span class=flex><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">dns
+<button id=appearance-switcher-mobile aria-label="Dark mode switcher" type=button style=margin-right:5px><div class="flex items-center justify-center h-12 dark:hidden"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M32 256C32 132.2 132.3 32 255.8 32c11.36.0 29.7 1.668 40.9 3.746 9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3 9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480 132.1 480 32 379.6 32 256z"/></svg></span></div><div class="items-center justify-center hidden h-12 dark:flex"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 159.1c-53.02.0-95.1 42.98-95.1 95.1s41.2 96.9 95.1 96.9 95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347l-63.2-91.9 63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89 164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6 12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256 2.74 347.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7 19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109 109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69.0-127.1-57.31-127.1-127.1.0-70.69 57.31-127.1 127.1-127.1S383.1 186.2 383.1 256c0 70.7-56.4 127.1-127.1 127.1z"/></svg></span></div></button></div></div><div class="-my-2 -mr-2 md:hidden"><label id=menu-button for=menu-controller class=block><input type=checkbox id=menu-controller class=hidden><div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentcolor" d="M0 96C0 78.33 14.33 64 32 64H416c17.7.0 32 14.33 32 32 0 17.7-14.3 32-32 32H32C14.33 128 0 113.7.0 96zM0 256c0-17.7 14.33-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32c-17.67.0-32-14.3-32-32zM416 448H32c-17.67.0-32-14.3-32-32s14.33-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32z"/></svg></span></div><div id=menu-wrapper style=padding-top:5px class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50"><ul class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none ltr:text-right rtl:text-left max-w-7xl"><li><span class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentcolor" d="M310.6 361.4c12.5 12.5 12.5 32.75.0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3 54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75.0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75.0-45.25s32.75-12.5 45.25.0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25.0s12.5 32.75.0 45.25l-105.4 105.4L310.6 361.4z"/></svg></span></span></li><li class=mt-1><a href=/posts/ class="flex items-center"><p class="text-bg font-bg text-gray-500 hover:text-gray-900" title=Posts>Posts</p></a></li><li class=mt-1><a href=/now/ class="flex items-center"><p class="text-bg font-bg text-gray-500 hover:text-gray-900" title=Now>Now</p></a></li><li class=mt-1><a href=/about/ class="flex items-center"><p class="text-bg font-bg text-gray-500 hover:text-gray-900" title=About>About</p></a></li></ul></div></label></div></div><script>(function(){var e=$(".main-menu"),t=window.location.pathname;e.find('a[href="'+t+'"]').each(function(e,t){$(t).children("p").addClass("active")})})()</script></div></div><script>window.addEventListener("scroll",function(){var t=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0,n=document.getElementById("menu-blur");n.style.opacity=t/300})</script><div class="relative flex flex-col grow"><main id=main-content class=grow><article><header id=single_header class="mt-5 max-w-prose"><h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">postfix workshop</h1><div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden"><div class="flex flex-row flex-wrap items-center">&lt;time datetime="2023-09-30 00:00:00 &amp;#43;0000 UTC">2023-09-30&lt;/time>&lt;span class="px-2 text-primary-500">&amp;middot;&lt;/span>&lt;span title="Reading time">10 mins&lt;/span></div><div class="flex flex-row flex-wrap items-center"></div><div class="flex flex-row flex-wrap items-center"><span style=margin-top:.5rem class=mr-2 onclick='window.open("/tags/dns/","_self")'><span class=flex><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">dns
 </span></span></span><span style=margin-top:.5rem class=mr-2 onclick='window.open("/tags/french/","_self")'><span class=flex><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">french
 </span></span></span><span style=margin-top:.5rem class=mr-2 onclick='window.open("/tags/gnu/linux/","_self")'><span class=flex><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">gnu/linux
 </span></span></span><span style=margin-top:.5rem class=mr-2 onclick='window.open("/tags/mail/","_self")'><span class=flex><span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">mail
@@ -35,46 +35,81 @@ bind9 -.- bind
 thunderbird -.- clients</div><div id=vm-postfix class=anchor></div><h2 class="relative group">vm postfix
 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#vm-postfix aria-label=Anchor>#</a></span></h2><p>modification nom d&rsquo;hôte</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>hostnamectl set-hostname r303-deb12-postfix <span class=o>&amp;&amp;</span> <span class=nb>logout</span>
 </span></span></code></pre></div><p>attribution adresse ip statique</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/network/interfaces
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln> 4</span><span class=cl><span class=nb>source</span> /etc/network/interfaces.d/*
-</span></span><span class=line><span class=ln> 5</span><span class=cl>
-</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=c1># The loopback network interface</span>
-</span></span><span class=line><span class=ln> 7</span><span class=cl>auto lo
-</span></span><span class=line><span class=ln> 8</span><span class=cl>iface lo inet loopback
-</span></span><span class=line><span class=ln> 9</span><span class=cl>
-</span></span><span class=line><span class=ln>10</span><span class=cl><span class=c1># The primary network interface</span>
-</span></span><span class=line><span class=ln>11</span><span class=cl>allow-hotplug enp1s0
-</span></span><span class="line hl"><span class=ln>12</span><span class=cl>iface enp1s0 inet static
-</span></span><span class="line hl"><span class=ln>13</span><span class=cl>address 192.168.122.10/24
-</span></span><span class="line hl"><span class=ln>14</span><span class=cl>gateway 192.168.122.1
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart networking
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=hl><span class=lnt>12
+</span></span><span class=hl><span class=lnt>13
+</span></span><span class=hl><span class=lnt>14
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>source</span> /etc/network/interfaces.d/*
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># The loopback network interface</span>
+</span></span><span class=line><span class=cl>auto lo
+</span></span><span class=line><span class=cl>iface lo inet loopback
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># The primary network interface</span>
+</span></span><span class=line><span class=cl>allow-hotplug enp1s0
+</span></span><span class="line hl"><span class=cl>iface enp1s0 inet static
+</span></span><span class="line hl"><span class=cl>address 192.168.122.10/24
+</span></span><span class="line hl"><span class=cl>gateway 192.168.122.1
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart networking
 </span></span></code></pre></div><p>installation paquet postfix & mailutils pour envoi/réception de mails entre utilisateurs</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apt install -y postfix mailutils
 </span></span></code></pre></div><blockquote><p><code>Internet Site</code> -> <code>rzo.lan</code></p></blockquote><p><em>pour que postfix propose de prendre un nom de domaine, qui sera finalement utilisé pour les mails</em></p><p>si installation sans accroc : service postfix actif</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl status postfix
 </span></span></code></pre></div><p>fichier de configuration global postfix <code>/etc/postfix/main.cf</code></p><p>commente tout ce qui touche au tls car pas utilisé ici</p><p>ajout informations pour utilisation du service</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/main.cf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>26</span><span class=cl><span class=c1># TLS parameters</span>
-</span></span><span class="line hl"><span class=ln>27</span><span class=cl><span class=c1># smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem</span>
-</span></span><span class="line hl"><span class=ln>28</span><span class=cl><span class=c1># smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key</span>
-</span></span><span class="line hl"><span class=ln>29</span><span class=cl><span class=c1># smtpd_tls_security_level=may</span>
-</span></span><span class=line><span class=ln>30</span><span class=cl>
-</span></span><span class="line hl"><span class=ln>31</span><span class=cl><span class=c1># smtp_tls_CApath=/etc/ssl/certs</span>
-</span></span><span class="line hl"><span class=ln>32</span><span class=cl><span class=c1># smtp_tls_security_level=may</span>
-</span></span><span class="line hl"><span class=ln>33</span><span class=cl><span class=c1># smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache</span>
-</span></span><span class=line><span class=ln>34</span><span class=cl>
-</span></span><span class=line><span class=ln>35</span><span class=cl>
-</span></span><span class="line hl"><span class=ln>36</span><span class=cl><span class=nv>mydomain</span> <span class=o>=</span> rzo.lan
-</span></span><span class="line hl"><span class=ln>37</span><span class=cl><span class=c1># smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination</span>
-</span></span><span class="line hl"><span class=ln>38</span><span class=cl><span class=nv>myhostname</span> <span class=o>=</span> r303-deb12-postfix.rzo.lan
-</span></span><span class=line><span class=ln>39</span><span class=cl><span class=nv>alias_maps</span> <span class=o>=</span> hash:/etc/aliases
-</span></span><span class=line><span class=ln>40</span><span class=cl><span class=nv>alias_database</span> <span class=o>=</span> hash:/etc/aliases
-</span></span><span class=line><span class=ln>41</span><span class=cl><span class=nv>myorigin</span> <span class=o>=</span> /etc/mailname
-</span></span><span class="line hl"><span class=ln>42</span><span class=cl><span class=nv>mydestination</span> <span class=o>=</span> <span class=nv>$mydomain</span>, <span class=nv>$myhostname</span>, localhost.<span class=nv>$mydomain</span>, localhost
-</span></span><span class="line hl"><span class=ln>43</span><span class=cl><span class=c1># relayhost = </span>
-</span></span><span class="line hl"><span class=ln>44</span><span class=cl><span class=nv>mynetworks</span> <span class=o>=</span> 127.0.0.0/8 192.168.122.0/24 
-</span></span><span class="line hl"><span class=ln>45</span><span class=cl><span class=nv>home_mailbox</span> <span class=o>=</span> Maildir/
-</span></span><span class="line hl"><span class=ln>46</span><span class=cl><span class=nv>mailbox_size_limit</span> <span class=o>=</span> <span class=m>51200000</span>
-</span></span><span class=line><span class=ln>47</span><span class=cl><span class=nv>recipient_delimiter</span> <span class=o>=</span> +
-</span></span><span class=line><span class=ln>48</span><span class=cl><span class=nv>inet_interfaces</span> <span class=o>=</span> all
-</span></span><span class=line><span class=ln>49</span><span class=cl><span class=nv>inet_protocols</span> <span class=o>=</span> ipv4
-</span></span></code></pre></div><blockquote><p><code>alias_maps</code> table des noms & des adresses de <code>mydestination</code><br><code>alias_database</code> table des noms d&rsquo;usages de <code>alias_maps</code><br><code>myorigin</code> pas de nom de domaine -> ajoute celui dans fichier<br><code>mydestination</code> domaines acceptés d&rsquo;échange<br><code>recipient_delimiter</code> truc@$mydomain & truc+random@$mydomain == les mêmes (pourriel)</p></blockquote><p>vérification syntaxique après édition</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>postfix check
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>26
+</span><span class=hl><span class=lnt>27
+</span></span><span class=hl><span class=lnt>28
+</span></span><span class=hl><span class=lnt>29
+</span></span><span class=lnt>30
+</span><span class=hl><span class=lnt>31
+</span></span><span class=hl><span class=lnt>32
+</span></span><span class=hl><span class=lnt>33
+</span></span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=hl><span class=lnt>36
+</span></span><span class=hl><span class=lnt>37
+</span></span><span class=hl><span class=lnt>38
+</span></span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=hl><span class=lnt>42
+</span></span><span class=hl><span class=lnt>43
+</span></span><span class=hl><span class=lnt>44
+</span></span><span class=hl><span class=lnt>45
+</span></span><span class=hl><span class=lnt>46
+</span></span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># TLS parameters</span>
+</span></span><span class="line hl"><span class=cl><span class=c1># smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem</span>
+</span></span><span class="line hl"><span class=cl><span class=c1># smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key</span>
+</span></span><span class="line hl"><span class=cl><span class=c1># smtpd_tls_security_level=may</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class="line hl"><span class=cl><span class=c1># smtp_tls_CApath=/etc/ssl/certs</span>
+</span></span><span class="line hl"><span class=cl><span class=c1># smtp_tls_security_level=may</span>
+</span></span><span class="line hl"><span class=cl><span class=c1># smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class="line hl"><span class=cl><span class=nv>mydomain</span> <span class=o>=</span> rzo.lan
+</span></span><span class="line hl"><span class=cl><span class=c1># smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>myhostname</span> <span class=o>=</span> r303-deb12-postfix.rzo.lan
+</span></span><span class=line><span class=cl><span class=nv>alias_maps</span> <span class=o>=</span> hash:/etc/aliases
+</span></span><span class=line><span class=cl><span class=nv>alias_database</span> <span class=o>=</span> hash:/etc/aliases
+</span></span><span class=line><span class=cl><span class=nv>myorigin</span> <span class=o>=</span> /etc/mailname
+</span></span><span class="line hl"><span class=cl><span class=nv>mydestination</span> <span class=o>=</span> <span class=nv>$mydomain</span>, <span class=nv>$myhostname</span>, localhost.<span class=nv>$mydomain</span>, localhost
+</span></span><span class="line hl"><span class=cl><span class=c1># relayhost = </span>
+</span></span><span class="line hl"><span class=cl><span class=nv>mynetworks</span> <span class=o>=</span> 127.0.0.0/8 192.168.122.0/24 
+</span></span><span class="line hl"><span class=cl><span class=nv>home_mailbox</span> <span class=o>=</span> Maildir/
+</span></span><span class="line hl"><span class=cl><span class=nv>mailbox_size_limit</span> <span class=o>=</span> <span class=m>51200000</span>
+</span></span><span class=line><span class=cl><span class=nv>recipient_delimiter</span> <span class=o>=</span> +
+</span></span><span class=line><span class=cl><span class=nv>inet_interfaces</span> <span class=o>=</span> all
+</span></span><span class=line><span class=cl><span class=nv>inet_protocols</span> <span class=o>=</span> ipv4
+</span></span></code></pre></td></tr></table></div></div><blockquote><p><code>alias_maps</code> table des noms & des adresses de <code>mydestination</code><br><code>alias_database</code> table des noms d&rsquo;usages de <code>alias_maps</code><br><code>myorigin</code> pas de nom de domaine -> ajoute celui dans fichier<br><code>mydestination</code> domaines acceptés d&rsquo;échange<br><code>recipient_delimiter</code> truc@$mydomain & truc+random@$mydomain == les mêmes (pourriel)</p></blockquote><p>vérification syntaxique après édition</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>postfix check
 </span></span></code></pre></div><p>redémarrage du service pour appliquer les modifications</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart postfix
 </span></span></code></pre></div><p>création de deux users gnu/linux</p><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"><span class="text-primary-400 ltr:pr-3 rtl:pl-3 flex items-center"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 0C114.6.0.0 114.6.0 256s114.6 256 256 256 256-114.6 256-256S397.4.0 256 0zm0 128c17.67.0 32 14.33 32 32 0 17.67-14.33 32-32 32s-32-14.3-32-32 14.3-32 32-32zm40 256h-80c-13.2.0-24-10.7-24-24s10.75-24 24-24h16v-64h-8c-13.25.0-24-10.75-24-24s10.8-24 24-24h32c13.25.0 24 10.75 24 24v88h16c13.25.0 24 10.75 24 24s-10.7 24-24 24z"/></svg></span></span><span class=dark:text-neutral-300><strong>Note</strong> mot de passe contingeant à l&rsquo;authentification&mldr;</span></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>adduser --gecos <span class=s2>&#34;&#34;</span> user1 <span class=o>&amp;&amp;</span> adduser --gecos <span class=s2>&#34;&#34;</span> user2
 </span></span></code></pre></div><p>connexion à l&rsquo;un des deux users pour test d&rsquo;envoi</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>su user1
@@ -84,162 +119,294 @@ thunderbird -.- clients</div><div id=vm-postfix class=anchor></div><h2 class="re
 </span></span></code></pre></div><p><code>1</code> si nouveau mail car fichier dans <code>~/Maildir/new/</code></p><p>dossier <code>~/Maildir</code> défini dans <code>/etc/postfix/main.cf</code></p><div id=dovecot class=anchor></div><h3 class="relative group">dovecot
 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#dovecot aria-label=Anchor>#</a></span></h3><p>serveur imap & pop3</p><p>installation du daemon imap de dovecot</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apt install -y dovecot-imapd
 </span></span></code></pre></div><p><em>autres paquets dans la suite <code>dovecot-*</code>, e.g. <code>dovecot-ldap</code> pour support ldap</em></p><p>fichiers de configuration de dovecot dans <code>/etc/dovecot/conf.d/</code></p><p>modification des méthodes d&rsquo;authentification</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-auth.conf
-</span></span></code></pre></div><p>précision de tout laisser passer en clair</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln> 5</span><span class=cl><span class=c1># Disable LOGIN command and all other plaintext authentications unless</span>
-</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=c1># SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP</span>
-</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1># matches the local IP (ie. you&#39;re connecting from the same computer), the</span>
-</span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1># connection is considered secure and plaintext authentication is allowed.</span>
-</span></span><span class=line><span class=ln> 9</span><span class=cl><span class=c1># See also ssl=required setting.</span>
-</span></span><span class="line hl"><span class=ln>10</span><span class=cl><span class=nv>disable_plaintext_auth</span> <span class=o>=</span> no
-</span></span></code></pre></div><p>définition des méchanismes d&rsquo;authentification (<code>login</code> obsolète mais toujours utilisé)</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln> 96</span><span class=cl><span class=c1># Space separated list of wanted authentication mechanisms:</span>
-</span></span><span class=line><span class=ln> 97</span><span class=cl><span class=c1>#   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp</span>
-</span></span><span class=line><span class=ln> 98</span><span class=cl><span class=c1>#   gss-spnego</span>
-</span></span><span class=line><span class=ln> 99</span><span class=cl><span class=c1># NOTE: See also disable_plaintext_auth setting.</span>
-</span></span><span class="line hl"><span class=ln>100</span><span class=cl><span class=nv>auth_mechanisms</span> <span class=o>=</span> plain login
-</span></span></code></pre></div><p>modification de l&rsquo;emplacement de destination des mails</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-mail.conf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>22</span><span class=cl><span class=c1># See doc/wiki/Variables.txt for full list. Some examples:</span>
-</span></span><span class=line><span class=ln>23</span><span class=cl><span class=c1>#</span>
-</span></span><span class=line><span class=ln>24</span><span class=cl><span class=c1>#   mail_location = maildir:~/Maildir</span>
-</span></span><span class=line><span class=ln>25</span><span class=cl><span class=c1>#   mail_location = mbox:~/mail:INBOX=/var/mail/%u</span>
-</span></span><span class=line><span class=ln>26</span><span class=cl><span class=c1>#   mail_location = mbox:/var/mail/%d/%1n/%n:INDEX=/var/indexes/%d/%1n/%n</span>
-</span></span><span class=line><span class=ln>27</span><span class=cl><span class=c1>#</span>
-</span></span><span class=line><span class=ln>28</span><span class=cl><span class=c1># &lt;doc/wiki/MailLocation.txt&gt;</span>
-</span></span><span class=line><span class=ln>29</span><span class=cl><span class=c1>#</span>
-</span></span><span class="line hl"><span class=ln>30</span><span class=cl><span class=nv>mail_location</span> <span class=o>=</span> maildir:~/Maildir
-</span></span></code></pre></div><p>modification de la gestion des logs <em>- a été utile</em></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-logging.conf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln> 5</span><span class=cl><span class=c1># Log file to use for error messages. &#34;syslog&#34; logs to syslog,</span>
-</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=c1># /dev/stderr logs to stderr.</span>
-</span></span><span class="line hl"><span class=ln> 7</span><span class=cl><span class=nv>log_path</span> <span class=o>=</span> /var/log/dovecot.log
-</span></span><span class=line><span class=ln> 8</span><span class=cl>
-</span></span><span class=line><span class=ln> 9</span><span class=cl><span class=c1># Log file to use for informational messages. Defaults to log_path.</span>
-</span></span><span class=line><span class=ln>10</span><span class=cl><span class=c1>#info_log_path = </span>
-</span></span><span class=line><span class=ln>11</span><span class=cl><span class=c1># Log file to use for debug messages. Defaults to info_log_path.</span>
-</span></span><span class=line><span class=ln>12</span><span class=cl><span class=c1>#debug_log_path = </span>
-</span></span><span class=line><span class=ln>13</span><span class=cl>
-</span></span><span class=line><span class=ln>14</span><span class=cl><span class=c1># Syslog facility to use if you&#39;re logging to syslog. Usually if you don&#39;t</span>
-</span></span><span class=line><span class=ln>15</span><span class=cl><span class=c1># want to use &#34;mail&#34;, you&#39;ll use local0..local7. Also other standard</span>
-</span></span><span class=line><span class=ln>16</span><span class=cl><span class=c1># facilities are supported.</span>
-</span></span><span class="line hl"><span class=ln>17</span><span class=cl><span class=nv>syslog_facility</span> <span class=o>=</span> mail
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>39</span><span class=cl><span class=c1># Log unsuccessful authentication attempts and the reasons why they failed.</span>
-</span></span><span class="line hl"><span class=ln>40</span><span class=cl><span class=nv>auth_verbose</span> <span class=o>=</span> yes
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>50</span><span class=cl><span class=c1># Even more verbose logging for debugging purposes. Shows for example SQL</span>
-</span></span><span class="line hl"><span class=ln>51</span><span class=cl><span class=c1># queries.</span>
-</span></span><span class=line><span class=ln>52</span><span class=cl><span class=nv>auth_debug</span> <span class=o>=</span> yes
-</span></span></code></pre></div><p>application des modifications</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart dovecot
+</span></span></code></pre></div><p>précision de tout laisser passer en clair</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=hl><span class=lnt>10
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Disable LOGIN command and all other plaintext authentications unless</span>
+</span></span><span class=line><span class=cl><span class=c1># SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP</span>
+</span></span><span class=line><span class=cl><span class=c1># matches the local IP (ie. you&#39;re connecting from the same computer), the</span>
+</span></span><span class=line><span class=cl><span class=c1># connection is considered secure and plaintext authentication is allowed.</span>
+</span></span><span class=line><span class=cl><span class=c1># See also ssl=required setting.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>disable_plaintext_auth</span> <span class=o>=</span> no
+</span></span></code></pre></td></tr></table></div></div><p>définition des méchanismes d&rsquo;authentification (<code>login</code> obsolète mais toujours utilisé)</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=hl><span class=lnt>100
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Space separated list of wanted authentication mechanisms:</span>
+</span></span><span class=line><span class=cl><span class=c1>#   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp</span>
+</span></span><span class=line><span class=cl><span class=c1>#   gss-spnego</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: See also disable_plaintext_auth setting.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>auth_mechanisms</span> <span class=o>=</span> plain login
+</span></span></code></pre></td></tr></table></div></div><p>modification de l&rsquo;emplacement de destination des mails</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-mail.conf
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=hl><span class=lnt>30
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># See doc/wiki/Variables.txt for full list. Some examples:</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1>#   mail_location = maildir:~/Maildir</span>
+</span></span><span class=line><span class=cl><span class=c1>#   mail_location = mbox:~/mail:INBOX=/var/mail/%u</span>
+</span></span><span class=line><span class=cl><span class=c1>#   mail_location = mbox:/var/mail/%d/%1n/%n:INDEX=/var/indexes/%d/%1n/%n</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># &lt;doc/wiki/MailLocation.txt&gt;</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>mail_location</span> <span class=o>=</span> maildir:~/Maildir
+</span></span></code></pre></td></tr></table></div></div><p>modification de la gestion des logs <em>- a été utile</em></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-logging.conf
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=hl><span class=lnt> 7
+</span></span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=hl><span class=lnt>17
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Log file to use for error messages. &#34;syslog&#34; logs to syslog,</span>
+</span></span><span class=line><span class=cl><span class=c1># /dev/stderr logs to stderr.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>log_path</span> <span class=o>=</span> /var/log/dovecot.log
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Log file to use for informational messages. Defaults to log_path.</span>
+</span></span><span class=line><span class=cl><span class=c1>#info_log_path = </span>
+</span></span><span class=line><span class=cl><span class=c1># Log file to use for debug messages. Defaults to info_log_path.</span>
+</span></span><span class=line><span class=cl><span class=c1>#debug_log_path = </span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Syslog facility to use if you&#39;re logging to syslog. Usually if you don&#39;t</span>
+</span></span><span class=line><span class=cl><span class=c1># want to use &#34;mail&#34;, you&#39;ll use local0..local7. Also other standard</span>
+</span></span><span class=line><span class=cl><span class=c1># facilities are supported.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>syslog_facility</span> <span class=o>=</span> mail
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>39
+</span><span class=hl><span class=lnt>40
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Log unsuccessful authentication attempts and the reasons why they failed.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>auth_verbose</span> <span class=o>=</span> yes
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>50
+</span><span class=hl><span class=lnt>51
+</span></span><span class=lnt>52
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Even more verbose logging for debugging purposes. Shows for example SQL</span>
+</span></span><span class="line hl"><span class=cl><span class=c1># queries.</span>
+</span></span><span class=line><span class=cl><span class=nv>auth_debug</span> <span class=o>=</span> yes
+</span></span></code></pre></td></tr></table></div></div><p>application des modifications</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart dovecot
 </span></span></code></pre></div><p>vérification du fonctionnement</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>telnet -l user1 localhost <span class=m>143</span>
 </span></span></code></pre></div><blockquote><p>a login user2 user2</p></blockquote><p><em>où user2 l&rsquo;utilisateur et le mot de passe</em></p><div id=utilisateurs-virtuels class=anchor></div><h3 class="relative group">utilisateurs virtuels
 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#utilisateurs-virtuels aria-label=Anchor>#</a></span></h3><p>création user <code>vmail</code> avec <code>/opt/messagerie</code> comme home directory</p><p>création groupe <code>vmail</code> avec group id de 5000</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>groupadd -g <span class=m>5000</span> vmail
 </span></span></code></pre></div><p>création du user</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>useradd -g vmail -u <span class=m>5000</span> vmail -d /opt/messagerie -m
 </span></span></code></pre></div><blockquote><p><code>-g</code> son groupe<br><code>-u 5000</code> user id de 5000<br><code>-d /opt/messagerie</code> son répertoire utilisateur/home <code>~</code><br><code>-m</code> créer son <code>~</code> si inexistant</p></blockquote><p>indication à postfix de <code>vmail</code> & du repertoire <code>/opt/messagerie</code> pour la gestion des boites aux lettres</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/main.cf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>26</span><span class=cl><span class=c1># TLS parameters</span>
-</span></span><span class=line><span class=ln>27</span><span class=cl><span class=c1># smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem</span>
-</span></span><span class=line><span class=ln>28</span><span class=cl><span class=c1># smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key</span>
-</span></span><span class=line><span class=ln>29</span><span class=cl><span class=c1># smtpd_tls_security_level=may</span>
-</span></span><span class=line><span class=ln>30</span><span class=cl>
-</span></span><span class=line><span class=ln>31</span><span class=cl><span class=c1># smtp_tls_CApath=/etc/ssl/certs</span>
-</span></span><span class=line><span class=ln>32</span><span class=cl><span class=c1># smtp_tls_security_level=may</span>
-</span></span><span class=line><span class=ln>33</span><span class=cl><span class=c1># smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache</span>
-</span></span><span class=line><span class=ln>34</span><span class=cl>
-</span></span><span class=line><span class=ln>35</span><span class=cl>
-</span></span><span class=line><span class=ln>36</span><span class=cl><span class=nv>mydomain</span> <span class=o>=</span> rzo.lan
-</span></span><span class=line><span class=ln>37</span><span class=cl><span class=c1># smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination</span>
-</span></span><span class=line><span class=ln>38</span><span class=cl><span class=nv>myhostname</span> <span class=o>=</span> r303-deb12-postfix.rzo.lan
-</span></span><span class=line><span class=ln>39</span><span class=cl><span class=nv>alias_maps</span> <span class=o>=</span> hash:/etc/aliases
-</span></span><span class=line><span class=ln>40</span><span class=cl><span class=nv>alias_database</span> <span class=o>=</span> hash:/etc/aliases
-</span></span><span class=line><span class=ln>41</span><span class=cl><span class=nv>myorigin</span> <span class=o>=</span> /etc/mailname
-</span></span><span class=line><span class=ln>42</span><span class=cl><span class=nv>mydestination</span> <span class=o>=</span> <span class=nv>$mydomain</span>, <span class=nv>$myhostname</span>, localhost.<span class=nv>$mydomain</span>, localhost
-</span></span><span class="line hl"><span class=ln>43</span><span class=cl><span class=nv>default_transport</span> <span class=o>=</span> dovecot
-</span></span><span class="line hl"><span class=ln>44</span><span class=cl><span class=nv>mail_spool_directory</span> <span class=o>=</span> /opt/messagerie/
-</span></span><span class="line hl"><span class=ln>45</span><span class=cl><span class=nv>virtual_mailbox_base</span> <span class=o>=</span> /opt/messagerie/
-</span></span><span class="line hl"><span class=ln>46</span><span class=cl><span class=nv>virtual_mailbox_domains</span> <span class=o>=</span> hash:/etc/postfix/vdomain
-</span></span><span class="line hl"><span class=ln>47</span><span class=cl><span class=nv>virtual_mailbox_maps</span> <span class=o>=</span> hash:/etc/postfix/vmail
-</span></span><span class="line hl"><span class=ln>48</span><span class=cl><span class=nv>virtual_alias_maps</span> <span class=o>=</span> hash:/etc/postfix/valias
-</span></span><span class="line hl"><span class=ln>49</span><span class=cl><span class=nv>virtual_uid_maps</span> <span class=o>=</span> static:5000
-</span></span><span class="line hl"><span class=ln>50</span><span class=cl><span class=nv>virtual_gid_maps</span> <span class=o>=</span> static:5000
-</span></span><span class=line><span class=ln>51</span><span class=cl><span class=c1># relayhost = </span>
-</span></span><span class=line><span class=ln>52</span><span class=cl><span class=nv>mynetworks</span> <span class=o>=</span> 127.0.0.0/8 192.168.122.0/24 
-</span></span><span class=line><span class=ln>53</span><span class=cl><span class=nv>home_mailbox</span> <span class=o>=</span> Maildir/
-</span></span><span class=line><span class=ln>54</span><span class=cl><span class=nv>mailbox_size_limit</span> <span class=o>=</span> <span class=m>51200000</span>
-</span></span><span class=line><span class=ln>55</span><span class=cl><span class=nv>recipient_delimiter</span> <span class=o>=</span> +
-</span></span><span class=line><span class=ln>56</span><span class=cl><span class=nv>inet_interfaces</span> <span class=o>=</span> all
-</span></span><span class=line><span class=ln>57</span><span class=cl><span class=nv>inet_protocols</span> <span class=o>=</span> ipv4
-</span></span></code></pre></div><blockquote><p><code>default_transport</code> protocole/serveur d&rsquo;envoi, par défaut smtp<br><code>mail_spool_directory</code> dossier de stockage des mails<br><code>virtual_mailbox_domains</code> liste domaines où postfix destinataire<br><code>virtual_mailbox_maps</code> adresses valides de <code>virtual_mailbox_domains</code><br><code>virtual_uid_maps</code> user id pour écrire les mails<br><code>virtual_uid_maps</code> pareil que <code>virtual_uid_maps</code> pour group id</p></blockquote><p>définition du domaine virtuel</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/vdomain
-</span></span></code></pre></div><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"><span class="text-primary-400 ltr:pr-3 rtl:pl-3 flex items-center"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 0C114.6.0.0 114.6.0 256s114.6 256 256 256 256-114.6 256-256S397.4.0 256 0zm0 128c17.67.0 32 14.33 32 32 0 17.67-14.33 32-32 32s-32-14.3-32-32 14.3-32 32-32zm40 256h-80c-13.2.0-24-10.7-24-24s10.75-24 24-24h16v-64h-8c-13.25.0-24-10.75-24-24s10.8-24 24-24h32c13.25.0 24 10.75 24 24v88h16c13.25.0 24 10.75 24 24s-10.7 24-24 24z"/></svg></span></span><span class=dark:text-neutral-300><strong>Note</strong> pas le droit d&rsquo;être le même que celui dans postfix</span></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln>1</span><span class=cl>rzo.private <span class=c1>#</span>
-</span></span></code></pre></div><p>création de messageries virtuelles <em>accordément à <code>virtual_mailbox_maps</code></em></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/vmail
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln>1</span><span class=cl>xeylou@rzo.private rzo.private/xeylou/
-</span></span><span class="line hl"><span class=ln>2</span><span class=cl>testing@rzo.private rzo.private/testing/
-</span></span><span class="line hl"><span class=ln>3</span><span class=cl>admin@rzo.private rzo.private/admin/
-</span></span></code></pre></div><p>définition des alias virtuels pour ces utilisateurs <em>vu <code>virtual_alias_maps</code></em></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/valias
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln>1</span><span class=cl>root: admin@rzo.private
-</span></span><span class="line hl"><span class=ln>2</span><span class=cl>xeylou: xeylou@rzo.private
-</span></span></code></pre></div><p>création d&rsquo;un daemon postfix pour dovecot/<code>vmail</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/master.cf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln>138</span><span class=cl>dovecot   unix  -       n       n       -       -       pipe
-</span></span><span class="line hl"><span class=ln>139</span><span class=cl>  <span class=nv>flags</span><span class=o>=</span>DRhu <span class=nv>user</span><span class=o>=</span>vmail:vmail <span class=nv>argv</span><span class=o>=</span>/usr/lib/dovecot/deliver -f <span class=si>${</span><span class=nv>sender</span><span class=si>}</span> -d <span class=si>${</span><span class=nv>recipient</span><span class=si>}</span>
-</span></span></code></pre></div><p>prise en compte des 3 fichiers modifiés</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>postmap /etc/postfix/vdomain
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=hl><span class=lnt>43
+</span></span><span class=hl><span class=lnt>44
+</span></span><span class=hl><span class=lnt>45
+</span></span><span class=hl><span class=lnt>46
+</span></span><span class=hl><span class=lnt>47
+</span></span><span class=hl><span class=lnt>48
+</span></span><span class=hl><span class=lnt>49
+</span></span><span class=hl><span class=lnt>50
+</span></span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># TLS parameters</span>
+</span></span><span class=line><span class=cl><span class=c1># smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem</span>
+</span></span><span class=line><span class=cl><span class=c1># smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key</span>
+</span></span><span class=line><span class=cl><span class=c1># smtpd_tls_security_level=may</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># smtp_tls_CApath=/etc/ssl/certs</span>
+</span></span><span class=line><span class=cl><span class=c1># smtp_tls_security_level=may</span>
+</span></span><span class=line><span class=cl><span class=c1># smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>mydomain</span> <span class=o>=</span> rzo.lan
+</span></span><span class=line><span class=cl><span class=c1># smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination</span>
+</span></span><span class=line><span class=cl><span class=nv>myhostname</span> <span class=o>=</span> r303-deb12-postfix.rzo.lan
+</span></span><span class=line><span class=cl><span class=nv>alias_maps</span> <span class=o>=</span> hash:/etc/aliases
+</span></span><span class=line><span class=cl><span class=nv>alias_database</span> <span class=o>=</span> hash:/etc/aliases
+</span></span><span class=line><span class=cl><span class=nv>myorigin</span> <span class=o>=</span> /etc/mailname
+</span></span><span class=line><span class=cl><span class=nv>mydestination</span> <span class=o>=</span> <span class=nv>$mydomain</span>, <span class=nv>$myhostname</span>, localhost.<span class=nv>$mydomain</span>, localhost
+</span></span><span class="line hl"><span class=cl><span class=nv>default_transport</span> <span class=o>=</span> dovecot
+</span></span><span class="line hl"><span class=cl><span class=nv>mail_spool_directory</span> <span class=o>=</span> /opt/messagerie/
+</span></span><span class="line hl"><span class=cl><span class=nv>virtual_mailbox_base</span> <span class=o>=</span> /opt/messagerie/
+</span></span><span class="line hl"><span class=cl><span class=nv>virtual_mailbox_domains</span> <span class=o>=</span> hash:/etc/postfix/vdomain
+</span></span><span class="line hl"><span class=cl><span class=nv>virtual_mailbox_maps</span> <span class=o>=</span> hash:/etc/postfix/vmail
+</span></span><span class="line hl"><span class=cl><span class=nv>virtual_alias_maps</span> <span class=o>=</span> hash:/etc/postfix/valias
+</span></span><span class="line hl"><span class=cl><span class=nv>virtual_uid_maps</span> <span class=o>=</span> static:5000
+</span></span><span class="line hl"><span class=cl><span class=nv>virtual_gid_maps</span> <span class=o>=</span> static:5000
+</span></span><span class=line><span class=cl><span class=c1># relayhost = </span>
+</span></span><span class=line><span class=cl><span class=nv>mynetworks</span> <span class=o>=</span> 127.0.0.0/8 192.168.122.0/24 
+</span></span><span class=line><span class=cl><span class=nv>home_mailbox</span> <span class=o>=</span> Maildir/
+</span></span><span class=line><span class=cl><span class=nv>mailbox_size_limit</span> <span class=o>=</span> <span class=m>51200000</span>
+</span></span><span class=line><span class=cl><span class=nv>recipient_delimiter</span> <span class=o>=</span> +
+</span></span><span class=line><span class=cl><span class=nv>inet_interfaces</span> <span class=o>=</span> all
+</span></span><span class=line><span class=cl><span class=nv>inet_protocols</span> <span class=o>=</span> ipv4
+</span></span></code></pre></td></tr></table></div></div><blockquote><p><code>default_transport</code> protocole/serveur d&rsquo;envoi, par défaut smtp<br><code>mail_spool_directory</code> dossier de stockage des mails<br><code>virtual_mailbox_domains</code> liste domaines où postfix destinataire<br><code>virtual_mailbox_maps</code> adresses valides de <code>virtual_mailbox_domains</code><br><code>virtual_uid_maps</code> user id pour écrire les mails<br><code>virtual_uid_maps</code> pareil que <code>virtual_uid_maps</code> pour group id</p></blockquote><p>définition du domaine virtuel</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/vdomain
+</span></span></code></pre></div><div class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"><span class="text-primary-400 ltr:pr-3 rtl:pl-3 flex items-center"><span class="relative block icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M256 0C114.6.0.0 114.6.0 256s114.6 256 256 256 256-114.6 256-256S397.4.0 256 0zm0 128c17.67.0 32 14.33 32 32 0 17.67-14.33 32-32 32s-32-14.3-32-32 14.3-32 32-32zm40 256h-80c-13.2.0-24-10.7-24-24s10.75-24 24-24h16v-64h-8c-13.25.0-24-10.75-24-24s10.8-24 24-24h32c13.25.0 24 10.75 24 24v88h16c13.25.0 24 10.75 24 24s-10.7 24-24 24z"/></svg></span></span><span class=dark:text-neutral-300><strong>Note</strong> pas le droit d&rsquo;être le même que celui dans postfix</span></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt>1
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl>rzo.private <span class=c1>#</span>
+</span></span></code></pre></td></tr></table></div></div><p>création de messageries virtuelles <em>accordément à <code>virtual_mailbox_maps</code></em></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/vmail
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt>1
+</span></span><span class=hl><span class=lnt>2
+</span></span><span class=hl><span class=lnt>3
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl>xeylou@rzo.private rzo.private/xeylou/
+</span></span><span class="line hl"><span class=cl>testing@rzo.private rzo.private/testing/
+</span></span><span class="line hl"><span class=cl>admin@rzo.private rzo.private/admin/
+</span></span></code></pre></td></tr></table></div></div><p>définition des alias virtuels pour ces utilisateurs <em>vu <code>virtual_alias_maps</code></em></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/valias
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt>1
+</span></span><span class=hl><span class=lnt>2
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl>root: admin@rzo.private
+</span></span><span class="line hl"><span class=cl>xeylou: xeylou@rzo.private
+</span></span></code></pre></td></tr></table></div></div><p>création d&rsquo;un daemon postfix pour dovecot/<code>vmail</code></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/postfix/master.cf
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt>138
+</span></span><span class=hl><span class=lnt>139
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl>dovecot   unix  -       n       n       -       -       pipe
+</span></span><span class="line hl"><span class=cl>  <span class=nv>flags</span><span class=o>=</span>DRhu <span class=nv>user</span><span class=o>=</span>vmail:vmail <span class=nv>argv</span><span class=o>=</span>/usr/lib/dovecot/deliver -f <span class=si>${</span><span class=nv>sender</span><span class=si>}</span> -d <span class=si>${</span><span class=nv>recipient</span><span class=si>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>prise en compte des 3 fichiers modifiés</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>postmap /etc/postfix/vdomain
 </span></span><span class=line><span class=cl>postmap /etc/postfix/vmail
 </span></span><span class=line><span class=cl>postalias /etc/postfix/valias
 </span></span><span class=line><span class=cl>postfix check
 </span></span></code></pre></div><div id=modification-dovecot class=anchor></div><h3 class="relative group">modification dovecot
 <span class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style=text-decoration-line:none!important href=#modification-dovecot aria-label=Anchor>#</a></span></h3><p>utilisation des comptes virtuels avec authentification correcte</p><p>modification de la méthode d&rsquo;accès</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-auth.conf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln> 5</span><span class=cl><span class=c1># Disable LOGIN command and all other plaintext authentications unless</span>
-</span></span><span class=line><span class=ln> 6</span><span class=cl><span class=c1># SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP</span>
-</span></span><span class=line><span class=ln> 7</span><span class=cl><span class=c1># matches the local IP (ie. you&#39;re connecting from the same computer), the</span>
-</span></span><span class=line><span class=ln> 8</span><span class=cl><span class=c1># connection is considered secure and plaintext authentication is allowed.</span>
-</span></span><span class=line><span class=ln> 9</span><span class=cl><span class=c1># See also ssl=required setting.</span>
-</span></span><span class="line hl"><span class=ln>10</span><span class=cl><span class=nv>disable_plaintext_auth</span> <span class=o>=</span> yes
-</span></span></code></pre></div><p>ajout d&rsquo;une méthode d&rsquo;authentification sécurisée</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln> 96</span><span class=cl><span class=c1># Space separated list of wanted authentication mechanisms:</span>
-</span></span><span class=line><span class=ln> 97</span><span class=cl><span class=c1>#   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp</span>
-</span></span><span class=line><span class=ln> 98</span><span class=cl><span class=c1>#   gss-spnego</span>
-</span></span><span class=line><span class=ln> 99</span><span class=cl><span class=c1># NOTE: See also disable_plaintext_auth setting.</span>
-</span></span><span class="line hl"><span class=ln>100</span><span class=cl><span class=nv>auth_mechanisms</span> <span class=o>=</span> cram-md5 plain login
-</span></span></code></pre></div><p>ajout du fichier <code>auth-static.conf.ext</code> dans la configuration</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln>122</span><span class=cl><span class=cp>#!include auth-system.conf.ext
-</span></span></span><span class=line><span class=ln>123</span><span class=cl><span class=cp></span><span class=c1>#!include auth-sql.conf.ext</span>
-</span></span><span class=line><span class=ln>124</span><span class=cl><span class=c1>#!include auth-ldap.conf.ext</span>
-</span></span><span class=line><span class=ln>125</span><span class=cl><span class=c1>#!include auth-passwdfile.conf.ext</span>
-</span></span><span class=line><span class=ln>126</span><span class=cl><span class=c1>#!include auth-checkpassword.conf.ext</span>
-</span></span><span class="line hl"><span class=ln>127</span><span class=cl>!include auth-static.conf.ext
-</span></span></code></pre></div><p>définition emplacement liste utilisateurs virtuels + mots de passe</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/auth-static.conf.ext
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln>16</span><span class=cl>passdb <span class=o>{</span>
-</span></span><span class=line><span class=ln>17</span><span class=cl><span class=c1>#  driver = static</span>
-</span></span><span class=line><span class=ln>18</span><span class=cl><span class=c1>#  args = password=test</span>
-</span></span><span class="line hl"><span class=ln>19</span><span class=cl>  <span class=nv>driver</span> <span class=o>=</span> passwd-file
-</span></span><span class="line hl"><span class=ln>20</span><span class=cl>  <span class=nv>args</span> <span class=o>=</span> <span class=nv>username_format</span><span class=o>=</span>%u /etc/dovecot/dovecot.users
-</span></span><span class="line hl"><span class=ln>21</span><span class=cl><span class=o>}</span>
-</span></span><span class=line><span class=ln>22</span><span class=cl>
-</span></span><span class="line hl"><span class=ln>23</span><span class=cl>userdb <span class=o>{</span>
-</span></span><span class=line><span class=ln>24</span><span class=cl><span class=c1>#  driver = static</span>
-</span></span><span class=line><span class=ln>25</span><span class=cl><span class=c1>#  args = uid=vmail gid=vmail home=/home/%u</span>
-</span></span><span class="line hl"><span class=ln>26</span><span class=cl>  <span class=nv>driver</span> <span class=o>=</span> static
-</span></span><span class="line hl"><span class=ln>27</span><span class=cl>  <span class=nv>args</span> <span class=o>=</span> <span class=nv>uid</span><span class=o>=</span>vmail <span class=nv>gid</span><span class=o>=</span>vmail <span class=nv>home</span><span class=o>=</span>/opt/messagerie/%d/%n/ <span class=nv>allow_all_users</span><span class=o>=</span>yes
-</span></span><span class="line hl"><span class=ln>28</span><span class=cl><span class=o>}</span>
-</span></span></code></pre></div><p>informations user <code>vmail</code> pour récupération mails</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-mail.conf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>105</span><span class=cl><span class=c1># System user and group used to access mails. If you use multiple, userdb</span>
-</span></span><span class=line><span class=ln>106</span><span class=cl><span class=c1># can override these by returning uid or gid fields. You can use either numbers</span>
-</span></span><span class=line><span class=ln>107</span><span class=cl><span class=c1># or names. &lt;doc/wiki/UserIds.txt&gt;</span>
-</span></span><span class="line hl"><span class=ln>108</span><span class=cl><span class=nv>mail_uid</span> <span class=o>=</span> <span class=m>5000</span>
-</span></span><span class="line hl"><span class=ln>109</span><span class=cl><span class=nv>mail_gid</span> <span class=o>=</span> <span class=m>5000</span>
-</span></span><span class=line><span class=ln>110</span><span class=cl>
-</span></span><span class=line><span class=ln>111</span><span class=cl><span class=c1># Group to enable temporarily for privileged operations. Currently this is</span>
-</span></span><span class=line><span class=ln>112</span><span class=cl><span class=c1># used only with INBOX when either its initial creation or dotlocking fails.</span>
-</span></span><span class=line><span class=ln>113</span><span class=cl><span class=c1># Typically this is set to &#34;mail&#34; to give access to /var/mail.</span>
-</span></span><span class="line hl"><span class=ln>114</span><span class=cl><span class=nv>mail_privileged_group</span> <span class=o>=</span> vmail
-</span></span></code></pre></div><p>définition des autorisations pour lister utilisateurs</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-master.conf
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=ln>100</span><span class=cl>  unix_listener auth-userdb <span class=o>{</span>
-</span></span><span class=line><span class=ln>101</span><span class=cl>    <span class=c1>#mode = 0666</span>
-</span></span><span class="line hl"><span class=ln>102</span><span class=cl>    <span class=nv>user</span> <span class=o>=</span> vmail
-</span></span><span class="line hl"><span class=ln>103</span><span class=cl>    <span class=nv>group</span> <span class=o>=</span> vmail
-</span></span><span class=line><span class=ln>104</span><span class=cl>  <span class=o>}</span>
-</span></span><span class=line><span class=ln>105</span><span class=cl>
-</span></span><span class="line hl"><span class=ln>106</span><span class=cl>  unix_listener /var/spool/postfix/private/auth <span class=o>{</span>
-</span></span><span class="line hl"><span class=ln>107</span><span class=cl>    <span class=nv>mode</span> <span class=o>=</span> <span class=m>0666</span>
-</span></span><span class="line hl"><span class=ln>108</span><span class=cl>    <span class=nv>user</span> <span class=o>=</span> postfix
-</span></span><span class="line hl"><span class=ln>109</span><span class=cl>    <span class=nv>group</span> <span class=o>=</span> postfix
-</span></span><span class="line hl"><span class=ln>110</span><span class=cl>  <span class=o>}</span>
-</span></span></code></pre></div><p>définition du hash des mots de passe des vusers</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>doveadm pw -s CRAM-MD5
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=hl><span class=lnt>10
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Disable LOGIN command and all other plaintext authentications unless</span>
+</span></span><span class=line><span class=cl><span class=c1># SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP</span>
+</span></span><span class=line><span class=cl><span class=c1># matches the local IP (ie. you&#39;re connecting from the same computer), the</span>
+</span></span><span class=line><span class=cl><span class=c1># connection is considered secure and plaintext authentication is allowed.</span>
+</span></span><span class=line><span class=cl><span class=c1># See also ssl=required setting.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>disable_plaintext_auth</span> <span class=o>=</span> yes
+</span></span></code></pre></td></tr></table></div></div><p>ajout d&rsquo;une méthode d&rsquo;authentification sécurisée</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=hl><span class=lnt>100
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Space separated list of wanted authentication mechanisms:</span>
+</span></span><span class=line><span class=cl><span class=c1>#   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp</span>
+</span></span><span class=line><span class=cl><span class=c1>#   gss-spnego</span>
+</span></span><span class=line><span class=cl><span class=c1># NOTE: See also disable_plaintext_auth setting.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>auth_mechanisms</span> <span class=o>=</span> cram-md5 plain login
+</span></span></code></pre></td></tr></table></div></div><p>ajout du fichier <code>auth-static.conf.ext</code> dans la configuration</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt>122
+</span></span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=hl><span class=lnt>127
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl><span class=cp>#!include auth-system.conf.ext
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=c1>#!include auth-sql.conf.ext</span>
+</span></span><span class=line><span class=cl><span class=c1>#!include auth-ldap.conf.ext</span>
+</span></span><span class=line><span class=cl><span class=c1>#!include auth-passwdfile.conf.ext</span>
+</span></span><span class=line><span class=cl><span class=c1>#!include auth-checkpassword.conf.ext</span>
+</span></span><span class="line hl"><span class=cl>!include auth-static.conf.ext
+</span></span></code></pre></td></tr></table></div></div><p>définition emplacement liste utilisateurs virtuels + mots de passe</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/auth-static.conf.ext
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt>16
+</span></span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=hl><span class=lnt>19
+</span></span><span class=hl><span class=lnt>20
+</span></span><span class=hl><span class=lnt>21
+</span></span><span class=lnt>22
+</span><span class=hl><span class=lnt>23
+</span></span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=hl><span class=lnt>26
+</span></span><span class=hl><span class=lnt>27
+</span></span><span class=hl><span class=lnt>28
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl>passdb <span class=o>{</span>
+</span></span><span class=line><span class=cl><span class=c1>#  driver = static</span>
+</span></span><span class=line><span class=cl><span class=c1>#  args = password=test</span>
+</span></span><span class="line hl"><span class=cl>  <span class=nv>driver</span> <span class=o>=</span> passwd-file
+</span></span><span class="line hl"><span class=cl>  <span class=nv>args</span> <span class=o>=</span> <span class=nv>username_format</span><span class=o>=</span>%u /etc/dovecot/dovecot.users
+</span></span><span class="line hl"><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class="line hl"><span class=cl>userdb <span class=o>{</span>
+</span></span><span class=line><span class=cl><span class=c1>#  driver = static</span>
+</span></span><span class=line><span class=cl><span class=c1>#  args = uid=vmail gid=vmail home=/home/%u</span>
+</span></span><span class="line hl"><span class=cl>  <span class=nv>driver</span> <span class=o>=</span> static
+</span></span><span class="line hl"><span class=cl>  <span class=nv>args</span> <span class=o>=</span> <span class=nv>uid</span><span class=o>=</span>vmail <span class=nv>gid</span><span class=o>=</span>vmail <span class=nv>home</span><span class=o>=</span>/opt/messagerie/%d/%n/ <span class=nv>allow_all_users</span><span class=o>=</span>yes
+</span></span><span class="line hl"><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>informations user <code>vmail</code> pour récupération mails</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-mail.conf
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=hl><span class=lnt>108
+</span></span><span class=hl><span class=lnt>109
+</span></span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=hl><span class=lnt>114
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># System user and group used to access mails. If you use multiple, userdb</span>
+</span></span><span class=line><span class=cl><span class=c1># can override these by returning uid or gid fields. You can use either numbers</span>
+</span></span><span class=line><span class=cl><span class=c1># or names. &lt;doc/wiki/UserIds.txt&gt;</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>mail_uid</span> <span class=o>=</span> <span class=m>5000</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>mail_gid</span> <span class=o>=</span> <span class=m>5000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Group to enable temporarily for privileged operations. Currently this is</span>
+</span></span><span class=line><span class=cl><span class=c1># used only with INBOX when either its initial creation or dotlocking fails.</span>
+</span></span><span class=line><span class=cl><span class=c1># Typically this is set to &#34;mail&#34; to give access to /var/mail.</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>mail_privileged_group</span> <span class=o>=</span> vmail
+</span></span></code></pre></td></tr></table></div></div><p>définition des autorisations pour lister utilisateurs</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/conf.d/10-master.conf
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=hl><span class=lnt>102
+</span></span><span class=hl><span class=lnt>103
+</span></span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=hl><span class=lnt>106
+</span></span><span class=hl><span class=lnt>107
+</span></span><span class=hl><span class=lnt>108
+</span></span><span class=hl><span class=lnt>109
+</span></span><span class=hl><span class=lnt>110
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>  unix_listener auth-userdb <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>#mode = 0666</span>
+</span></span><span class="line hl"><span class=cl>    <span class=nv>user</span> <span class=o>=</span> vmail
+</span></span><span class="line hl"><span class=cl>    <span class=nv>group</span> <span class=o>=</span> vmail
+</span></span><span class=line><span class=cl>  <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class="line hl"><span class=cl>  unix_listener /var/spool/postfix/private/auth <span class=o>{</span>
+</span></span><span class="line hl"><span class=cl>    <span class=nv>mode</span> <span class=o>=</span> <span class=m>0666</span>
+</span></span><span class="line hl"><span class=cl>    <span class=nv>user</span> <span class=o>=</span> postfix
+</span></span><span class="line hl"><span class=cl>    <span class=nv>group</span> <span class=o>=</span> postfix
+</span></span><span class="line hl"><span class=cl>  <span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>définition du hash des mots de passe des vusers</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>doveadm pw -s CRAM-MD5
 </span></span></code></pre></div><blockquote><p>Enter new password:<br>Retype new password:<br>{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6</p></blockquote><p>le coller dans <code>/etc/dovecot/dovecot.users</code> <em>défini depuis <code>/etc/dovecot/conf.d/auth-static.conf.ext</code></em></p><p>définition mots de passe vusers</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/dovecot/dovecot.users
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln>1</span><span class=cl>xeylou@rzo.private:<span class=o>{</span>CRAM-MD5<span class=o>}</span>e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
-</span></span><span class="line hl"><span class=ln>2</span><span class=cl>testing@rzo.private:<span class=o>{</span>CRAM-MD5<span class=o>}</span>e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
-</span></span><span class="line hl"><span class=ln>3</span><span class=cl>admin@rzo.private:<span class=o>{</span>CRAM-MD5<span class=o>}</span>e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
-</span></span></code></pre></div><p><em>les 3 utilisateurs ont le même mot de passe</em></p><p>redémarrage des deux services</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart postfix
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt>1
+</span></span><span class=hl><span class=lnt>2
+</span></span><span class=hl><span class=lnt>3
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl>xeylou@rzo.private:<span class=o>{</span>CRAM-MD5<span class=o>}</span>e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+</span></span><span class="line hl"><span class=cl>testing@rzo.private:<span class=o>{</span>CRAM-MD5<span class=o>}</span>e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+</span></span><span class="line hl"><span class=cl>admin@rzo.private:<span class=o>{</span>CRAM-MD5<span class=o>}</span>e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
+</span></span></code></pre></td></tr></table></div></div><p><em>les 3 utilisateurs ont le même mot de passe</em></p><p>redémarrage des deux services</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart postfix
 </span></span><span class=line><span class=cl>systemctl restart dovecot
 </span></span></code></pre></div><p>vérification de leur fonctionnement</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl status postfix
 </span></span><span class=line><span class=cl>systemctl status dovecot
@@ -296,53 +463,97 @@ xeylou@rzo.private</a>): Error: net_connect_unix(/run/dovecot/stats-writer) fail
 </span></span><span class=line><span class=cl><span class=o>}</span><span class=p>;</span>
 </span></span></code></pre></td></tr></table></div></div><p>vérification syntaxique</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>named-checkconf /etc/bind/named.conf.local
 </span></span></code></pre></div><p>édition de celles-ci</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/bind/rzo.lan
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln> 1</span><span class=cl><span class=nv>$TTL</span> <span class=m>86400</span>
-</span></span><span class="line hl"><span class=ln> 2</span><span class=cl><span class=nv>$ORIGIN</span> rzo.lan.
-</span></span><span class="line hl"><span class=ln> 3</span><span class=cl>
-</span></span><span class="line hl"><span class=ln> 4</span><span class=cl>@ IN SOA ns.rzo.lan. admin.rzo.lan. <span class=o>(</span>
-</span></span><span class="line hl"><span class=ln> 5</span><span class=cl><span class=m>2023100101</span> <span class=p>;</span> serial
-</span></span><span class="line hl"><span class=ln> 6</span><span class=cl><span class=m>21600</span> <span class=p>;</span> refresh
-</span></span><span class="line hl"><span class=ln> 7</span><span class=cl><span class=m>10800</span> <span class=p>;</span> retry
-</span></span><span class="line hl"><span class=ln> 8</span><span class=cl><span class=m>43200</span> <span class=p>;</span> expire
-</span></span><span class="line hl"><span class=ln> 9</span><span class=cl><span class=m>10800</span> <span class=o>)</span> <span class=p>;</span> minimum
-</span></span><span class="line hl"><span class=ln>10</span><span class=cl>
-</span></span><span class="line hl"><span class=ln>11</span><span class=cl>@ IN NS ns.rzo.lan.
-</span></span><span class="line hl"><span class=ln>12</span><span class=cl>@ IN MX <span class=m>10</span> mail.rzo.lan.
-</span></span><span class="line hl"><span class=ln>13</span><span class=cl>mail IN A 192.168.122.10
-</span></span><span class="line hl"><span class=ln>14</span><span class=cl>ns IN A 192.168.122.11
-</span></span><span class="line hl"><span class=ln>15</span><span class=cl>postfix IN CNAME mail
-</span></span><span class="line hl"><span class=ln>16</span><span class=cl>bind1 IN CNAME ns
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/bind/rzo.private
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=ln> 1</span><span class=cl><span class=nv>$TTL</span> <span class=m>86400</span>
-</span></span><span class="line hl"><span class=ln> 2</span><span class=cl><span class=nv>$ORIGIN</span> rzo.private.
-</span></span><span class="line hl"><span class=ln> 3</span><span class=cl>
-</span></span><span class="line hl"><span class=ln> 4</span><span class=cl>@ IN SOA ns.rzo.private. admin.rzo.private. <span class=o>(</span>
-</span></span><span class="line hl"><span class=ln> 5</span><span class=cl><span class=m>2023100201</span> <span class=p>;</span> serial
-</span></span><span class="line hl"><span class=ln> 6</span><span class=cl><span class=m>21600</span> <span class=p>;</span> refresh
-</span></span><span class="line hl"><span class=ln> 7</span><span class=cl><span class=m>10800</span> <span class=p>;</span> retry
-</span></span><span class="line hl"><span class=ln> 8</span><span class=cl><span class=m>43200</span> <span class=p>;</span> expire
-</span></span><span class="line hl"><span class=ln> 9</span><span class=cl><span class=m>10800</span> <span class=o>)</span> <span class=p>;</span> minimum
-</span></span><span class="line hl"><span class=ln>10</span><span class=cl>
-</span></span><span class="line hl"><span class=ln>11</span><span class=cl>@ IN NS ns.rzo.private.
-</span></span><span class="line hl"><span class=ln>12</span><span class=cl>@ IN MX <span class=m>10</span> mail.rzo.private.
-</span></span><span class="line hl"><span class=ln>13</span><span class=cl>mail IN A 192.168.122.10
-</span></span><span class="line hl"><span class=ln>14</span><span class=cl>ns IN A 192.168.122.11
-</span></span><span class="line hl"><span class=ln>15</span><span class=cl>postfix IN CNAME mail
-</span></span><span class="line hl"><span class=ln>16</span><span class=cl>bind1 IN CNAME ns
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/bind/rzo.lan.inverse
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class="line hl"><span class=ln> 1</span><span class=cl>$TTL 86400
-</span></span><span class="line hl"><span class=ln> 2</span><span class=cl>
-</span></span><span class="line hl"><span class=ln> 3</span><span class=cl>@ IN SOA ns.rzo.lan. admin.rzo.lan. (
-</span></span><span class="line hl"><span class=ln> 4</span><span class=cl>2023100101 ; serial
-</span></span><span class="line hl"><span class=ln> 5</span><span class=cl>21600 ; refresh
-</span></span><span class="line hl"><span class=ln> 6</span><span class=cl>10800 ; retry
-</span></span><span class="line hl"><span class=ln> 7</span><span class=cl>43200 ; expire
-</span></span><span class="line hl"><span class=ln> 8</span><span class=cl>10800 ) ; minimum
-</span></span><span class="line hl"><span class=ln> 9</span><span class=cl>
-</span></span><span class="line hl"><span class=ln>10</span><span class=cl>@ IN NS ns.
-</span></span><span class="line hl"><span class=ln>11</span><span class=cl>11 IN PTR ns
-</span></span><span class="line hl"><span class=ln>12</span><span class=cl>10 IN PTR mail
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>named-checkzone rzo.lan /etc/bind/rzo.lan
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt> 1
+</span></span><span class=hl><span class=lnt> 2
+</span></span><span class=hl><span class=lnt> 3
+</span></span><span class=hl><span class=lnt> 4
+</span></span><span class=hl><span class=lnt> 5
+</span></span><span class=hl><span class=lnt> 6
+</span></span><span class=hl><span class=lnt> 7
+</span></span><span class=hl><span class=lnt> 8
+</span></span><span class=hl><span class=lnt> 9
+</span></span><span class=hl><span class=lnt>10
+</span></span><span class=hl><span class=lnt>11
+</span></span><span class=hl><span class=lnt>12
+</span></span><span class=hl><span class=lnt>13
+</span></span><span class=hl><span class=lnt>14
+</span></span><span class=hl><span class=lnt>15
+</span></span><span class=hl><span class=lnt>16
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl><span class=nv>$TTL</span> <span class=m>86400</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>$ORIGIN</span> rzo.lan.
+</span></span><span class="line hl"><span class=cl>
+</span></span><span class="line hl"><span class=cl>@ IN SOA ns.rzo.lan. admin.rzo.lan. <span class=o>(</span>
+</span></span><span class="line hl"><span class=cl><span class=m>2023100101</span> <span class=p>;</span> serial
+</span></span><span class="line hl"><span class=cl><span class=m>21600</span> <span class=p>;</span> refresh
+</span></span><span class="line hl"><span class=cl><span class=m>10800</span> <span class=p>;</span> retry
+</span></span><span class="line hl"><span class=cl><span class=m>43200</span> <span class=p>;</span> expire
+</span></span><span class="line hl"><span class=cl><span class=m>10800</span> <span class=o>)</span> <span class=p>;</span> minimum
+</span></span><span class="line hl"><span class=cl>
+</span></span><span class="line hl"><span class=cl>@ IN NS ns.rzo.lan.
+</span></span><span class="line hl"><span class=cl>@ IN MX <span class=m>10</span> mail.rzo.lan.
+</span></span><span class="line hl"><span class=cl>mail IN A 192.168.122.10
+</span></span><span class="line hl"><span class=cl>ns IN A 192.168.122.11
+</span></span><span class="line hl"><span class=cl>postfix IN CNAME mail
+</span></span><span class="line hl"><span class=cl>bind1 IN CNAME ns
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/bind/rzo.private
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt> 1
+</span></span><span class=hl><span class=lnt> 2
+</span></span><span class=hl><span class=lnt> 3
+</span></span><span class=hl><span class=lnt> 4
+</span></span><span class=hl><span class=lnt> 5
+</span></span><span class=hl><span class=lnt> 6
+</span></span><span class=hl><span class=lnt> 7
+</span></span><span class=hl><span class=lnt> 8
+</span></span><span class=hl><span class=lnt> 9
+</span></span><span class=hl><span class=lnt>10
+</span></span><span class=hl><span class=lnt>11
+</span></span><span class=hl><span class=lnt>12
+</span></span><span class=hl><span class=lnt>13
+</span></span><span class=hl><span class=lnt>14
+</span></span><span class=hl><span class=lnt>15
+</span></span><span class=hl><span class=lnt>16
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class="line hl"><span class=cl><span class=nv>$TTL</span> <span class=m>86400</span>
+</span></span><span class="line hl"><span class=cl><span class=nv>$ORIGIN</span> rzo.private.
+</span></span><span class="line hl"><span class=cl>
+</span></span><span class="line hl"><span class=cl>@ IN SOA ns.rzo.private. admin.rzo.private. <span class=o>(</span>
+</span></span><span class="line hl"><span class=cl><span class=m>2023100201</span> <span class=p>;</span> serial
+</span></span><span class="line hl"><span class=cl><span class=m>21600</span> <span class=p>;</span> refresh
+</span></span><span class="line hl"><span class=cl><span class=m>10800</span> <span class=p>;</span> retry
+</span></span><span class="line hl"><span class=cl><span class=m>43200</span> <span class=p>;</span> expire
+</span></span><span class="line hl"><span class=cl><span class=m>10800</span> <span class=o>)</span> <span class=p>;</span> minimum
+</span></span><span class="line hl"><span class=cl>
+</span></span><span class="line hl"><span class=cl>@ IN NS ns.rzo.private.
+</span></span><span class="line hl"><span class=cl>@ IN MX <span class=m>10</span> mail.rzo.private.
+</span></span><span class="line hl"><span class=cl>mail IN A 192.168.122.10
+</span></span><span class="line hl"><span class=cl>ns IN A 192.168.122.11
+</span></span><span class="line hl"><span class=cl>postfix IN CNAME mail
+</span></span><span class="line hl"><span class=cl>bind1 IN CNAME ns
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>nano /etc/bind/rzo.lan.inverse
+</span></span></code></pre></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=hl><span class=lnt> 1
+</span></span><span class=hl><span class=lnt> 2
+</span></span><span class=hl><span class=lnt> 3
+</span></span><span class=hl><span class=lnt> 4
+</span></span><span class=hl><span class=lnt> 5
+</span></span><span class=hl><span class=lnt> 6
+</span></span><span class=hl><span class=lnt> 7
+</span></span><span class=hl><span class=lnt> 8
+</span></span><span class=hl><span class=lnt> 9
+</span></span><span class=hl><span class=lnt>10
+</span></span><span class=hl><span class=lnt>11
+</span></span><span class=hl><span class=lnt>12
+</span></span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class="line hl"><span class=cl>$TTL 86400
+</span></span><span class="line hl"><span class=cl>
+</span></span><span class="line hl"><span class=cl>@ IN SOA ns.rzo.lan. admin.rzo.lan. (
+</span></span><span class="line hl"><span class=cl>2023100101 ; serial
+</span></span><span class="line hl"><span class=cl>21600 ; refresh
+</span></span><span class="line hl"><span class=cl>10800 ; retry
+</span></span><span class="line hl"><span class=cl>43200 ; expire
+</span></span><span class="line hl"><span class=cl>10800 ) ; minimum
+</span></span><span class="line hl"><span class=cl>
+</span></span><span class="line hl"><span class=cl>@ IN NS ns.
+</span></span><span class="line hl"><span class=cl>11 IN PTR ns
+</span></span><span class="line hl"><span class=cl>10 IN PTR mail
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>named-checkzone rzo.lan /etc/bind/rzo.lan
 </span></span><span class=line><span class=cl>named-checkzone rzo.private /etc/bind/rzo.private
 </span></span><span class=line><span class=cl>named-checkzone rzo.lan.inverse /etc/bind/rzo.lan.inverse
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl restart bind9
