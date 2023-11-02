@@ -54,7 +54,7 @@ attribution adresse ip statique
 ```bash
 nano /etc/network/interfaces
 ```
-```bash {linenos=inline, hl_lines=["9-11"], linenostart=4}
+```bash {linenos=table, hl_lines=["9-11"], linenostart=4}
 source /etc/network/interfaces.d/*
 
 # The loopback network interface
@@ -102,7 +102,7 @@ ajout informations pour utilisation du service
 ```bash
 nano /etc/postfix/main.cf
 ```
-```bash {linenos=inline, hl_lines=["2-4", "6-8", "11-13", "17-21"], linenostart=26}
+```bash {linenos=table, hl_lines=["2-4", "6-8", "11-13", "17-21"], linenostart=26}
 # TLS parameters
 # smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 # smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
@@ -214,7 +214,7 @@ nano /etc/dovecot/conf.d/10-auth.conf
 
 précision de tout laisser passer en clair
 
-```bash {linenos=inline, hl_lines=[6], linenostart=5}
+```bash {linenos=table, hl_lines=[6], linenostart=5}
 # Disable LOGIN command and all other plaintext authentications unless
 # SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP
 # matches the local IP (ie. you're connecting from the same computer), the
@@ -225,7 +225,7 @@ disable_plaintext_auth = no
 
 définition des méchanismes d'authentification (`login` obsolète mais toujours utilisé)
 
-```bash {linenos=inline, hl_lines=[5], linenostart=96}
+```bash {linenos=table, hl_lines=[5], linenostart=96}
 # Space separated list of wanted authentication mechanisms:
 #   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp
 #   gss-spnego
@@ -239,7 +239,7 @@ modification de l'emplacement de destination des mails
 nano /etc/dovecot/conf.d/10-mail.conf
 ```
 
-```bash {linenos=inline, hl_lines=[9], linenostart=22}
+```bash {linenos=table, hl_lines=[9], linenostart=22}
 # See doc/wiki/Variables.txt for full list. Some examples:
 #
 #   mail_location = maildir:~/Maildir
@@ -257,7 +257,7 @@ modification de la gestion des logs *- a été utile*
 nano /etc/dovecot/conf.d/10-logging.conf
 ```
 
-```bash {linenos=inline, hl_lines=[3, 13], linenostart=5}
+```bash {linenos=table, hl_lines=[3, 13], linenostart=5}
 # Log file to use for error messages. "syslog" logs to syslog,
 # /dev/stderr logs to stderr.
 log_path = /var/log/dovecot.log
@@ -272,12 +272,12 @@ log_path = /var/log/dovecot.log
 # facilities are supported.
 syslog_facility = mail
 ```
-```bash {linenos=inline, hl_lines=[2], linenostart=39}
+```bash {linenos=table, hl_lines=[2], linenostart=39}
 # Log unsuccessful authentication attempts and the reasons why they failed.
 auth_verbose = yes
 ```
 
-```bash {linenos=inline, hl_lines=[2], linenostart=50}
+```bash {linenos=table, hl_lines=[2], linenostart=50}
 # Even more verbose logging for debugging purposes. Shows for example SQL
 # queries.
 auth_debug = yes
@@ -322,7 +322,7 @@ indication à postfix de `vmail` & du repertoire `/opt/messagerie` pour la gesti
 ```bash
 nano /etc/postfix/main.cf
 ```
-```bash {linenos=inline, hl_lines=["18-25"], linenostart=26}
+```bash {linenos=table, hl_lines=["18-25"], linenostart=26}
 # TLS parameters
 # smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 # smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
@@ -373,7 +373,7 @@ nano /etc/postfix/vdomain
 **Note** pas le droit d'être le même que celui dans postfix
 {{< /alert >}}
 
-```bash {linenos=inline, hl_lines=[1], linenostart=1}
+```bash {linenos=table, hl_lines=[1], linenostart=1}
 rzo.private #
 ```
 
@@ -383,7 +383,7 @@ création de messageries virtuelles *accordément à `virtual_mailbox_maps`*
 nano /etc/postfix/vmail
 ```
 
-```bash {linenos=inline, hl_lines=["1-3"], linenostart=1}
+```bash {linenos=table, hl_lines=["1-3"], linenostart=1}
 xeylou@rzo.private rzo.private/xeylou/
 testing@rzo.private rzo.private/testing/
 admin@rzo.private rzo.private/admin/
@@ -394,7 +394,7 @@ définition des alias virtuels pour ces utilisateurs *vu `virtual_alias_maps`*
 ```bash
 nano /etc/postfix/valias
 ```
-```bash {linenos=inline, hl_lines=["1-3"], linenostart=1}
+```bash {linenos=table, hl_lines=["1-3"], linenostart=1}
 root: admin@rzo.private
 xeylou: xeylou@rzo.private
 ```
@@ -404,7 +404,7 @@ création d'un daemon postfix pour dovecot/`vmail`
 ```bash
 nano /etc/postfix/master.cf
 ```
-```bash {linenos=inline, hl_lines=["1-2"], linenostart=138}
+```bash {linenos=table, hl_lines=["1-2"], linenostart=138}
 dovecot   unix  -       n       n       -       -       pipe
   flags=DRhu user=vmail:vmail argv=/usr/lib/dovecot/deliver -f ${sender} -d ${recipient}
 ```
@@ -428,7 +428,7 @@ modification de la méthode d'accès
 nano /etc/dovecot/conf.d/10-auth.conf
 ```
 
-```bash {linenos=inline, hl_lines=[6], linenostart=5}
+```bash {linenos=table, hl_lines=[6], linenostart=5}
 # Disable LOGIN command and all other plaintext authentications unless
 # SSL/TLS is used (LOGINDISABLED capability). Note that if the remote IP
 # matches the local IP (ie. you're connecting from the same computer), the
@@ -439,7 +439,7 @@ disable_plaintext_auth = yes
 
 ajout d'une méthode d'authentification sécurisée
 
-```bash {linenos=inline, hl_lines=[5], linenostart=96}
+```bash {linenos=table, hl_lines=[5], linenostart=96}
 # Space separated list of wanted authentication mechanisms:
 #   plain login digest-md5 cram-md5 ntlm rpa apop anonymous gssapi otp
 #   gss-spnego
@@ -449,7 +449,7 @@ auth_mechanisms = cram-md5 plain login
 
 ajout du fichier `auth-static.conf.ext` dans la configuration
 
-```bash {linenos=inline, hl_lines=[1, 6], linenostart=122}
+```bash {linenos=table, hl_lines=[1, 6], linenostart=122}
 #!include auth-system.conf.ext
 #!include auth-sql.conf.ext
 #!include auth-ldap.conf.ext
@@ -464,7 +464,7 @@ définition emplacement liste utilisateurs virtuels + mots de passe
 nano /etc/dovecot/conf.d/auth-static.conf.ext
 ```
 
-```bash {linenos=inline, hl_lines=[1, "4-6", 8, "11-13"], linenostart=16}
+```bash {linenos=table, hl_lines=[1, "4-6", 8, "11-13"], linenostart=16}
 passdb {
 #  driver = static
 #  args = password=test
@@ -486,7 +486,7 @@ informations user `vmail` pour récupération mails
 nano /etc/dovecot/conf.d/10-mail.conf
 ```
 
-```bash {linenos=inline, hl_lines=["4-5", 10], linenostart=105}
+```bash {linenos=table, hl_lines=["4-5", 10], linenostart=105}
 # System user and group used to access mails. If you use multiple, userdb
 # can override these by returning uid or gid fields. You can use either numbers
 # or names. <doc/wiki/UserIds.txt>
@@ -505,7 +505,7 @@ définition des autorisations pour lister utilisateurs
 nano /etc/dovecot/conf.d/10-master.conf
 ```
 
-```bash {linenos=inline, hl_lines=["3-4", "7-11"], linenostart=100}
+```bash {linenos=table, hl_lines=["3-4", "7-11"], linenostart=100}
   unix_listener auth-userdb {
     #mode = 0666
     user = vmail
@@ -538,7 +538,7 @@ définition mots de passe vusers
 nano /etc/dovecot/dovecot.users
 ```
 
-```bash {linenos=inline, hl_lines=["1-3"], linenostart=1}
+```bash {linenos=table, hl_lines=["1-3"], linenostart=1}
 xeylou@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
 testing@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
 admin@rzo.private:{CRAM-MD5}e02d374fde0dc75a17a557039a3a5338c7743304777dccd376f332bee68d2cf6
@@ -627,7 +627,7 @@ named-checkconf /etc/bind/named.conf.local
 nano /etc/bind/rzo.lan
 ```
 
-```bash {linenos=inline, hl_lines=["1-16"]}
+```bash {linenos=table, hl_lines=["1-16"]}
 $TTL 86400
 $ORIGIN rzo.lan.
 
@@ -650,7 +650,7 @@ bind1 IN CNAME ns
 nano /etc/bind/rzo.private
 ```
 
-```bash {linenos=inline, hl_lines=["1-16"]}
+```bash {linenos=table, hl_lines=["1-16"]}
 $TTL 86400
 $ORIGIN rzo.private.
 
@@ -673,7 +673,7 @@ bind1 IN CNAME ns
 nano /etc/bind/rzo.lan.inverse
 ```
 
-```txt {linenos=inline, hl_lines=["1-12"]}
+```txt {linenos=table, hl_lines=["1-12"]}
 $TTL 86400
 
 @ IN SOA ns.rzo.lan. admin.rzo.lan. (
