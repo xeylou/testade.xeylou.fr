@@ -31,10 +31,16 @@ cisco ios supporte uniquement l'algorithme de chiffrement `rsa`
 
 la taille de la clé est à votre convenance (1024, 2048, 4096...)
 
-génération d'une paire de clés ssh dans `~/.ssh/` suivant l'algorithme de chiffrement rsa de longueur 4096 bits sans passphrase
+génération d'une paire de clés ssh dans `~/.ssh/` suivant l'algorithme de chiffrement rsa de longueur 1024 bits sans passphrase
+
+*taille minimum clé en rsa avec ssh en version 2: 768, j'ai pris 1024 car plus courant*
+
+{{< alert icon="circle-info">}}
+**Note** retenez la longueur de la clé si vous la changez, elle sera utile plus tard
+{{< /alert >}}
 
 ```bash
-ssh-keygen -t rsa -b 4096 -N "" -f "$HOME/.ssh/cisco-ssh"
+ssh-keygen -t rsa -b 1024 -N "" -f "$HOME/.ssh/cisco-ssh"
 ```
 > `-t rsa` choix de l'algorithme de chiffrement  
 `-b 4096` précision longueur de la clé  
@@ -54,22 +60,12 @@ cat ~/.ssh/cisco-ssh.pub
 exemple de sortie de la commande
 
 ```bash {linenos=inline}
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVhJRoxzGwIMNyQjbWDWUH5GvcPPipzyp5U1chwNsYWa4KiXgvBh/iVEq+a4kr0I/4jPJJXkjWNeBplLkYAYRIGF8w4CuQPHE0mjRuAzxTtuvFOD6ZaIP+kEWmoLrDCRPorW2y3WV6/fGLuDoLnS6v32qcxTS5bevpy9Iqw8Y4mVRpIHbQsnKNo3HZY5aOC0bxWCZ6m+EVXJnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1 xeylou@UPPA20102
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDXRp1IYBPwCUtXXwAlY3ewRY6lb9zO+LQ80Ynb1hLFq58F+3ui+MoyRYrD4uIK8Z3B91nQf0zhrmYGKVQHpdgvoWclp8E0QUcwAuWdZLl3zTt5nz97+h10yFg9eTnAYyPOZpaC5J/Obw34yM1pJAWPPrFo+no6KslsFNgFjOlvlQ== xeylou@null
 ```
 
-le contenu effectif de la clé devra être utilisé (sans le `ssh-rsa` au début & le commentaire en fin)
+le contenu effectif de la clé est sans le `ssh-rsa` au début & le commentaire en fin
 
-sauvegarde de la clé sans `ssh-rsa` & le commentaire `xeylou@UPPA20102`
-
-```bash
-cat ~/.ssh/cisco-ssh.pub | sed "s/ssh-rsa //g" | sed "s/ xeylou@UPPA20102//g" > ~/.ssh/cisco-ssh.pub
-```
-
-contenu de la clé effective `~/.ssh/cisco-ssh.pub`
-
-```bash {linenos=inline}
-AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVhJRoxzGwIMNyQjbWDWUH5GvcPPipzyp5U1chwNsYWa4KiXgvBh/iVEq+a4kr0I/4jPJJXkjWNeBplLkYAYRIGF8w4CuQPHE0mjRuAzxTtuvFOD6ZaIP+kEWmoLrDCRPorW2y3WV6/fGLuDoLnS6v32qcxTS5bevpy9Iqw8Y4mVRpIHbQsnKNo3HZY5aOC0bxWCZ6m+EVXJnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1
-```
+la clé peut être renseignée avec ces informations quand même
 
 cependant, tout est en une seule ligne
 
@@ -86,10 +82,10 @@ exemple de sortie de la commande
 <!-- AVANT J'AVAIS LAISSE SSH-RSA AU DEBUT -->
 
 ```bash {linenos=inline}
-AAAAB3NzaC1yc2EAAAADAQABAAABAQDPtiK1iUvKUFL6Ff8l9iR37yN4DdIR0CXAkLoRze/WY1sEHz1qwDThApO31WVh
-JRoxzGwIMNyQjbWDWUH5GvcPPipzyp5U1chwNsYWa4KiXgvBh/iVEq+a4kr0I/4jPJJXkjWNeBplLkYAYRIGF8w4CuQPHE0mjRuA
-zxTtuvFOD6ZaIP+kEWmoLrDCRPorW2y3WV6/fGLuDoLnS6v32qcxTS5bevpy9Iqw8Y4mVRpIHbQsnKNo3HZY5aOC0bxWCZ6m+EVX
-JnD5UiQbZmikPVGKqydKgEr/ZuqEjKKFiB+ETTIjYqFM7HjuurVenEiJ0BlVkp8B6aOIbpypp4skZfi1
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDXRp1IYBPwCUtXXwAlY3ewRY6lb9zO+LQ8
+0Ynb1hLFq58F+3ui+MoyRYrD4uIK8Z3B91nQf0zhrmYGKVQHpdgvoWclp8E0QUcwAuWdZLl3
+zTt5nz97+h10yFg9eTnAYyPOZpaC5J/Obw34yM1pJAWPPrFo+no6KslsFNgFjOlvlQ== xey
+lou@null
 ```
 
 ce sera le contenu à coller dans la configuration de l'équipement
@@ -109,13 +105,17 @@ hostname GASPARD
 no ip domain-lookup
 ```
 
-génération d'une clé rsa de 4096 bits pour initier l'environnement ssh
+génération d'une clé rsa de 1024 bits pour initier l'environnement ssh
 
 renseignement d'un domaine contingeant à la création
 
+{{< alert cardColor="#e63946" iconColor="#1d3557" textColor="#f1faee" >}}
+**Générez une clé de la même longueur que celle de la vm**
+{{< /alert >}}
+
 ```bash
 ip domain-name rzo.local
-crypto key generate rsa modulus 4096
+crypto key generate rsa modulus 1024
 ```
 
 création d'un utilisateur pour la connexion
@@ -128,7 +128,6 @@ username xeylou privilege 15 algorithm-type sha256 secret motdepasse
 > `privilege 15` mêmes permissions que enable  
 `algorithm-type sha256` choix méthode de chiffrement du mot de passe  
 `secret motdepasse` définition d'un mot de passe *(optionnel)*
-
 
 les lignes virtuelles sont des supports pour accéder à l'interface de commande cisco à distance
 
@@ -163,6 +162,8 @@ exit
 ```
 
 désactivation de tous les types d'authentification sauf par clé ssh *(publickey)*
+
+ces commandes peuvent ne pas être supporté par la version de cisco ios utilisée
 
 <!--
 Public-key authentication method
