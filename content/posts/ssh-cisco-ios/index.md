@@ -29,25 +29,25 @@ sera utilisée une vm ubuntu pour la génération des clés ssh
 
 cisco ios supporte uniquement l'algorithme de chiffrement `rsa`
 
-la taille de la clé est à votre convenance (1024, 2048, 4096...)
+la taille des clés est à votre convenance (1024, 2048, 4096... bits)
 
-génération d'une paire de clés ssh dans `~/.ssh/` suivant l'algorithme de chiffrement rsa de longueur 1024 bits sans passphrase
-
-*taille minimum clé en rsa avec ssh en version 2: 768, j'ai pris 1024 car plus courant*
+génération d'une paire de clés ssh dans `~/.ssh/` suivant l'algorithme de chiffrement rsa avec une longueur 1024 bits, sans passphrase
 
 {{< alert icon="circle-info">}}
-**Note** retenez la longueur de la clé si vous la changez, elle sera utile plus tard
+**Note** si vous changez la longueur de la clé, retenez la pour plus tard
 {{< /alert >}}
 
 ```bash
 ssh-keygen -t rsa -b 1024 -N "" -f "$HOME/.ssh/cisco-ssh"
 ```
 > `-t rsa` choix de l'algorithme de chiffrement  
-`-b 4096` précision longueur de la clé  
+`-b 1024` précision longueur de la clé  
 `-c "~/.ssh/cisco-ssh.key"` définition de leur emplacement  
-`-N ""` indication passphrasse (nulle)
+`-N ""` indication passphrasse (sans)
 
 *clé privée `~/.ssh/cisco-ssh`, clé publique `~/.ssh/cisco-ssh.pub`*
+
+*la taille minimum d'une clé rsa avec ssh en version 2 est de 768 bits, j'ai préféré prendre 1024 car plus courant*
 
 la clé publique devra être renseignée sur l'équipement cisco
 
@@ -63,13 +63,13 @@ exemple de sortie de la commande
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDXRp1IYBPwCUtXXwAlY3ewRY6lb9zO+LQ80Ynb1hLFq58F+3ui+MoyRYrD4uIK8Z3B91nQf0zhrmYGKVQHpdgvoWclp8E0QUcwAuWdZLl3zTt5nz97+h10yFg9eTnAYyPOZpaC5J/Obw34yM1pJAWPPrFo+no6KslsFNgFjOlvlQ== xeylou@null
 ```
 
-le contenu effectif de la clé est sans le `ssh-rsa` au début & le commentaire en fin
+le contenu effectif de la clé serait sans le `ssh-rsa` au début & le commentaire en fin (ici `xeylou@null`)
 
 la clé peut être renseignée avec ces informations quand même
 
-cependant, tout est en une seule ligne
+cependant, elle occupe une seule grande ligne
 
-cisco ios supporte maximum 254 caractères par ligne de commande
+or, cisco ios supporte maximum 254 caractères par ligne de commande
 
 la clé sera renseignée par paquets équivalents de 72 octets
 
@@ -81,7 +81,7 @@ exemple de sortie de la commande
 
 <!-- AVANT J'AVAIS LAISSE SSH-RSA AU DEBUT -->
 
-```bash {linenos=inline}
+```bash {linenos=table}
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDXRp1IYBPwCUtXXwAlY3ewRY6lb9zO+LQ8
 0Ynb1hLFq58F+3ui+MoyRYrD4uIK8Z3B91nQf0zhrmYGKVQHpdgvoWclp8E0QUcwAuWdZLl3
 zTt5nz97+h10yFg9eTnAYyPOZpaC5J/Obw34yM1pJAWPPrFo+no6KslsFNgFjOlvlQ== xey
@@ -91,12 +91,12 @@ lou@null
 ce sera le contenu à coller dans la configuration de l'équipement
 
 {{< alert icon="circle-info">}}
-**Note**  *pour le copier depuis un terminal* <mark>CTRL + &#8593; + C</mark>
+**Note**  *pour le copier depuis un terminal, selectionnez puis faites* <mark>CTRL + &#8593; + C</mark>
 {{< /alert >}}
 
 ### configuration sur routeur
 
-un cisco 2901 configuré comme suivant
+un routeur cisco 2901 configuré comme suivant
 
 ```bash
 enable
@@ -105,12 +105,12 @@ hostname GASPARD
 no ip domain-lookup
 ```
 
-génération d'une clé rsa de 1024 bits pour initier l'environnement ssh
+génération d'une paire de clés rsa 1024 bits pour initier l'environnement ssh
 
-renseignement d'un domaine contingeant à la création
+renseignement d'un domaine contingeant à la création (pas important)
 
 {{< alert cardColor="#e63946" iconColor="#1d3557" textColor="#f1faee" >}}
-**Générez une clé de la même longueur que celle de la vm**
+**Générez une paire de clé de même longueur que celles générées sur la vm**
 {{< /alert >}}
 
 ```bash
@@ -131,9 +131,9 @@ username xeylou privilege 15 algorithm-type sha256 secret motdepasse
 
 les lignes virtuelles sont des supports pour accéder à l'interface de commande cisco à distance
 
-les anciennes versions de cisco ios en ont 5 (0-4) sinon 16 (0-15) 
+les anciennes versions de cisco ios en ont 5 (0-4) sinon 16 (0-15), & encore ça peut varier...
 
-configuration des lignes virtuelles pour y accéder uniquement par une connexion en ssh enregistrée sur la base d'utilisateur locale
+configuration des lignes virtuelles pour y accéder uniquement via une connexion ssh enregistrée sur la base d'utilisateurs locale
 
 ```bash
 line vty 0 15
@@ -154,16 +154,16 @@ ip ssh pubkey-chain
 username xeylou
 key-string
 ```
-> coller la clé publique effective ici
+> coller la clé publique vue sur la vm ici
 
-pour indiquer la fin de la clé
+indication de la fin de la clé
 ```bash
 exit
 ```
 
 désactivation de tous les types d'authentification sauf par clé ssh *(publickey)*
 
-ces commandes peuvent ne pas être supporté par la version de cisco ios utilisée
+ces commandes peuvent ne pas être supportées par la version de cisco ios utilisée
 
 <!--
 Public-key authentication method
@@ -178,7 +178,7 @@ no ip ssh server authenticate user password
 no ip ssh server authenticate user keyboard
 ```
 
-attribution d'un adresse ip à une des interfaces
+attribution d'une adresse ip à une des interfaces du routeur
 
 ```bash
 int g0/0
@@ -188,7 +188,7 @@ no shut
 
 ### configuration sur switch
 
-la configuration ssh est identique
+la configuration ssh est identique pour le switch
 
 ```bash
 enable
@@ -206,16 +206,16 @@ ip ssh pubkey-chain
 username xeylou
 key-string
 ```
-> renseignement du contenu effectif de la clé publique
+> renseignement de la clé publique ici
 ```bash
 exit
 no ip ssh server authenticate user password
 no ip ssh server authenticate user keyboard
 ```
 
-configuration de l'interface d'accès qui sera un vlan pour les switchs
+configuration de l'interface d'accès qui sera un vlan
 
-*un vlan dédié serait préférable*
+*un vlan dédié serait préférable, mais bon!*
 
 ```bash
 int vlan 1
@@ -225,7 +225,7 @@ no shut
 
 ### connexion ssh
 
-configuration des commandes `ssh gaspard` & `ssh sw7` pour se connecter aux équipements
+configuration des commandes `ssh gaspard` & `ssh sw7` pour se connecter aux équipements depuis la vm
 
 sur l'hôte qui accédera aux équipements
 
@@ -237,9 +237,9 @@ cisco ios utilise des protocoles obsolètes que openssh refuse d'utiliser par d�
 
 renseignement de ceux-ci dans la configuration des alias
 
-pour le routeur
+renseignement pour le routeur
 
-```bash {linenos=inline}
+```bash {linenos=table}
 Host gaspard
   hostname = 192.168.0.1
   user = xeylou
@@ -252,7 +252,7 @@ Host gaspard
 `HostKeyAlgorithms` chiffrement proposé par la vm ubuntu  
 `PubKeyAcceptedAlgorithms` pareil par l'équipement  
 
-manipulation supplémentaire à faire pour l'alias du switch
+une manipulation supplémentaire est à faire pour le switch
 
 les ciphers définissent les algorithmes utilisés pour sécuriser la connexion ssh (ne pas transmettre en clair dès le départ)
 
@@ -275,6 +275,14 @@ connexion depuis la vm ubuntu
 ssh gaspard
 ssh sw7
 ```
+
+*pensez à être sur le même réseau que les équipements*
+
+à cette étape, vous devriez normalement pouvoir vous connecter au routeur & au switch sans avoir à renseigner de mot de passe
+
+une fois une connexion ssh active initiée, vous êtes au même niveau qu'un `enable` sur un port console (tous les droits)
+
+je suis toujours là si des choses se sont mal passées ou que tout ça est vraiment nul
 
 <!-- ### références
 https://networklessons.com/uncategorized/ssh-public-key-authentication-cisco-ios#Linux
@@ -304,7 +312,7 @@ comparable au hash sur la vm ubuntu
 ssh-keygen -l -f $HOME/.ssh/cisco-ssh.key.pub
 ```
 
-définition d'une acl pour n'autoriser uniquement les adresses ip locales à se connecter en ssh
+définition d'une acl pour autoriser uniquement les adresses ip locales à se connecter en ssh
 
 ```bash
 enable
