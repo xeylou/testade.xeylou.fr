@@ -1,4 +1,0 @@
-"Login","Status","Language","Person->First Name","Person->Last Name","Person->Organization name","Password expiration","Profiles","Password"
-"hugues-juriactes","Enabled","FR FR","Hugues","Lacroix","JURIACTES","Never expire","profileid->name:Portal user","tmp-mdp"
-"yannick-juriactes","Enabled","FR FR","Yannick","Couturier","JURIACTES","Never expire","profileid->name:Portal user","tmp-mdp"
-"vincent-juriactes","Enabled","FR FR","Vincent","Mimoun-Prat","JURIACTES","Never expire","profileid->name:Portal user","tmp-mdp"
