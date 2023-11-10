@@ -80,22 +80,12 @@ end
 > `100` numéro du groupe hsrp
 >
 > `standby 100 ip 192.168.0.1` définition adresse ip virtuelle
-<<<<<<< HEAD
 >
 > `standby 100 priority 110` numéro de priorité pour ce routeur
 >
 > `standby 100 preempt` active préemption -> si nouveau routeur avec plus haute priorité arrive dans un groupe, il devient l'actif
 
 configuration du routeur passif R2, avec une priorité de 100
-=======
-
-> `standby 100 priority 110` numéro de priorité du routeur configuré
->
-> optionnel:
-> `standby 100 preempt` active la préemption -> si nouveau routeur avec plus haute priorité dans un groupe, il le devient immédiatement celui actif
-
-R2
->>>>>>> 8fdd2e2127431db64f3a50391f09fa27c5585c50
 
 ```bash {hl_lines=["8-10"]}
 enable
