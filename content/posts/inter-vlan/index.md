@@ -21,11 +21,11 @@ inter-vlan sur équipements cisco
 
 je crée finalement une série d'articles dédiés à r301, le module abordant du cisco cli évalué en pratique
 
-cet article est dédié à la compréhension & l'étude des principes liés au routage inter-vlan sur des équipements cisco, pas à de l'exploration technique ou une utilisation avancée
+cet article est dédié à la compréhension & à l'étude des principes liés au routage inter-vlan, pas à de l'exploration technique ou une utilisation avancée
 
-j'expose uniquement les bases du routage inter-vlan, libre à vous de chercher plus loin dans la pratique
+j'expose uniquement les bases du routage inter-vlan, libre à vous de chercher plus loin
 
-*si vous avez intégré cet article, les tp devraient être triviaux*
+*si vous avez compris cet article, les tp devraient être sympa à faire*
 
 ## rappels vlan
 
@@ -33,17 +33,19 @@ j'expose uniquement les bases du routage inter-vlan, libre à vous de chercher p
 
 les vlan servent à faire de la ségmentation réseau
 
-les machines d'un vlan ne pourront communiquer qu'avec les machines de ce même vlan (ségmentation)
+les machines d'un vlan ne pourront communiquer qu'avec les autres machines du même vlan (ségmentation)
 
 <!-- ainsi, les vlans seuls permettent de séparer les différents réseaux présents sur un équipement -->
 
-l'attribution des vlan à des équipements se fait généralement sur un switch
+l'applications des vlan se fait généralement sur un switch
 
-les ports d'un switch sont associés à des vlans, les machines derrière ces ports sont en conséquent affectées à des vlan sans qu'elles ne le sachent
+les ports d'un switch sont associés à un ou plusieurs vlans, les machines derrières ces ports sont par conséquent affectées à ces vlan sans qu'elles ne le sachent
 
-de ce fait, les machines du vlan `X` auront accès uniquement aux autres machines du vlan `X`
+de ce fait, les machines du vlan `X` auront accès uniquement aux autres machines du vlan `X`, si tous les liens entre les deux autorisent le passage de ce vlan
 
-*side note: tous les ports des switchs cisco ont un vlan par défaut & natif : le vlan 1, donc tout le monde se voit partout*
+*side notes: tous les ports des switchs cisco ont un vlan par défaut & natif : le vlan 1, donc tout le monde se voit partout*
+
+*en français on appelerait ça le "taggage de paquets IP", chaque trâme étant taguée par un vlan*
 
 ## principes d'inter-vlan
 
@@ -53,13 +55,13 @@ il n'est pas possible de les contourner en remontant les couches, ni en les desc
 
 cependant, il est parfois nécessaire de faire communiquer des machines appartenant à des vlan différents
 
-*e.g. dans un réseau d'entreprise avec un vlan `COMPTA` & un vlan `SECRETAIRES`, les deux auraient besoin d'accéder au vlan `SERVICES`*
+*e.g. dans un réseau d'entreprise avec un vlan `COMPTA` & un vlan `SECRETAIRES`, les deux auraient besoin de faire communiquer leurs machines*
 
-une machine devrait donc se charger de faire passer les trâmes d'un vlan à un autre
+une machine devrait donc se charger de faire passer les trâmes d'un vlan pour un autre vlan
 
-le remède à tout ça serait un `routeur`, transférant les trames d'un vlan à un autre, plutôt que d'un réseau à un autre
+le remède à tout ça serait un `routeur`, qui transfère les trames d'un vlan à un autre, plutôt que d'un réseau à un autre
 
-cela existe & est disponible sur tous les routeurs cisco
+cela existe & est disponible sur tous les routeurs (pas que cisco)
 
 leur spécificité étant qu'ils font du routage entre les vlan : du `routage inter-vlan`
 
@@ -69,13 +71,15 @@ cette notion sera abordée pour la suite
 
 un lien peut transporter plusieurs vlans, mais ces vlan ne se verront pas
 
-il faut que les deux ports, les deux extrémités du lien, soient configurés de la même manière d'un bout à l'autre
+il faut que les ports aux extrémités du lien soient configurés de la même manière (sur deux switchs par exemple)
 
-c'est le principe d'un lien `trunk`
+pour faire passer plusieurs vlan sur un seul lien, il sera monté en mode `trunk`
 
 ## méthodes d'inter-vlans
 
 un routeur peut faire du routage inter-vlan de la même manière qu'il le fait pour des réseaux physiques
+
+un exemple ici
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
@@ -92,11 +96,13 @@ sw1 ---|vlan 10| pc1
 sw2 ---|vlan 20| pc2
 {{< /mermaid >}}
 
-cependant, selon les réseaux, un bien plus grand nombre de vlan peuvent être amené à être routé
+cependant, selon les réseaux, un bien plus grand nombre de vlan peut être amené à être routé (30, 50+ ...)
 
-l'idée de garder un lien par vlan devient alors insensée
+l'idée de garder un lien par vlan, comme on le ferait pour un réseau devient alors insensée
 
-l'utilisation de ports en mode trunk est alors recommandé, vu [notions annexes](#notions-annexes), pour transporter plusieurs vlan
+l'utilisation des ports en mode trunk est alors conseillé pour transporter plusieurs vlan sur un seul lien
+
+le routeur comprenant l'arrivée des trâmes taguées
 
 le routage devenant alors `on stick`
 
@@ -121,9 +127,9 @@ sw1 ---|vlan 20| pc2
 
 comme dit [méthodes d'inter-vlan](#méthodes-dinter-vlans), le routage peut se faire en utilisant des liens physiques
 
-cette méthode n'est pas utilisée car serait beaucoup trop chère (acheter un routeur physique 48 ports ça n'existe pas...)
+cette méthode n'est pas utilisée car serait beaucoup trop chère & inutile (pour 48 vlan, acheter un routeur physique de 48 ports ça n'existe pas...)
 
-je l'expose tout de même ici car demandé en td
+je l'expose tout de même ici car demandé en tp
 
 les notions de routage restent les mêmes, les vlan ayant des adresses réseau différentes -> c'est comme des réseaux physiques
 
@@ -135,9 +141,9 @@ si l'on se base sur la topologie suivante
 télécharger le fichier packet tracer vierge
 {{< /button >}}
 
-voici les commandes de configurations des équipements présents
+voici les commandes de configuration des équipements
 
-j'omets d'expliquer les commandes: elles devraient être transparentes -> mêmes que pour routage simple
+j'omets d'expliquer les commandes: elles devraient être transparentes -> ce sont les mêmes que pour routage simple
 
 configuration du switch SW1
 
@@ -183,7 +189,7 @@ exit
 end
 ```
 
-après l'attribution d'une adresse ip à PC1 & PC2 selon l'adresse réseau de leur vlan + leur, & leur passerelle -> ils pourront se ping
+après l'attribution d'une adresse ip à PC1 & PC2 & renseignement de leur passerelle -> ils pourront communiquer
 
 ## routage on stick
 
@@ -193,9 +199,9 @@ l'unique exception étant l'utilisation d'un lien `trunk` pour le passage des vl
 
 cela implique au routeur de connaitre les vlan transmis par ce lien -> pour se configurer une adresse ip sur chaque vlan & leur servir de passerelle
 
-pour cela, le routeur va découper son interface pour chaque vlan demandé, créant des `sous-interfaces` pour chacun d'entre eux
+pour cela, le routeur va découper son interface pour chaque vlan demandé, créant des `sous-interfaces` pour chaque vlan
 
-ces sous-interfaces seront les passerelles des machines pour leur vlan
+ces sous-interfaces seront les passerelles des machines sur leur réseau local (défini par le vlan sur lequel elles sont)
 
 je considèrerai l'infrastructure suivante
 
@@ -228,8 +234,9 @@ exit
 end
 ```
 
-> `int g0/0.10` créer la sous-interface 10 sur port gigabit ethernet 0/0  
-`encapsulation dot1Q 10` utilisera vlan 10 sur cette interface
+> `int g0/0.10` créer la sous-interface 10 sur le port GigabitEthernet 0/0
+>
+> `encapsulation dot1Q 10` utilisera le vlan 10 sur cette interface
 
 configuration SW1
 
@@ -250,8 +257,10 @@ end
 ```
 
 > pas besoin de créer un vlan avec la commande `vlan 10` par exemple, si inexistant -> il va le créer  
-pas besoin `switchport trunk allowed vlan 10,20` car accepte tout par défaut  
-pas besoin `switchport trunk native vlan 1` non plus
+>
+> pas besoin `switchport trunk allowed vlan 10,20` car ne fait pas de restriction par défaut  
+>
+> pas besoin `switchport trunk native vlan 1` non plus
 
 commandes utiles pour débogger
 

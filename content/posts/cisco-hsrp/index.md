@@ -12,14 +12,14 @@ slug: "cisco-hsrp"
 
 {{< lead >}}
 utilisation du protocole  
-hsrp sur routers cisco
+hsrp sur routeurs cisco
 {{< /lead >}}
 
 <!-- article -->
 
 ## introduction
 
-dernier article de la série des explications du module r301, dédié au protocole hsrp
+dernier article de la série des explications sur le module r301, dédié au protocole hsrp
 
 son implémentation simple ne prend pas beaucoup de temps
 
@@ -46,38 +46,37 @@ r2 --- sw1
 sw1 --- pc1 & pc2
 {{< /mermaid >}}
 
-deux routeurs se partagent une adresse ip virtuelle, ici 192.168.0.1, en plus des leur
+deux routeurs se partagent une adresse ip virtuelle, ici 192.168.0.1
 
-les machines du réseau local (PC1 & PC2) utilisent l'adresse virtuelle comme passerelle
+les machines du réseau local PC1 & PC2 utilisent l'adresse virtuelle comme passerelle par défaut
 
-hsrp définit un routeur comme `actif`, ici R1 & l'autre comme `passif` - R2
+hsrp définit un routeur comme `actif` - R1 & l'autre comme `passif` - R2
 
-les routeurs communiquent entre eux pour savoir qui redirige le traffic de l'ip virtuelle & quand
+les routeurs communiquent entre eux pour savoir qui redirige le traffic de l'ip virtuelle : si l'actif n'est plus présent, le deuxième routeur en "standby" prend le relai
 
-le routeur passif prendra la redirection si il ne reçoit plus de message hsrp (hello) du routeur R1 
+le routeur passif R2 prendra la redirection si il ne reçoit plus de message hsrp hello du routeur R1 
 
-si celui-ci renvoie des messages par la suite, il reprendra la redirection
+si R1 renvoie des messages hello par la suite, il reprendra la redirection
 
-le routeur avec la priorité la plus haute sera l'actif
+le routeur avec la priorité la plus haute sera l'actif, sera le premier routeur de secours celui avec la priorité inférieure la plus haute etc. en suivant...
 
 ## implémentation
 
 configuration du routeur actif R1, avec une priorité de 110
 
-```bash {hl_lines=["8-10"]}
+```bash {hl_lines=["7-9"]}
 enable
 configure terminal
 hostname R1
 no ip domain-lookup
 interface fa0/0
 ip address 192.168.0.2 255.255.255.0
-
 standby 100 ip 192.168.0.1
 standby 100 priority 110
 standby 100 preempt
 end
 ```
-> `100` numéro du groupe hsrp
+> `100` numéro groupe hsrp (applicable ensuite)
 >
 > `standby 100 ip 192.168.0.1` définition adresse ip virtuelle
 >
@@ -87,24 +86,29 @@ end
 
 configuration du routeur passif R2, avec une priorité de 100
 
-```bash {hl_lines=["8-10"]}
+```bash {hl_lines=["7-9"]}
 enable
 configure terminal
 hostname R2
 no ip domain-lookup
 interface fa0/0
 ip address 192.168.0.3 255.255.255.0
-
 standby 100 ip 192.168.0.1
 standby 100 priority 100
 standby 100 preempt
 end
 ```
 
-le routeur R1 a une priorité de `110`, R2 `100`
+le routeur R1 a une priorité de `110` & R2 de `100`
 
 R1 -> actif, R2 -> passif
 
-pour tester la configuration, vous pouvez `ping -t 192.168.0.1` (ping à l'infini, comme sur distributions gnu/linux)
+pour tester la configuration, après configuration du PC1 ou PC2, `ping -t 192.168.0.1` (ping à l'infini)
 
 si lien coupé entre R1 & SW1 : après quelques timeout, les ping reprennent car R2 reprend la redirection
+
+c'est de la "haute disponibilité"
+
+R2 prend le relai après environ 3 timeout car se laisse une marge d'erreur : R1 est peut-être encore actif, peut-être le réseau, j'attends un peu (je compte jusqu'à 3)
+
+je vous laisse voir ce que ça fait de couper le lien entre R2 & SW1 lorsque le hsrp est actif...
