@@ -50,7 +50,7 @@ deux routeurs se partagent une adresse ip virtuelle, ici 192.168.0.1
 
 les machines du réseau local PC1 & PC2 utilisent l'adresse virtuelle comme passerelle par défaut
 
-hsrp définit un routeur comme `actif` - R1 & l'autre comme `passif` - R2
+hsrp définit un routeur comme `actif` R1 & l'autre comme `passif` R2
 
 les routeurs communiquent entre eux pour savoir qui redirige le traffic de l'ip virtuelle : si l'actif n'est plus présent, le deuxième routeur en "standby" prend le relai
 
@@ -58,7 +58,9 @@ le routeur passif R2 prendra la redirection si il ne reçoit plus de message hsr
 
 si R1 renvoie des messages hello par la suite, il reprendra la redirection
 
-le routeur avec la priorité la plus haute sera l'actif, sera le premier routeur de secours celui avec la priorité inférieure la plus haute etc. en suivant...
+le routeur avec la priorité la plus haute sera l'actif, sera le premier routeur avec la priorité inférieure la plus haute qui reprendra, & en suivant...
+
+les routeurs se partagent leur configuration, l'intervale de temps de synchronisation peut être défini, pareil pour les messages hello
 
 ## implémentation
 
@@ -103,12 +105,12 @@ le routeur R1 a une priorité de `110` & R2 de `100`
 
 R1 -> actif, R2 -> passif
 
-pour tester la configuration, après configuration du PC1 ou PC2, `ping -t 192.168.0.1` (ping à l'infini)
+pour tester la configuration, après configuration du PC1 ou PC2, `ping -t 192.168.0.1` (ping à l'infini) depuis un pc
 
 si lien coupé entre R1 & SW1 : après quelques timeout, les ping reprennent car R2 reprend la redirection
 
-c'est de la "haute disponibilité"
+c'est de la haute disponibilité (redondance avec un système de bascule et réplication de la configuration) *resiliency != redundancy*
 
-R2 prend le relai après environ 3 timeout car se laisse une marge d'erreur : R1 est peut-être encore actif, peut-être le réseau, j'attends un peu (je compte jusqu'à 3)
+R2 prend le relai après environ 3 timeout car se laisse une marge d'erreur : R1 est peut-être encore actif, peut-être le interruption réseau, j'attends un peu (je compte jusqu'à 3)
 
-je vous laisse voir ce que ça fait de couper le lien entre R2 & SW1 lorsque le hsrp est actif...
+vous pouvez voir ce que ça fait de couper le lien entre R2 & SW1, alors que R1 est actif et fonctionnel *(plus rien ne répondait chez moi, ce qui est un peu bète en vu du protocole : si le passif tombe, l'actif aussi)*
