@@ -48,14 +48,14 @@ Les personnes compétentes, qui travaillent plus vite que les personnes normales
 Un salaire à l'heure n'est pas intéressant pour une personne qui travaille bien.  
 *Hourly income doesn't make sense for those who works great.*
 
-Si tu es payé à l'heure, tu es puni si tu travailles mieux.  
+Si tu es payé à l'heure, tu es puni si tu travailles bien.  
 *If you charge by the hour, you get punished for doing well.*
 
 > si je sors de mon "one sided view", c'est aussi bien dans une entreprise d'être payé à l'heure comme les autres : pour ne pas créer de rivalités entre qui est payé le plus
 
-> c'est aussi à la responsabilité de l'employeur qui t'a payé à l'heure de savoir s'il aurait du te payer au projet || non, par e.g. en freelance (je ne touchais pas que le domaine salarial)
+> c'est aussi à la responsabilité de l'employeur qui t'a payé à l'heure de savoir s'il aurait du te payer au projet || non, e.g. en freelance (je ne voulais pas que toucher pas le domaine salarial)
 
-> "tu auras peut-être une version différente de ton discours quand tu auras des enfants", || quand j'aurais une vision différente du travail, parce que je souhaiterais peut-être mieux valoriser mon temps, || autre...
+> "tu auras peut-être une version différente de ton discours quand tu auras des enfants", merci, || quand j'aurai une vision différente du travail peut-être même, parce que je souhaiterais peut-être mieux valoriser mon temps, || autre...
 
 ## never-ending-projects
 
@@ -65,7 +65,7 @@ Si tu es payé à l'heure, tu es puni si tu travailles mieux.
 
 I learned it's nealy impossible to finish a personnal project for yourself, because it’s nearly impossible to really know what you want && separate it from what you want to want. It’s impossible to set “deadlines” if they’re not real, that is, imposed by an external authority.
 
-I had a personnal networking project at university. Since they had good equipments laying arround, i asked politely if i could use it for learning purposes, && also to write a post about it latter.
+I had a personnal networking project at university. Since they had good equipments laying arround, i asked politely if i could use it for learning purposes, && also to write a post about it later.
 
 But i never published this post, because i couldn't tell where the end of the project would be. It’s impossible to start something and, given enough time and input, not have it grow && evolve into something else entirely. It’s impossible to avoid [scope creep](https://en.wikipedia.org/wiki/Scope_creep).
 
@@ -75,12 +75,12 @@ Here is some images of the draft post. (you can click to zoom on them)
 ![](images/projet-rzo-500.png)
 ![](images/project-photo.webp)
 
-Many of my personnal projects are out of my control because i told myself so many times that *"it lacks of [...], it's fine, i'll add it later"*, or i learned something new because i dug further onto the subject so *"what i done is incredibly wrong, i'll start it back"* : && it never ends!
+Many of my personnal projects are out of my control because i told myself so many times that *"it lacks of [...], it's fine, i'll add it later"*, or i learned something new because i dug further onto the subject so *"what i done is incredibly wrong, i'll start it back"* : && it never ends
 
-Je retiens que si je fais un projet pour moi, peu importe avec quoi || dans quel domaine : je dois d'abord me projeter sur ce que je dois avoir plutôt que ce que je veux qu'il soit - vraiment. Sinon, ce que je veux qu'il soit ne cessera de changer parce que je le ferrai pour moi, je définis ce que je fais par rapport à ce que je veux.
+Je retiens que si je fais un projet pour moi, peu importe avec quoi || dans quel domaine : je dois d'abord me projeter sur ce que je dois avoir plutôt que ce que je veux qu'il soit, vraiment. Sinon, ce que je veux qu'il soit ne cessera de changer parce que j'apprendrai, parce que je changerai d'idée : parce que je le fais pour moi. Je définis maintenant ce que je fais par rapport à ce que je veux avoir au bout, pas par rapport à ce que j'ai envie.
 
-J'y dépenserai une quantité folle de temps parce que je ne pourrai pas fixer une limite de temps à ce que je veux : j'ajoute des choses au fur && à mesure que le projet avance, car je le fais pour moi. En recherche, si on aborde un sujet, si on ne se limite pas, on fini par jamais finir de l'étudier.
+Je dépense une quantité folle de temps parce que je ne peux pas fixer une limite de temps à ce que je veux : j'ajoute des choses au fur && à mesure que le projet avance, car je le fais pour moi. En recherche, si on aborde un sujet, si on ne s'y met pas de limite, on fini par jamais finir de l'étudier.
 
 Les cours nous donne des délais, une limite de temps à ne pas dépasser pour un module. Quand on fait un projet perso, si on ne se fixe pas de limite, c'est pas possible de prévoir le temps qu'on va y mettre || de le délimiter si on ne sait pas ce qu'on voudra que le projet soit dans 3, 5 jours.
 
-I stopped to told myself that it will be done when it's done, otherwise it will never be.
+I stopped to told myself that it will be done when it's done, otherwise it will never be
