@@ -1,7 +1,7 @@
 ---
 title: "zabbix ha cluster"
 date: 2024-03-02
-draft: false
+draft: true
 tags: [ "monitoring" ]
 slug: "zabbix-ha-clustering"
 ---
