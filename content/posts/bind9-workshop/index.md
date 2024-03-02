@@ -52,7 +52,7 @@ bind1 -.- srv-bind
 bind2 -.- srv-bind2
 {{< /mermaid >}}
 
-j'utilise debian par habitude, mais *mr. le prof* veut nous faire accèder en ssh à ces vm pour ne pas utiliser l'environnement de bureau des ubuntu
+j'utilise debian par habitude, *mr. le prof* veut nous faire accèder en ssh à ces vm pour ne pas utiliser l'environnement de bureau des ubuntu
 
 ## configuration initiale
 
@@ -78,7 +78,7 @@ nano /etc/network/interfaces
 
 je supprime la ligne indiquant de se référer au dhcp (si elle existe): `inet iface enp1s0 dhcp`
 
-& je rajoute cette configuration selon l'interface, ici `enp1s0` où `X` est le dernier octet de l'adresse des vm configurées [sur le schéma](#explications)
+&& je rajoute cette configuration selon l'interface, ici `enp1s0` où `X` est le dernier octet de l'adresse des vm configurées [sur le schéma](#explications)
 
 ```bash {linenos=table, hl_lines=["13-17"], linenostart=1}
 # This file describes the network interfaces available on your system
@@ -140,7 +140,7 @@ passwd root
 
 pour ne pas trop réflechir avec des ip *- je le fais mais une erreur d'inattention dans une ip & j'y suis pour 4h de deboggage...*
 
-sur la machine qui va accèder en ssh aux vm, je crée des alias pour juste rentrer `ssh bind` & arriver sur le serveur bind par exemple *- j'essaye d'être "fénéant intelligemment"* :smile:
+sur la machine qui va accèder en ssh aux vm, je crée des alias pour juste rentrer `ssh bind` & arriver sur la vm bind par exemple *- j'essaye d'être "fénéant intelligemment"* :smile:
 
 {{< alert icon="circle-info">}}
 **Note** sur la machine physique
@@ -189,13 +189,13 @@ une `zone inverse` : on demande au serveur dns -> pour cette adresse ip, tu as q
 
 ce qui est l'inverse de -> j'ai ce nom de domaine, donne-moi son ip associée
 
-dans la zone inverse, il faut mettre les mêmes enregistrements que ceux dans adehu.com, mais à l'envers
+dans la zone inverse, il faut mettre les mêmes enregistrements que ceux dans adehu.com, mais à l'envers (vous allez comprendre)
 
 je définis aussi que ce serveur dns (bind1) est le serveur principal pour ces zones dns
 
 dans le fichier de gestion des zones `/etc/bind/named.conf`, sera définit la zone dns & sa zone inverse
 
-*même si la bonne pratique voudrait qu'il include notre fichier de conf...*
+*même si la bonne pratique voudrait qu'il inclut un fichier de configuration pour chaque zone...*
 
 ```bash
 nano /etc/bind/named.conf

@@ -58,7 +58,7 @@ le routeur passif R2 prendra la redirection si il ne reçoit plus de message hsr
 
 si R1 renvoie des messages hello par la suite, il reprendra la redirection
 
-le routeur avec la priorité la plus haute sera l'actif, sera le premier routeur avec la priorité inférieure la plus haute qui reprendra, & en suivant...
+le routeur avec la priorité la plus haute sera l'actif, sera le premier routeur avec la priorité inférieure la plus haute celui qui reprendra, & en suivant...
 
 les routeurs se partagent leur configuration, l'intervale de temps de synchronisation peut être défini, pareil pour les messages hello
 
@@ -76,6 +76,7 @@ ip address 192.168.0.2 255.255.255.0
 standby 100 ip 192.168.0.1
 standby 100 priority 110
 standby 100 preempt
+no shutdown
 end
 ```
 > `100` numéro groupe hsrp (applicable ensuite)
@@ -98,6 +99,7 @@ ip address 192.168.0.3 255.255.255.0
 standby 100 ip 192.168.0.1
 standby 100 priority 100
 standby 100 preempt
+no shutdown
 end
 ```
 
@@ -105,12 +107,12 @@ le routeur R1 a une priorité de `110` & R2 de `100`
 
 R1 -> actif, R2 -> passif
 
-pour tester la configuration, après configuration du PC1 ou PC2, `ping -t 192.168.0.1` (ping à l'infini) depuis un pc
+pour tester la configuration, après configuration réseau du PC1 ou PC2, `ping -t 192.168.0.1` (ping à l'infini) depuis un pc
 
-si lien coupé entre R1 & SW1 : après quelques timeout, les ping reprennent car R2 reprend la redirection
+si lien coupé entre R1 & SW1 : après quelques timeout (5 secondes), les ping reprennent car R2 reprend la redirection
 
 c'est de la haute disponibilité (redondance avec un système de bascule et réplication de la configuration) *resiliency != redundancy*
 
-R2 prend le relai après environ 3 timeout car se laisse une marge d'erreur : R1 est peut-être encore actif, peut-être le interruption réseau, j'attends un peu (je compte jusqu'à 3)
+R2 prend le relai après environ 3 timeout car se laisse une marge d'erreur avant de s'attribuer l'ip virtuelle
 
-vous pouvez voir ce que ça fait de couper le lien entre R2 & SW1, alors que R1 est actif et fonctionnel *(plus rien ne répondait chez moi, ce qui est un peu bète en vu du protocole : si le passif tombe, l'actif aussi)*
+quand R1 revient, un timeout est présent le temps qu'il reprenne l'adresse virtuelle

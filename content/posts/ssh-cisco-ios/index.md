@@ -31,6 +31,8 @@ cisco ios supporte uniquement l'algorithme de chiffrement `rsa`
 
 la taille des clés est à votre convenance (1024, 2048, 4096... bits)
 
+je recommande 1024 bits, les processeurs des équipements cisco à l'iut sont vieux donc prennent du temps pour des tailles de clés plus élevées...
+
 génération d'une paire de clés ssh dans `~/.ssh/` suivant l'algorithme de chiffrement rsa avec une longueur 1024 bits, sans passphrase
 
 {{< alert icon="circle-info">}}
@@ -41,9 +43,9 @@ génération d'une paire de clés ssh dans `~/.ssh/` suivant l'algorithme de chi
 ssh-keygen -t rsa -b 1024 -N "" -f "$HOME/.ssh/cisco-ssh"
 ```
 > `-t rsa` choix de l'algorithme de chiffrement  
-`-b 1024` précision longueur de la clé  
+`-b 1024` précision de la longueur de la clé  
 `-c "~/.ssh/cisco-ssh.key"` définition de leur emplacement  
-`-N ""` indication passphrasse (sans)
+`-N ""` indication passphrasse (aucune)
 
 *clé privée `~/.ssh/cisco-ssh`, clé publique `~/.ssh/cisco-ssh.pub`*
 
@@ -96,7 +98,7 @@ ce sera le contenu à coller dans la configuration de l'équipement
 
 ### configuration sur routeur
 
-un routeur cisco 2901 configuré comme suivant
+pour un routeur cisco 2901 configuré comme suivant
 
 ```bash
 enable
@@ -105,12 +107,12 @@ hostname GASPARD
 no ip domain-lookup
 ```
 
+renseignement d'un domaine contingeant à la création de l'environnement ssh (pas important)
+
 génération d'une paire de clés rsa 1024 bits pour initier l'environnement ssh
 
-renseignement d'un domaine contingeant à la création (pas important)
-
 {{< alert cardColor="#e63946" iconColor="#1d3557" textColor="#f1faee" >}}
-**Générez une paire de clé de même longueur que celles générées sur la vm**
+**Générez une paire de clés de même longueur que celles générées sur la vm**
 {{< /alert >}}
 
 ```bash
@@ -131,7 +133,7 @@ username xeylou privilege 15 algorithm-type sha256 secret motdepasse
 
 les lignes virtuelles sont des supports pour accéder à l'interface de commande cisco à distance
 
-les anciennes versions de cisco ios en ont 5 (0-4) sinon 16 (0-15), & encore ça peut varier...
+les anciennes versions de cisco ios en ont 5 (0-4) sinon 16 (0-15), && encore ça peut varier...
 
 configuration des lignes virtuelles pour y accéder uniquement via une connexion ssh enregistrée sur la base d'utilisateurs locale
 
@@ -154,7 +156,7 @@ ip ssh pubkey-chain
 username xeylou
 key-string
 ```
-> coller la clé publique vue sur la vm ici
+> coller la clé publique découpée sur la vm ici
 
 indication de la fin de la clé
 ```bash
@@ -163,7 +165,7 @@ exit
 
 désactivation de tous les types d'authentification sauf par clé ssh *(publickey)*
 
-ces commandes peuvent ne pas être supportées par la version de cisco ios utilisée
+ces commandes peuvent ne pas être supportées par la version de cisco ios utilisée, je les donne quand même
 
 <!--
 Public-key authentication method
@@ -188,7 +190,7 @@ no shut
 
 ### configuration sur switch
 
-la configuration ssh est identique pour le switch
+la configuration ssh est identique pour un switch
 
 ```bash
 enable
@@ -227,7 +229,7 @@ no shut
 
 configuration des commandes `ssh gaspard` & `ssh sw7` pour se connecter aux équipements depuis la vm
 
-sur l'hôte qui accédera aux équipements
+sur l'hôte qui accédera aux équipements (la vm)
 
 ```bash
 nano ~/.ssh/config
@@ -269,7 +271,7 @@ Host sw7
   Ciphers aes256-cbc
 ```
 
-connexion depuis la vm ubuntu
+connexion en ssh depuis la vm ubuntu
 
 ```bash
 ssh gaspard
@@ -282,7 +284,7 @@ ssh sw7
 
 une fois une connexion ssh active initiée, vous êtes au même niveau qu'un `enable` sur un port console (tous les droits)
 
-je suis toujours là si des choses se sont mal passées ou que tout ça est vraiment nul
+je suis toujours là si des choses se sont mal passées ou que tout est vraiment nul
 
 <!-- ### références
 https://networklessons.com/uncategorized/ssh-public-key-authentication-cisco-ios#Linux
@@ -323,13 +325,13 @@ line vty 0 15
 access-class SHH_ACL in
 ```
 
-ajout d'un timeout de 10 minutes (inactivité) *sinon infini*
+ajout d'un timeout au bout de 10 minutes d'inactivité *sinon infini*
 
 ```bash
 exec timeout 10 0
 ```
 
-définition de maximum 3 tentatives de connexion *ralentissement bruteforce*
+définition de maximum 3 tentatives de connexion *ralentissement de bruteforce*
 
 ```bash
 ip ssh authentication-retries 3

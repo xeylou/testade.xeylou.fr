@@ -21,7 +21,7 @@ you can always contact me if the last update is too old
 
 i am a second-grade Network & Telecommunication bachelor student at [University of Pau and the Adour Region](https://www.univ-pau.fr/en/home.html)
 
-i do a work-study as an Network & System Administrator for a french IT service delivery company
+i do a work-study as an apprentice Network & System Administrator for a french IT service delivery company
 
 ### Freetime
 

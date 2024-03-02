@@ -36,13 +36,13 @@ by downloading an installer externally, the chances to install a wrong software,
 
 software updates are individuals, each software must search for its update - *background apps, when the computer starts etc.*
 
-nor the Windows Update or the Microsoft Store will check for the external installed software updates
+nor the Windows Update or the Microsoft Store will check for the external installed software updates (apps you installed)
 
 ### uninstallation
 
-most of the time, software can be found in the control panel or the apps section of the windows settings
+most of the time, software can be found in the control panel or in the apps section of the windows settings
 
-however, software installed in non common path are not listed alongside those
+however, software installed in non common path are not listed alongside those (standalone or portable applications...&)
 
 dependencies installed to use them usually remain after uninstalling the software - *how many programs in the control panel are not used...*
 
@@ -50,11 +50,11 @@ dependencies installed to use them usually remain after uninstalling the softwar
 
 the Microsoft Store has improved the software management in windows
 
-the software are trusted because approved & listed by Microsoft
+the software listed are trusted because approved & listed by Microsoft
 
 software are searched & directly downloaded, no risks to download additional software or execute a malicious program online
 
-the software installed from the Microsoft Store can be all updated at once, no background apps etc
+the software installed from the Microsoft Store can be all updated at once, no background apps etc. (not as catastrophic as each app has its own updates ritual)
 
 however, the ms store apps list doesn't cover all the wanted users apps
 
@@ -62,9 +62,9 @@ however, the ms store apps list doesn't cover all the wanted users apps
 
 windows, maybe knowning how software are handled on linux, created their [package manager](https://learn.microsoft.com/en-us/windows/package-manager/#understanding-package-managers)
 
-package managers are tools used to install & manage software & their packages
+package managers are tools used to install & manage software w/ their packages/dependencies
 
-linux users use them to quickly install software, update their system, their software & packages whenever they want, and also uninstall software including unused dependencies
+linux users use them to quickly install software, update their system, their software & packages **whenever they want**, and also uninstall software including unused dependencies, folders created for no residuals...
 
 a package manager is a simpler & cleaner way to manage your system software & updates
 
@@ -87,7 +87,7 @@ either, this command can be launched in an admin. terminal to list installed app
 ```powershell
 Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table –AutoSiz
 ```
-export the list to a file
+to export the list to a file
 ```powershell
 Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Format-Table –AutoSize > C:\programs.txt
 ```
@@ -101,18 +101,18 @@ winget is the windows package manager shipped with windows 11 - *can be installe
 adobe products & other microsoft trusted software can be installed quickly & securely through it
 
 with `vlc` for example, instead of opening a web browser, searching vlc, downloading the installer, executing it, clicking next...  
-open a Terminal or a Powershell & run
+open Powershell & run
 ```powershell
 winget install vlc
 ```
 > multiple software can be installed at once, to install gimp & vlc for example `winget install gimp vlc`
 
-winget can search wanted packages, example with `gimp`
+winget can search wanted packages too, example with `gimp`
 ```powershell
 winget search gimp
 ```
 
-list installed packages
+list installed packages *(yes, usefull, unusual from windows)*
 ```powershell
 winget list
 ```
@@ -128,7 +128,7 @@ winget upgrade --id Adobe.Acrobat.Reader.64-bit
 winget upgrade --all
 ```
 
-configuration can be exported if moving from a pc to an other
+configuration can also be exported if moving from a pc to an other
 ```powershell
 winget export packages.json
 winget import packages.json
@@ -138,11 +138,11 @@ winget import packages.json
 <!-- https://blog.logrocket.com/6-best-package-managers-windows-beyond/#ninite -->
 leaving the command line, ninite aims to install & update software all at once using a `.exe`
 
-very usefull after a windows installation to download all your software at once if you didn't have winget at first
+very usefull after a windows installation to download all your software at once if you don't want winget
 
 running it more than once will update the selected software
 
-on their website, software to download can be choose, from that it will generate a `.exe` to install them
+on their website, software to download can be choosen, from that it will generate a `.exe` to install them
 
 {{< button href="https://ninite.com/" target="_blank" >}}
 select software to install & "Get Your Ninite"
@@ -154,14 +154,14 @@ most used package manager in windows, appeared before winget in 2011: chocolatey
 
 more packages are in chocolatey, they are moderated & doesn't contain malware or bloatware
 
-chocolatey is more open, more widely used software are present than in winget, those who are not verified yet by windows
+chocolatey is more open, so more widely used software are present than in winget, those who are not verified yet by windows but by their editors or chocolatey team
 
 a single powershell command can install chocolatey, runned as admin
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
-chocolatey has a strong & native gui called `chocolateygui` to avoid using commandline
+chocolatey has a strong & native gui called `chocolateygui` to avoid using commandline compared to winget
 
 ```bash
 choco install chocolateygui
@@ -173,9 +173,9 @@ the commands are similar to [winget](#winget) with the `choco` command
 
 > i personally use chocolatey when i got to be on windows host & find it more convenient to use, also for new users because of its native gui
 
-list local installed software
+list installed software, so you can quickly see your unused apps to uninstall or quickly install your software to a new windows host using chocolatey
 ```powershell
-choco list --local
+choco list
 ```
 
 upgrade all packages
@@ -183,7 +183,12 @@ upgrade all packages
 choco upgrade all
 ```
 
-and the ultimate command to remove a software with its dependencies if not use by other ones *- those commands are the same*
+or upgrade vlc only
+```powershell
+choco upgrade vlc
+```
+
+and the ultimate command to remove a software with its dependencies if not use by other software *- those commands are the same*
 
 ```powershell
 choco uninstall package --removedependencies

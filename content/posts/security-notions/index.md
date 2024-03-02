@@ -160,19 +160,19 @@ as always, good passwords are always a most & for the ssh protocol the [usage of
 
 #### authentication
 
-using a login & a password cannot verify the identity of the person accessing a ressource behind the user 
+using a login & a password cannot verify the identity of the person accessing a ressource for that user 
 
 since then, human intervention has guaranteed the identity of the person accessing the resource
 
 back then, simple questions where asked to know if the intended person using the credentials was the one intended - *e.g name of its dog, where did he was born, etc.*
 
-this authentication method was highly subjected to doxing
+this authentication method was highly subjected to doxing/osint
 
 nowadays, 2fa is used, living on the intended person's phone or an dedicated hardware device (yubikey)
 
 2fa can take the form of push notifications *(malicious ones can be injected)*, sms verifications *(warning sim swapping attack method)* or authenticators codes using the totp protocol
 
-mfa (multifactor authentication) can also be choose
+mfa (multifactor authentication) is also a thing
 
 ### os/software side
 
@@ -184,7 +184,7 @@ mfa (multifactor authentication) can also be choose
 
 #### ng-av/edr
 
-*antivirus*, *next gen antivirus*, *endpoint detection & response* 
+*antivirus (av)*, *next gen antivirus (ngav)* & *endpoint detection & response (edr)* 
 
 are commonly used solutions to protect endpoints
 
@@ -194,7 +194,7 @@ are commonly used solutions to protect endpoints
 
 an individual hash could be generated for each file. standard avs compare them to a list of malicious files hash to know if the checked file is one of them or not to flag it
 
-it is only working against file-based attack & new or yet unknown malwares could not be discovered using this method
+it is only working against file-based attack & new or yet unknown malwares, otherwise it could not be discovered using this method
 
 <!-- that also introduce the notion of `false positive` if a non-malicious file is flagged by an av... -->
 
@@ -204,7 +204,7 @@ ngav use behaviour detection on top of the signature recognition, so if a softwa
 
 some may introduce sandboxing & ai *- machine learning* although av & ngav are already well ressources hungry
 
-edr & ng-avs are very important security solutions since only the endpoint can see encrypted ongoing or incomming traffics *(e.g. https traffic)*
+edr & ng-avs are very important security solutions since only the endpoint can see the unencrypted ongoing or incomming traffics *(e.g. https traffic)*
 
 be aware that more than one av could lead to more ressource usage & them trying to cancel each other, since they are accessing same files & seeing each other activity
 
@@ -223,11 +223,11 @@ firewalling protects networks from unwanted traffic by setting a set of pre-prog
 
 it can also provide a network segmentation, separating the lan *local area network* into smaller ones w/ their dedicated rules
 
-*not to compare w/ software firewalls who applies rules to an host only*
+*not to compare w/ software firewalls who applies rules to an host applications only*
 
 #### proxy
 
-proxy servers could be an intermediate to access the internet in a lan
+proxy servers could be an intermediate to access the internet in a lan (local area network)
 
 very usefull to reduce a network attack surface since all the traffic is going through it
 
@@ -235,7 +235,7 @@ it can monitor traffic or gather metrics
 
 it also provide sort of firewalling since you are restricted by what the proxy permit you to access to
 
-it is also great for privacy since hosts are not directly exposed
+it is also great for privacy since hosts are not directly exposed, the proxy is
 
 *many use of proxies can be found doing research*
 
@@ -244,6 +244,8 @@ it is also great for privacy since hosts are not directly exposed
 reverse proxies act the same as normal proxies but for incomming traffic
 
 endpoints are behind the reverse proxy so that all incomming connexions need to pass through the reverse proxy to access the hosts
+
+the advantages are the same
 
 #### ids & ips
 <!-- https://www.okta.com/identity-101/ids-vs-ips/ -->
@@ -254,14 +256,16 @@ the ids & the ips analyse real-time traffic for signature matching known attacks
 
 the difference between them is that ips can act as a hardware switch to cut a malicious traffic whereas the ids only raise alerts
 
+they are oftenly shipped inside a firewall by some companies
+
 #### soc
 <!-- https://www.ibm.com/topics/security-operations-center -->
 
-*security operations center* or isoc *information security ...*
+*security operations center* or isoc *information security operations center*
 
-is the structure (people, room, screens, devices...) where logs are gathered & correlated
+is the structure (people, room, screens & devices) where logs are gathered & correlated
 
-people are present at full-time to maintain the soc since it is a very important protection mesure (the ciso *chief information security officer*, analysts, devops/secdevops person...)
+people are present at full-time to maintain the soc since it is a very important protection mesure (the ciso *chief information security officer*, analysts, devops/secdevops teams...)
 
 the soc integrate various solutions such as a [siem](#siem) or a [soar](#soar) for example
 
@@ -289,7 +293,7 @@ logs gathered from the firewalls, network appliances, ids... can be filtered by 
 
 the siem is: collecting, aggregating, identifying, categorising & analysing incidents or events
 
-the siem needs continuous learning by the security team *(this report is normal because, it is current that...)* or by ai *(machine learning)* to keep categorising the data well but that has more to do with a [soar](#soar)
+the siem needs continuous learning by the security team *(this report is normal because we know [...], it is current that [...]...)* or by ai *(machine learning)* to keep categorising the data well but that has more to do with a [soar](#soar)
 
 #### soar
 <!-- 

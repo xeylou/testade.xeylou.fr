@@ -41,9 +41,9 @@ secure shell - ssh, is a very versatile protocol but generally used to access a 
 - use port tcp/22 by default
 - use asymetric cryptography
 
-the first time accessing a remote ssh host, its public key fingerprint is prompted to know if you are accessing the wanted host - security reasons, MitM, asking you if you trust it or not 
+the first time accessing a remote ssh host, its public key fingerprint is prompted to know if you are accessing the wanted host - security reasons, prevent MitM attacks - asking you if you trust it or not 
 
-if yes, the fingerprint is paste in `~/.ssh/known_hosts` w/ the associate ip address & encryption protocol; its trusted by the local machine
+if yes, the fingerprint is paste in your `~/.ssh/known_hosts` w/ the associate ip address & encryption protocol; its now trusted by your local machine
 
 ### modifications
 
@@ -59,6 +59,8 @@ if modifications is made, for the changes to take effect: the sshd service needs
 systemctl restart sshd
 ```
 
+*for hosts using systemd, like debian distros*
+
 ### good practices
 
 - change the ssh access port from the port 22
@@ -73,15 +75,17 @@ systemctl restart sshd
 
 - use a [passphrase](#passphrases) for your private keys
 
+- use an [ssh bastion](#ssh-bastions) to centralise your connections from the outside
+
 ### keys
 
 the server has a public key that everyone can see, only you have the private key to connect to the server; public key -> the lock, private key -> *the key...*
 
 private & public keys are generated simultaneously, various encryption algorithms could be choosen
 
-private keys default location is `~/.ssh` - *perfectly fine with it*
+private keys default location is `~/.ssh` in your local machine - *perfectly fine with it*
 
-w/ openssl, this command brings forms to fill to create a public & private key pair
+w/ openssl, this command brings forms to fill to create a public & a private key pair
 
 ```bash
 ssh-keygen # to generate keys
@@ -95,7 +99,7 @@ ssh-keygen # to generate keys
 `-N ""` specify a passphrase, replace what's inside `""`
 <!-- ed25519 -->
 
-pushing a public key to a remote host, after running the `ssh-keygen` command
+pushing a public key to a remote host, after running the `ssh-keygen` command - *make sure an ssh server is running on the remote host & that you have login for it*
 
 ```bash
 ssh-copy-id -i path/to/key.pub username@remotehost
@@ -112,6 +116,8 @@ passphrases can be added to private ssh keys, preventing the usage of the key if
 
 `~/.ssh/config` serve the ssh client to manage its remote hosts
 
+it simplifies your connexions, since you only use to do `ssh debian-vm` for example
+
 ```bash
 Host abitraryname
     Hostname remotehost
@@ -123,7 +129,7 @@ Host abitraryname
 after changes, no need to restart a service
 
 ```bash
-ssh remotename
+ssh abitraryname
 ```
 
 ### certificates
@@ -148,9 +154,9 @@ ssh-keygen -s hostca -I hostname.domain.tld -h -n hostname.domain.tld -V +52w ke
 
 `key-cert.pub` should be generated
 
-to use it on a local machine, paste the the ca & the public key to the `/etc/ssh` folder on the remote host for example
+to use it, paste the the ca to the `/etc/ssh` folder on the local host for example
 
-edit in the `/etc/ssh/sshd_config` file:
+and edit in the `/etc/ssh/sshd_config` file:
 
 ```bash
 HostCertificate /etc/ssh/key-cert.pub

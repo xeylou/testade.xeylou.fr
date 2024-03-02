@@ -17,9 +17,11 @@ avec dovecot & utilisation avec thunderbird
 
 ## introduction
 
-je continue l'avancée des workshops avec un serveur mail postfix avec dovecot pour l'envoi & la réception de mails
+je continue l'avancée des workshops avec un serveur mail postfix avec dovecot, pour l'envoi & la réception de mails
 
 il pourra être utilisé avec utilisateurs gnu/linux ou virtuels
+
+topologie utilisée
 
 {{< mermaid >}}
 %%{init: {'theme':'dark'}}%%
@@ -97,7 +99,7 @@ fichier de configuration global postfix `/etc/postfix/main.cf`
 
 commente tout ce qui touche au tls car pas utilisé ici
 
-ajout informations pour utilisation du service
+ajout d'informations pour l'utilisation du service
 
 ```bash
 nano /etc/postfix/main.cf
@@ -295,7 +297,7 @@ telnet -l user1 localhost 143
 ```
 > a login user2 user2  
 
-*où user2 l'utilisateur et le mot de passe*
+*où user2 l'utilisateur et user2 son mot de passe*
 
 ### utilisateurs virtuels
 
@@ -458,7 +460,7 @@ ajout du fichier `auth-static.conf.ext` dans la configuration
 !include auth-static.conf.ext
 ```
 
-définition emplacement liste utilisateurs virtuels + mots de passe
+définition de l'emplacement de la liste des utilisateurs virtuels + des mots de passe
 
 ```bash
 nano /etc/dovecot/conf.d/auth-static.conf.ext
@@ -521,7 +523,7 @@ nano /etc/dovecot/conf.d/10-master.conf
 
 <!-- **sûr qu'il faut pas décommenter le premier mode?** -->
 
-définition du hash des mots de passe des vusers
+définition du hash des mots de passe des utilisateurs virtuels (vusers)
 
 ```bash
 doveadm pw -s CRAM-MD5
@@ -532,7 +534,7 @@ Retype new password:
 
 le coller dans `/etc/dovecot/dovecot.users` *défini depuis `/etc/dovecot/conf.d/auth-static.conf.ext`*
 
-définition mots de passe vusers
+définition des mots de passe des vusers
 
 ```bash
 nano /etc/dovecot/dovecot.users
@@ -566,7 +568,7 @@ pour débogger
 journalctl -xfe
 ```
 
-un des problèmes importants que j'ai eu
+un des problèmes que j'ai eu
 
 > Oct 02 09:01:33 r303-deb12-postfix postfix/pipe[2905]: 940265FD8B: to=<xeylou@rzo.private>, relay=dovecot, delay=0.04, delays=0.02/0/0/0.02, dsn=4.3.0, status=deferred (temporary failure. Command output: lda(xeylou@rzo.private): Error: net_connect_unix(/run/dovecot/stats-writer) failed: Permission denied Can't open log file /var/log/dovecot.log: Permission denied )
 
@@ -715,6 +717,8 @@ apt install -y thunderbird
 
 connexion utilisateur virtuel `xeylou`
 
+*cliquez sur l'image pour zoomer, les formulaires séléctionnez sont ceux que j'ai cliqués*
+
 ![](thunderbird/thunderbird-00.png)
 ![](thunderbird/thunderbird-01.png)
 ![](thunderbird/thunderbird-02.png)
@@ -728,9 +732,12 @@ sur une autre VM, mêmes manipulations pour l'utilisateur `testing`
 ![](thunderbird/thunderbird-00-2.png)
 ![](thunderbird/thunderbird-00-3.png)
 ![](thunderbird/thunderbird-00-4.png)
+
+l'envoi et la réception des mails fonctionne
+
 ![](thunderbird/thunderbird-00-5.png)
 
-envoi du premier mail
+exemple d'envoi d'un mail
 
 ![](thunderbird/thunderbird-05-0.png)
 ![](thunderbird/thunderbird-05-1.png)

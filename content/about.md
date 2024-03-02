@@ -1,6 +1,6 @@
 ---
 title: "About"
-date: 2023-07-18
+date: 2024-03-02
 showDate: false
 showReadingTime: false
 showWordCount: false
@@ -15,9 +15,9 @@ showAuthor: false
 
 my interests are oriented in **networks & telecommunications**, enjoying learning new technos on bare metal, using embedded or virtualization (gns3, packet tracer)
 
-i've been a linux enthusiast for years, having over **3 years of layer 2-7 administration of gnu/linux** distributions for daily use (rhel, debian, alpine, arch, nixos)
+i've been a linux enthusiast for years, having over **3 years of gnu/linux layer 2-7 administration** of various distributions for daily use (rhel, debian, alpine, arch, nixos)
 
-i have a **strong background in virtualization & containerization** using qemu/kvm, proxmox, gns3, cisco pt, docker + compose & k8s
+i have a **strong background in virtualization & containerization** using qemu/kvm, proxmox, esxi, gns3, cisco pt, docker + compose & k8s
 
 i also love programming using java, python & bash
 

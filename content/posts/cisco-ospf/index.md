@@ -21,13 +21,13 @@ ospf sur routeurs cisco
 
 dans mon avancée sur les explications du module r301, je m'attaque au routage dynamique avec ospf
 
-encore une fois, cette série est pour se familiariser aux principes des protocoles & aux commandes pour les tp
+encore une fois, cette série a pour but de se familiariser aux principes des protocoles & aux commandes pour les tp
 
-ce n'est pas une application avancée pour les lab., c'est un point de départ
+ce n'est pas une application avancée pour les lab, c'est un point de départ
 
 ## routage dynamique
 
-dans notre utilisation des routeurs cisco, nous étions conformé au routage statique
+dans notre utilisation des routeurs cisco, nous étions conformés au routage statique
 
 après avoir renseigné des adresses ip sur leurs interfaces, les routeurs créaient leur table de routage en conséquent, & nous ajoutions manuellement des routes pour les "réseaux cachés"
 
@@ -37,7 +37,7 @@ en opposition au routage statique, le routage dynamique permet aux routeurs de c
 
 les algorithmes de recherche & de partage des routes sont définis par leur(s) `protocole(s) de routage`
 
-parmis les protocoles les plus connus: rip (choissant le nombre de routeur vers la destination le plus court) & ospf (préférant l'état des liens entre les routeurs - leur débit, disponibilité...)
+parmis les protocoles les plus connus: rip (choissant le nombre de routeur vers la destination le plus mince) & ospf (préférant l'état des liens entre les routeurs - leur débit, disponibilité...)
 
 ## ospf
 
@@ -45,9 +45,9 @@ parmis les protocoles les plus connus: rip (choissant le nombre de routeur vers 
 
 est un protocole non affilié à cisco, regardant l'état des liens entre les routeurs, construisant son interprêtation du réseau
 
-pour ceux qui l'ont vu en terminal, ospf est l'implémentation de l'algorithme de Dijkstra
+pour ceux qui l'ont vu en terminale, ospf est l'implémentation de l'algorithme de Dijkstra
 
-celui-ci créer un `coût` se basant sur la bande passante *(pour éviter la congestion)* & sur la disponibilité du lien
+celui-ci créer un `coût` se basant sur la bande passante *(pour éviter la congestion)* des liens && sur leur disponibilité
 
 voici un exemple d'utilisation de ospf
 
@@ -67,21 +67,21 @@ ici, pour aller de R1 à R3, ospf préfèrera passer par R2
 
 le coût d'utilisation de deux liens à 100 Mbits/s étant moins élevé que celui d'un lien à 10 Mbits/s
 
-le protocole rip aurait pris le lien entre R1 & R3, ayant le moins de "sauts" entre les deux
+le protocole rip aurait pris le lien entre R1 & R3, ayant le nombre de saut le plus court entre les deux
 
-une formule mathématique existe pour calculer les coûts, ce tableau tableau résume les débits courants
+une formule mathématique existe pour calculer les coûts, ce  tableau résume les débits courants
 
 <table><thead><tr><th>Bande passante</th><th>Coût OSPF</th></tr></thead><tbody><tr><td>10 Gbits/s</td><td>1</td></tr><tr><td>1 Gbits/s</td><td>1</td></tr><tr><td>100 Mbits/s</td><td>1</td></tr><tr><td>10 Mbits/s</td><td>10</td></tr><tr><td>1544 Kbps (série)</td><td>64</td></tr></tbody></table>
 
-ospf séctarise par sous réseaux qu'il appelle `area`
+ospf séctarise par zone qu'il appelle `area`
 
 un ensemble de routeurs font parti d'une area, deux areas pouvant s'interconnecter pour échanger leurs routes
 
 <!-- https://www.ictshore.com/free-ccna-course/ospf-understanding/ -->
 
-les routeurs avec ospf configuré s'envoient des messages `hello` pour vérifier leurs configurations
+les routeurs avec ospf s'envoient des messages `hello` pour vérifier leurs configurations
 
-ces messages passent par différentes `STATES`, `full` signifiant que les deux communiquant connaissent les mêmes réseaux - qu'ils ont bien appris de l'autre
+ces messages passent par différentes `STATES`, `full` signifiant que les deux communiquants connaissent les mêmes réseaux - qu'ils ont bien appris de l'autre
 
 <!-- area, state (full c'est dernier bon), messages hello -->
 
@@ -108,6 +108,8 @@ cet id peut être changé en une commande, plutôt que de configurer une interfa
 router-id 1.1.1.1
 ```
 
+*c'est juste une ip pour reconnaitre les routeurs, ici pour dire le routeur 1 par exemple (ils font comme ceci dans les lab)*
+
 sinon
 
 ```bash
@@ -115,21 +117,23 @@ interface loopback 0
 ip address 1.1.1.1 255.255.255.255
 ```
 
-pour annoncer un réseau (ou une route...), sera indiquée l'adresse ip de l'interface du routeur - qui est donc la passerelle du réseau
+pour annoncer un réseau (ou une route...), sera indiquée l'adresse ip du réseau
 
-sera aussi renseigné le masque mais en inversé (wildcard)  
+avec son masque mais inversé (wildcard)  
 e.g. 255.255.255.0 -> 0.0.0.255
 
 sera aussi précisée la zone à laquelle appartient la route
 
-exemple d'annonce du route sur le réseau ospf
+exemple d'annonce d'une route pour le réseau 192.168.0.0/24 pour la zone 1 sur le réseau ospf
 
 ```bash
-network 192.168.0.1 0.0.0.255 area 1
+network 192.168.0.0 0.0.0.255 area 1
 ```
-> sous la forme `network <ip interface> <wildcard> area <numéro zone>`
+> sous la forme `network <ip réseau> <wildcard> area <numéro zone>`
 >
 > `area 1` un chiffre ou un nombre pour identifier la zone
+
+la configuration peut aussi se faire avec l'ip de l'interface (`network <ip interface> <wildcard> area <numéro zone>`)
 
 ## vérifications
 
@@ -144,7 +148,7 @@ voir si des routes sont crées par ospf
 ```bash
 show ip route
 ```
-> toutes les routes commençant par `O` sont apprises par ospf
+> toutes les routes commençant par un `O` sont apprises par ospf
 
 regarder les états des messages `HELLO`
 
