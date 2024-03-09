@@ -24,7 +24,7 @@ https://www.youtube.com/watch?v=xhGYobuG508
 
 ## introduction
 
-i daily use docker at work && for personal use to host services in a simpler way
+i daily use docker at work && for personal use to host && deploy services quickly
 
 to me, docker permits fast service deployment && management w/ docker compose || docker file..., ha w/ docker swarm || kubernetes (k8s, k3s, k0s, k8e...) && more
 
@@ -42,7 +42,7 @@ you could also manage your infrastructure only using docker, thus is a free && w
 
 more on that, windows could be inside your docker installation : using same docker networks, sharing services... to averall take the avantages of the docker management && integrate it to a windows environnement
 
-if i go beyond what i saw previously, i'd say that i wish to see micro-services hosted on windows containerized environments
+if i go beyond what i saw previously, i'd say that i wish to see micro-services hosted on windows containerized environments (active directories, exchange servers...)
 
 also, as far as my windows knowledge goes, i didn't heard of a movement of windows moving forward docker integration 
 
@@ -52,7 +52,7 @@ i'll only talk about [dockur](https://github.com/dockur/) work here, since it is
 
 so what they've done, is using docker as a launching platform for kvm based virtualization to launch windows 11, 10 etc. images
 
-to start, all of their integration is comming from an existing project aiming to bring qemu into a docker container, [qemux/qemu-docker](https://github.com/qemus/qemu-docker) *(based on their `Dockerfile`)*
+to start, all of their integration is comming from an existing project aiming to bring qemu into a docker container, [qemux/qemu-docker](https://github.com/qemus/qemu-docker) *(based on their [`Dockerfile`](https://github.com/dockur/windows/blob/master/Dockerfile))*
 
 ```dockerfile {linenos=table, hl_lines=[2], linenostart=1}
 FROM scratch
@@ -67,17 +67,17 @@ ARG DEBCONF_NONINTERACTIVE_SEEN "true"
 
 that include the kvm acceleration, `*.iso` importation, as well as the web-based viewer...
 
-in fact, thanks to `qemux` it has usb/disks pass-through, network, support for custom `*.iso` images, integration w/ docker volumes etc.
-
-`qemu-docker` let you use whatever `*.iso` file image you want to install it in a docker container
+in fact, thanks to [qemux](https://github.com/qemus), it has usb/disks pass-through, network integration, support for custom `*.iso` images, support for docker volumes etc.
 
 after that, it turns to be shell scripts to run qemu commands && instruct a virtual machine on your host (exiting docker)
 
 ## still docker related?
 
-in some terms, you still use docker to manage your environment; but in fact, you are exiting it to bring up commands to start a vm
+in some terms, you still use docker to manage your environment; but in fact, you are exiting it to bring up commands to run a vm
 
 to me it is still docker related for the management part (you can share disks from docker instructions, share drives, vertically scale...)
+
+but from a hardware view, it has nothing to do w/ docker, only qemu/kvm
 
 ## my point of view
 
@@ -87,6 +87,6 @@ this kind of project is very very new ([two months](https://api.github.com/repos
 
 i think it's safe for now to test it || watch it grow rather than deploy it (not production tested, support?, only docker community?, microsoft reaction)
 
-i think it is a good way to bypass windows restrictions && get a new way to host windows only services
+i think it is a good way to bypass windows restrictions && get a new way to host windows only services; && also integrated it well better w/ your existing docker infrastructure
 
-i hope those projects go well, i'll keep watching them
+i hope these projects go well near future, i'll keep watching them && support them
