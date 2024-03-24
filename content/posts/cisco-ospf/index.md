@@ -148,7 +148,7 @@ voir si des routes sont crées par ospf
 ```bash
 show ip route
 ```
-> toutes les routes commençant par un `O` sont apprises par ospf
+> toutes les routes commençant par un `O` sont apprises par ospf -> `show ip route | begin O`
 
 regarder les états des messages `HELLO`
 

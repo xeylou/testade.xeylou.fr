@@ -55,13 +55,13 @@ il n'est pas possible de les contourner en remontant les couches, ni en les desc
 
 cependant, il est parfois nécessaire de faire communiquer des machines appartenant à des vlans différents
 
-*e.g. dans un réseau d'entreprise avec un vlan `COMPTA` & un vlan `SECRETAIRES`, les deux auraient besoin de faire communiquer des informations*
+<!-- *e.g. dans un réseau d'entreprise avec un vlan `COMPTA` & un vlan `SECRETAIRES`, les deux auraient besoin de faire communiquer des informations* -->
 
 une machine devrait donc se charger de faire passer les trâmes d'un vlan pour un autre vlan
 
-le remède à tout ça serait un `routeur`, qui transfère les trames d'un vlan à un autre, plutôt que d'un réseau à un autre
+le remède à tout ça serait un `routeur`, qui transfère les trames d'un vlan à un autre, comme d'un réseau à un autre
 
-cela existe & est disponible sur tous les routeurs (pas que cisco)
+cela existe sur beaucoup de routeurs (pas que cisco)
 
 leur spécificité étant qu'ils font du routage entre les vlan : du `routage inter-vlan`
 
@@ -127,11 +127,11 @@ sw1 ---|vlan 20| pc2
 
 comme dit [méthodes d'inter-vlan](#méthodes-dinter-vlans), le routage peut se faire en utilisant des liens physiques
 
-cette méthode n'est pas utilisée car serait beaucoup trop chère & inutile (pour 48 vlans, acheter un routeur physique de 48 ports ça ne se fait pas...)
+cette méthode n'est pas utilisée car serait beaucoup trop couteuse & inutile (pour 48 vlan, acheter un routeur physique de 48 ports ça ne se fait pas...)
 
 je l'expose tout de même ici car demandé en tp
 
-les notions de routage restent les mêmes, les vlans ayant des adresses réseau différentes -> c'est comme des réseaux physiques
+les notions de routage restent les mêmes, les vlans ayant des adresses réseaux différentes -> c'est comme des réseaux physiques
 
 si l'on se base sur la topologie suivante
 
@@ -143,7 +143,7 @@ télécharger le fichier packet tracer vierge
 
 voici les commandes de configuration des équipements
 
-j'omets d'expliquer les commandes: elles devraient être transparentes -> ce sont les mêmes que pour routage simple
+j'omets d'expliquer les commandes: elles devraient être transparentes -> ce sont les mêmes que pour du routage simple
 
 configuration du switch SW1
 
@@ -167,7 +167,7 @@ end
 > 
 > pas besoin de la commande `switchport mode access`, les ports le sont par défaut  
 > 
-> pas besoin de déclarer les vlan, `vlan 10` par exemple, s'ils ne sont pas crées le switch le fera à la volée  
+> pas besoin de déclarer les vlan, `vlan 10` par exemple, s'ils ne sont pas déjà crées le switch le fera à la volée  
 
 configuration du routeur R1
 
@@ -187,19 +187,19 @@ end
 
 après l'attribution d'une adresse ip à PC1 & PC2 & renseignement de leur passerelle -> ils pourront communiquer
 
-*attendez que le ping soit fini, cherchez pas c'est cisco...*
+*attendez bien quelques secondes que le ping se terminent...*
 
 ## routage on stick
 
 le routage inter-vlan on stick possède les mêmes propritétés que le [routage inter-vlan simple](#routage-simple)
 
-l'unique exception étant l'utilisation d'un lien `trunk` pour le passage des vlans
+l'unique exception étant l'utilisation d'un lien `trunk` pour le passage des vlans du switch au routeur
 
 cela implique au routeur de connaitre les vlans transmis sur ce lien -> pour se configurer une adresse ip sur chaque vlan & leur servir de passerelle
 
-pour cela, le routeur va découper son interface pour chaque vlan demandé, créant des `sous-interfaces` pour chaque vlan sur son interface
+pour cela, le routeur va découper son interface en `sous-interfaces` pour chaque vlan demandé
 
-ces sous-interfaces seront les passerelles des machines sur leur réseau local (définies par le vlan sur lequel elles sont)
+ces sous-interfaces seront les passerelles des machines pour leur réseau local (définies par le vlan sur lequel elles sont)
 
 je considèrerai l'infrastructure suivante
 
@@ -232,6 +232,10 @@ end
 > `int g0/0.10` créer la sous-interface 10 sur le port GigabitEthernet0/0
 >
 > `encapsulation dot1Q 10` utilisera le vlan 10 sur cette interface
+
+{{< alert icon="circle-info">}}
+**Note** Pour que les sous-interfaces fonctionnent, il faut que l'interface sur laquelle elles sont déclarées soit en `no shutdown` *(pour ne pas que vous panniquiez aucontrôle...)*
+{{< /alert >}}
 
 configuration SW1
 
