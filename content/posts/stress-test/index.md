@@ -1,7 +1,7 @@
 ---
 title: "bash stresstest"
 date: 2024-04-29
-draft: false
+draft: true
 tags: [ "gnu/linux", "ssh" ]
 slug: "bash-stresstest"
 ---
