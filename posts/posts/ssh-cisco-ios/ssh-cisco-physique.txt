@@ -1,0 +1,25 @@
+ssh-keygen -b 2048 -t rsa
+
+en
+conf t
+hostname GASPARD
+ip domain-name rzo.local
+crypto key generate rsa modulus 2048
+ip ssh version 2
+line vty 0 15
+transport input ssh
+login local
+
+fold -b -w100 ~/.ssh/id_rsa.pub
+// copier
+
+ip ssh pubkey-chain
+username xeylou
+key-string
+// coller
+exit
+exit
+exit
+
+ssh xeylou@192.168.0.1
+
