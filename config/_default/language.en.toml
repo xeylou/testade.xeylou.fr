@@ -1,0 +1,20 @@
+title = "xeylou"
+weight = 1
+
+[author]
+  name = "xeylou"
+  image = "img/xeylou_transparent.png"
+  headline = "boringly normal"
+  links = [
+    { discord = "https://discordapp.com/users/835863642498793483" },
+    { github = "https://github.com/xeylou" },
+    { email = "mailto:xeylou@proton.me" },
+]
+
+[params]
+  displayName = "EN"
+  isoCode = "en"
+  rtl = false
+  dateFormat="2006-01-02"
+  logo = "img/xeylou_transparent_small.png"
+  description = "xeylou's website"

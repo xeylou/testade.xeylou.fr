@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth" data-default-appearance="dark"
+  data-auto-appearance="true"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    
+    <meta http-equiv="content-language" content="en" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <title>hands on maas &middot; xeylou</title>
+    <meta name="title" content="hands on maas &middot; xeylou" />
+    
+    <meta name="description" content="xeylou&#39;s website" />
+    <meta name="keywords" content="virtualization, gnu/linux, " />
+    
+    
+    <link rel="canonical" href="http://localhost:1313/posts/hands-on-maas/" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link type="text/css" rel="stylesheet" href="/css/main.bundle.min.aee4ef2886429ada878717a2131b326c32ae5bec95c068360222ceaf5e81301ca3f2a897460b755f83fb37a5bc8b84aa598f0f2f8656650720dc76bd4759261d.css"
+      integrity="sha512-ruTvKIZCmtqHhxeiExsybDKuW&#43;yVwGg2AiLOr16BMByj8qiXRgt1X4P7N6W8i4SqWY8PL4ZWZQcg3Ha9R1kmHQ==" />
+    
+    
+    <script type="text/javascript" src="/js/appearance.min.516a16745bea5a9bd011138d254cc0fd3973cd55ce6e15f3dec763e7c7c2c7448f8fe7b54cca811cb821b0c7e12cd161caace1dd794ac3d34d40937cbcc9ee12.js"
+      integrity="sha512-UWoWdFvqWpvQERONJUzA/TlzzVXObhXz3sdj58fCx0SPj&#43;e1TMqBHLghsMfhLNFhyqzh3XlKw9NNQJN8vMnuEg=="></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.d6c35110b5d7df8014403fbb81cd21a9d89daf9eb586c936e585e9d04adc204dce554aa737f81e8c902b9dea9e67bd63a977b77dedefb8a39430581ebc519207.js"
+      integrity="sha512-1sNRELXX34AUQD&#43;7gc0hqdidr561hsk25YXp0ErcIE3OVUqnN/gejJArneqeZ71jqXe3fe3vuKOUMFgevFGSBw==" data-copy="" data-copied=""></script>
+    
+    
+    <script src="/js/zoom.min.js"></script>
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    
+    
+    
+    
+    
+    
+    <meta property="og:url" content="http://localhost:1313/posts/hands-on-maas/">
+  <meta property="og:site_name" content="xeylou">
+  <meta property="og:title" content="hands on maas">
+  <meta property="og:description" content="getting hands on maas using qemu/kvm">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-03-31T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-03-31T00:00:00+00:00">
+    <meta property="article:tag" content="Virtualization">
+    <meta property="article:tag" content="Gnu/Linux">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="hands on maas">
+  <meta name="twitter:description" content="getting hands on maas using qemu/kvm">
+
+    
+    <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "hands on maas",
+    "headline": "hands on maas",
+    
+    "abstract": "getting hands on maas using qemu\/kvm",
+    "inLanguage": "en",
+    "url" : "http:\/\/localhost:1313\/posts\/hands-on-maas\/",
+    "author" : {
+      "@type": "Person",
+      "name": "xeylou"
+    },
+    "copyrightYear": "2024",
+    "dateCreated": "2024-03-31T00:00:00\u002b00:00",
+    "datePublished": "2024-03-31T00:00:00\u002b00:00",
+    
+    "dateModified": "2024-03-31T00:00:00\u002b00:00",
+    
+    "keywords": ["virtualization","gnu/linux"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "2428"
+  }]
+  </script>
+
+
+    
+    
+    <meta name="author" content="xeylou" />
+    
+    
+    
+    <link href="https://discordapp.com/users/835863642498793483" rel="me" />
+    
+    
+    <link href="https://github.com/xeylou" rel="me" />
+    
+    
+    <link href="mailto:xeylou@proton.me" rel="me" />
+    
+    
+    
+    
+
+<script src="/lib/jquery/jquery.slim.min.js" integrity=""></script>
+
+
+
+  
+  
+  
+  
+  <script
+    defer
+    type="text/javascript"
+    src="/js/mermaid.bundle.9aab96d44f6ac9568364d8bc6faeb1120a4f4f78a1742ecd23e9401160647174f0551e09453104173597409a0f0c89370fa03e70a58d337298934f9267a77c7c.js"
+    integrity="sha512-mquW1E9qyVaDZNi8b66xEgpPT3ihdC7NI&#43;lAEWBkcXTwVR4JRTEEFzWXQJoPDIk3D6A&#43;cKWNM3KYk0&#43;SZ6d8fA=="
+  ></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+    
+    
+    <meta name="theme-color"/>
+    
+    
+  </head><body
+  class="flex flex-col h-screen px-6 m-auto text-lg leading-7 max-w-7xl bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32 scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
+  <div id="the-top" class="absolute flex self-center">
+    <a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+      href="#main-content"><span
+        class="font-bold text-primary-600 ltr:pr-2 rtl:pl-2 dark:text-primary-400">&darr;</span>Skip to main content</a>
+  </div>
+  
+  
+  <div class="min-h-[148px]"></div>
+<div class="fixed inset-x-0 pl-[24px] pr-[24px]" style="z-index:100">
+  <div id="menu-blur" class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl shadow-2xl"></div>
+  <div class="relative max-w-[64rem] ml-auto mr-auto">
+    <div style="padding-left:0;padding-right:0;padding-top:2px;padding-bottom:3px"
+    class="main-menu flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start space-x-3">
+    
+    
+    
+    <div>
+        <a href="/" class="flex">
+            <span class="sr-only">xeylou</span>
+
+            <img src="/img/xeylou_transparent_small.png" width="35" height="35"
+                class="logo max-h-[5rem] max-w-[5rem] object-scale-down object-left nozoom" alt="xeylou" />
+
+        </a>
+    </div>
+    
+    <div class="flex flex-1 items-center justify-between">
+        <nav class="flex space-x-3">
+
+            
+            <a href="/" class="text-base font-medium text-gray-500 hover:text-gray-900">xeylou</a>
+            
+
+        </nav>
+        <nav class="hidden md:flex items-center space-x-5 md:ml-12 h-12">
+
+            
+            
+            
+  <a href="/posts/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-base font-medium" title="">
+        Posts
+    </p>
+</a>
+
+
+
+            
+            
+  <a href="/now/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-base font-medium" title="">
+        Now
+    </p>
+</a>
+
+
+
+            
+            
+  <a href="/about/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-base font-medium" title="">
+        About
+    </p>
+</a>
+
+
+
+            
+            
+
+            
+
+
+            
+            <button id="search-button" aria-label="Search" class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+                title="">
+                
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+            
+
+
+            
+            
+            <div
+                class="ltr:mr-14 rtl:ml-14 flex items-center">
+                <button id="appearance-switcher" aria-label="Dark mode switcher" type="button" class="text-base hover:text-primary-600 dark:hover:text-primary-400">
+                    <div class="flex items-center justify-center dark:hidden">
+                        
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+
+                    </div>
+                    <div class="items-center justify-center hidden dark:flex">
+                        
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+
+                    </div>
+                </button>
+            </div>
+            
+
+        </nav>
+        <div class="flex md:hidden items-center space-x-5 md:ml-12 h-12">
+
+            <span></span>
+
+            
+
+
+            
+            <button id="search-button-mobile" aria-label="Search" class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+                title="">
+                
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+            
+
+            
+            
+            <button id="appearance-switcher-mobile" aria-label="Dark mode switcher" type="button" class="text-base hover:text-primary-600 dark:hover:text-primary-400" style="margin-right:5px">
+                <div class="flex items-center justify-center dark:hidden">
+                    
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+
+                </div>
+                <div class="items-center justify-center hidden dark:flex">
+                    
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+
+                </div>
+            </button>
+            
+
+        </div>
+    </div>
+    <div class="-my-2 -mr-2 md:hidden">
+
+        <label id="menu-button" for="menu-controller" class="block">
+            <input type="checkbox" id="menu-controller" class="hidden" />
+            
+            <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+                
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+
+  </span>
+
+
+            </div>
+            <div id="menu-wrapper" style="padding-top:5px;"
+                class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50">
+                <ul
+                    class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none ltr:text-right rtl:text-left max-w-7xl">
+
+                    <li>
+                        <span
+                            class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+</span>
+                    </li>
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="/posts/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+        
+        <p class="text-bg font-bg" title="">
+            Posts
+        </p>
+    </a>
+</li>
+
+
+
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="/now/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+        
+        <p class="text-bg font-bg" title="">
+            Now
+        </p>
+    </a>
+</li>
+
+
+
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="/about/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+        
+        <p class="text-bg font-bg" title="">
+            About
+        </p>
+    </a>
+</li>
+
+
+
+
+                    
+
+                </ul>
+                
+                
+
+            </div>
+        </label>
+    </div>
+</div>
+
+
+
+
+<script>
+    (function () {
+        var $mainmenu = $('.main-menu');
+        var path = window.location.pathname;
+        $mainmenu.find('a[href="' + path + '"]').each(function (i, e) {
+            $(e).children('p').addClass('active');
+        });
+    })();
+</script>
+
+
+  </div>
+</div>
+<script>
+  window.addEventListener('scroll', function (e) {
+    var scroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    var background_blur = document.getElementById('menu-blur');
+    background_blur.style.opacity = (scroll / 300);
+  });
+</script>
+
+  
+  <div class="relative flex flex-col grow">
+    <main id="main-content" class="grow">
+      
+
+
+<article>
+  
+
+  <header id="single_header" class="mt-5 max-w-prose">
+    
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      hands on maas
+    </h1>
+    <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="flex flex-row flex-wrap items-center">
+  
+  
+  <time datetime="2024-03-31 00:00:00 &#43;0000 UTC">2024-03-31</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">12 mins</span>
+  
+
+  
+  
+</div>
+
+
+<div class="flex flex-row flex-wrap items-center">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+
+
+
+<div class="flex flex-row flex-wrap items-center">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span style="margin-top:0.5rem" class="mr-2" onclick="window.open(&#34;/tags/virtualization/&#34;,'_self');">
+    <span class="flex" style="cursor: pointer;">
+  <span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Virtualization
+  </span>
+</span>
+  </span>
+  
+  <span style="margin-top:0.5rem" class="mr-2" onclick="window.open(&#34;/tags/gnu/linux/&#34;,'_self');">
+    <span class="flex" style="cursor: pointer;">
+  <span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Gnu/Linux
+  </span>
+</span>
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+
+
+    </div>
+
+    
+    
+    
+    
+    
+
+    
+
+    
+      
+      
+        
+        
+<div class="flex author">
+  
+    
+    
+      
+    
+    
+      
+        
+      
+      <img class="!mt-0 !mb-0 h-24 w-24 rounded-full ltr:mr-4 rtl:ml-4" width="96" height="96"
+      alt="xeylou" src="/img/xeylou_transparent_hue3c50861ea44393a8560d0baa31d0d0b_533896_192x192_fill_box_center_3.png" />
+    
+  
+  <div class="place-self-center">
+    
+    <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+      Author
+    </div>
+    <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+      xeylou
+    </div>
+    
+    
+    <div class="text-2xl sm:text-lg">
+  <div class="flex flex-wrap text-neutral-400 dark:text-neutral-500">
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="https://discordapp.com/users/835863642498793483"
+          target="_blank"
+          aria-label="Discord"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"/></svg>
+
+  </span>
+
+</span></a
+        >
+      
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="https://github.com/xeylou"
+          target="_blank"
+          aria-label="Github"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+  </span>
+
+</span></a
+        >
+      
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="mailto:xeylou@proton.me"
+          target="_blank"
+          aria-label="Email"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M207.8 20.73c-93.45 18.32-168.7 93.66-187 187.1c-27.64 140.9 68.65 266.2 199.1 285.1c19.01 2.888 36.17-12.26 36.17-31.49l.0001-.6631c0-15.74-11.44-28.88-26.84-31.24c-84.35-12.98-149.2-86.13-149.2-174.2c0-102.9 88.61-185.5 193.4-175.4c91.54 8.869 158.6 91.25 158.6 183.2l0 16.16c0 22.09-17.94 40.05-40 40.05s-40.01-17.96-40.01-40.05v-120.1c0-8.847-7.161-16.02-16.01-16.02l-31.98 .0036c-7.299 0-13.2 4.992-15.12 11.68c-24.85-12.15-54.24-16.38-86.06-5.106c-38.75 13.73-68.12 48.91-73.72 89.64c-9.483 69.01 43.81 128 110.9 128c26.44 0 50.43-9.544 69.59-24.88c24 31.3 65.23 48.69 109.4 37.49C465.2 369.3 496 324.1 495.1 277.2V256.3C495.1 107.1 361.2-9.332 207.8 20.73zM239.1 304.3c-26.47 0-48-21.56-48-48.05s21.53-48.05 48-48.05s48 21.56 48 48.05S266.5 304.3 239.1 304.3z"/></svg>
+
+  </span>
+
+</span></a
+        >
+      
+    
+  </div>
+
+</div>
+  </div>
+</div>
+
+      
+
+      
+
+      
+      <div class="mb-5"></div>
+      
+
+    
+
+  </header>
+  
+  <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+    
+     <div
+      class="order-first lg:ml-auto px-0 lg:order-last ltr:lg:pl-8 rtl:lg:pr-8">
+      <div class="toc ltr:pl-5 rtl:pr-5 print:hidden lg:sticky lg:top-[140px]">
+
+         <details open id="TOCView"
+  class="toc-right mt-0 overflow-y-scroll overscroll-contain scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">introduction</a></li>
+    <li><a href="#maas">maas?</a></li>
+    <li><a href="#technical-terms">technical terms</a></li>
+    <li><a href="#the-plan">the plan</a></li>
+    <li><a href="#getting-started">getting started</a>
+      <ul>
+        <li><a href="#controller-vm-config">controller vm config</a></li>
+        <li><a href="#maas-installation">maas installation</a></li>
+        <li><a href="#subnet-configuration">subnet configuration</a></li>
+        <li><a href="#commissionning-process">commissionning process</a></li>
+        <li><a href="#final-step">final step</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">introduction</a></li>
+    <li><a href="#maas">maas?</a></li>
+    <li><a href="#technical-terms">technical terms</a></li>
+    <li><a href="#the-plan">the plan</a></li>
+    <li><a href="#getting-started">getting started</a>
+      <ul>
+        <li><a href="#controller-vm-config">controller vm config</a></li>
+        <li><a href="#maas-installation">maas installation</a></li>
+        <li><a href="#subnet-configuration">subnet configuration</a></li>
+        <li><a href="#commissionning-process">commissionning process</a></li>
+        <li><a href="#final-step">final step</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+<script>
+
+  var margin = 200;
+  var marginError = 50;
+
+  (function () {
+    var $window = $(window);
+    var $toc = $('#TOCView');
+    var tocHeight = $toc.height();
+
+    function onResize() {
+      var windowAndMarginHeight = $window.height() - margin;
+      if(tocHeight >= windowAndMarginHeight) {
+        $toc.css("overflow-y", "scroll")
+        $toc.css("max-height", (windowAndMarginHeight + marginError) + "px")
+      } else {
+        $toc.css("overflow-y", "hidden")
+        $toc.css("max-height", "9999999px")
+      }
+    }
+
+    $window.on('resize', onResize);
+    $(document).ready(onResize);
+  })();
+
+
+
+  (function () {
+    var $toc = $('#TableOfContents');
+    if ($toc.length > 0) {
+      var $window = $(window);
+
+      function onScroll() {
+        var currentScroll = $window.scrollTop();
+        var h = $('.anchor');
+        var id = "";
+        h.each(function (i, e) {
+          e = $(e);
+          if (e.offset().top - $(window).height()/3 <= currentScroll) {
+            id = decodeURIComponent(e.attr('id'));
+          }
+        });
+        var active = $toc.find('a.active');      
+        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+        active.each(function (i, e) {
+           
+            $(e).removeClass('active').siblings('ul').hide();
+          
+        });
+        $toc.find('a[href="#' + id + '"]').addClass('active')
+        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+          $(e).children('a').parents('ul').show();          
+        });
+      }
+
+      $window.on('scroll', onScroll);
+      $(document).ready(function () {
+         
+          $toc.find('a').parent('li').find('ul').hide();
+        
+        onScroll();
+      });
+    }
+  })();
+
+
+</script>
+   </div>
+      </div>
+      
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+        
+
+
+        <div class="article-content max-w-prose mb-20">
+          <!-- prologue -->
+<div class="lead text-neutral-500 dark:text-neutral-400 !mb-9 text-xl">
+  getting hands on maas using qemu/kvm<br>
+&amp;&amp; last remaining brain cells
+</div>
+
+<!-- sources -->
+<!--
+https://blog.zwindler.fr/2023/12/21/premiers-pas-avec-maas-baremetal-canonical/
+https://askubuntu.com/questions/590449/maas-network-and-nat
+https://maas.io/docs/managing-vm-hosts
+https://discourse.maas.io/t/network-address-translation-nat-and-tunneling/7410
+-->
+<!-- article -->
+
+
+<h2 class="relative group">introduction 
+    <div id="introduction" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>i wanted to get my hands on maas &amp;&amp; overall devops operations for a while now</p>
+<p>i&rsquo;ve decided to start by taking a look at maas on my local machine using qemu/kvm</p>
+
+
+<h2 class="relative group">maas? 
+    <div id="maas" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#maas" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>maas <em>metal as a service</em> is canonical <a href="https://git.launchpad.net/maas/" target="_blank">open source</a> solution for bare-metal server deployment &amp;&amp; management for cloud-like environment</p>
+<p>you oftenly use maas to orchestrate your bare-metal hosts (mini pcs, servers&hellip;) to deploy your os &amp;&amp; manage your hosts from the network, w/out feeling like moving your chair</p>
+<p>jokes aside, it is a very cool way to manage your hosts without custom made or integrated ipam solutions (idrac, ilo&hellip;) remotely</p>
+<p>it is a standalone pxe/preseed service to streamline machines management -&gt; you typically boot over the network &amp;&amp; your host appears onto your controller ready to be managed</p>
+<p>big plus for me is its web ui, possible rest api calls &amp;&amp; its cli management</p>
+
+
+<h2 class="relative group">technical terms 
+    <div id="technical-terms" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#technical-terms" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>maas refers your hosts as <code>nodes</code></p>
+<p>these nodes are part of <code>zones</code>, simple organisational units that contains nodes, where each node is in one, &amp;&amp; only one zone (&ldquo;bedroom&rdquo;, &ldquo;closet&rdquo;, whatever&hellip;)</p>
+<p>newly installed maas comes with the &ldquo;default&rdquo; zone which contains all nodes unless you create a new one</p>
+<p>those zones are part of <code>regions</code>, same purpose as zones are for nodes, but for zones</p>
+<p>some particular nodes will be <code>controllers</code>, especially <code>regions controllers</code> &amp;&amp; <code>racks controllers</code></p>
+<p>region controllers deals w/ your requests, when rack controllers provide the resulting actions to the asked nodes</p>
+<p>
+  <figure>
+    <img class="my-0 rounded-md" loading="lazy" src="https://assets.ubuntu.com/v1/b03d95a1-maas.io-how-it-works.svg" alt="" />
+    
+  </figure>
+</p>
+<p>keep in mind that region controllers (for regions, obviously) are the entry points for your actions &amp;&amp; rack controllers are the front-line managers for your nodes</p>
+<p>regions controllers typically has the web ui, the rest api, the database &amp;&amp; such, where the racks controllers manage the nodes by implementing dhcp, giving orders, hosting images&hellip;</p>
+<p>a node will be going through different <code>commissioning states</code>, such as &ldquo;New&rdquo;, &ldquo;Commissioning&rdquo;, &amp;&amp; &ldquo;Ready&rdquo;</p>
+<p>a full glossary is available on <a href="https://maas.io/docs/maas-glossary" target="_blank">maas.io docs</a> but i wanted to put my words on important notions i use later</p>
+
+
+<h2 class="relative group">the plan 
+    <div id="the-plan" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#the-plan" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>i will be provisioning two vms, could be considered as bare-metal servers here, from a controller that will be a region &amp;&amp; a rack one</p>
+<p>here is a simplified diagram of what my installation will look like</p>
+<div class="mermaid" align="center">
+  
+%%{init: {'theme':'dark'}}%%
+graph TD
+
+subgraph hosted-network
+nat-gateway(nat-gateway<br><font color="#a9a9a9">192.168.122.1</font>)
+end
+
+subgraph maas-network
+maas-controller(maas-controller<br><font color="#a9a9a9">192.168.122.2<br>172.16.0.10</font>)
+maas-node-001[maas-node-001<br><font color="#a9a9a9">172.16.0.2</font>]
+maas-node-002[maas-node-002<br><font color="#a9a9a9">172.16.0.3</font>]
+end
+
+
+nat-gateway ---|natting| maas-controller
+maas-controller --- maas-node-001 & maas-node-002
+
+</div>
+
+<p>the maas-controller will do both region &amp;&amp; rack controller, distributing ip addresses through dhcp, be the dns, gateway &amp;&amp; have a web ui</p>
+<p>for a more corporate use, you can use your own dhcp server from your router e.g. pfsense, just make sure you configure &ldquo;tftp&rdquo; &amp;&amp; &ldquo;network booting&rdquo; values to redirect your nodes on your maas controller when booting over the network</p>
+
+
+<h2 class="relative group">getting started 
+    <div id="getting-started" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#getting-started" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>i will use <code>virt-manager</code> as my virtualisation tool, i could have use usual <code>qemu-img</code> &amp;&amp; <code>qemu-system-x86_64</code> commands but that could have lead to more complex comprehension</p>
+<p>ubuntu server 22.04 lts will be my choice to host the controller</p>
+<p>i will show you the process after you have installed an ubuntu server vm</p>
+<p>my controller will have <mark>2 vcpu</mark>, <mark>4 gb ram</mark> &amp;&amp; <mark>16 gb</mark> virtio storage, where my nodes will have <mark>4 vcpu</mark>, <mark>8 gb ram</mark> &amp;&amp; <mark>32 gb</mark></p>
+<p>i will provision ubuntu desktop 22.04 lts on <code>maas-node-001</code> &amp;&amp; <code>maas-node-002</code></p>
+<p>my boot order: 1. over the network, 2. on the hard drive</p>
+
+
+<h3 class="relative group">controller vm config 
+    <div id="controller-vm-config" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#controller-vm-config" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>the maas-controller vm has two network interfaces, the first for the maas-network &amp;&amp; the other for the hosted-network</p>
+<p>in this first configuration, i will configure ssh root access using ssh keys</p>
+<p>later on, i will use the same ssh keys to connect to my nodes, during the controller installation i will show you how to use different ones if you want to</p>
+<p>on the installed ubuntu server, i will accept temporarly password based ssh connection for root user to transit the public key</p>
+<p>starting by changing root password, verifying it</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo passwd root  <span class="c1"># changing root user password</span>
+</span></span><span class="line"><span class="cl">su -  <span class="c1"># checking it</span>
+</span></span></code></pre></div><p>modifying <code>/etc/ssh/sshd_config</code> to accept password based authentication on root user &amp;&amp; restarting service to make it take effect</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config <span class="o">&amp;&amp;</span> systemctl restart sshd
+</span></span></code></pre></div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="hl"><span class="lnt">33
+</span></span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Authentication</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#LoginGraceTime 2m</span>
+</span></span><span class="line hl"><span class="cl">PermitRootLogin yes
+</span></span><span class="line"><span class="cl"><span class="c1">#StrictModes yes</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#MaxAuthTries 6</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#MaxSessions 10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>after that, on any host over 192.168.122.0/24 network, i generate ssh keys pair to apply them later</p>
+<p>i remove the known fingerprint if i have already connected once to another machine using this ip address &amp;&amp; generating the keys using <code>ed25519</code> algorithm, w/out passphrase</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sed -i <span class="s1">&#39;/192.168.122.2/d&#39;</span> ~/.ssh/known_hosts <span class="c1"># fingerprint...</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t ed25519 -N <span class="s2">&#34;&#34;</span> -f <span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.ssh/maas-global&#34;</span>
+</span></span></code></pre></div><p>here my private key is <code>~/.ssh/maas-global</code> &amp;&amp; my public key is <code>~/.ssh/maas-global.pub</code></p>
+<p>sending the ssh public key on the remote host</p>
+<p><em>(remote root password asked)</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh-copy-id -i .ssh/maas-global.pub root@192.168.122.2
+</span></span></code></pre></div><p>for more simplicity, i will add on my <code>~/.ssh/config</code> an entry to tell: when i type <code>ssh maas-controller</code>, you do <code>ssh root@192.168.122.2</code> using the private key generated</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano ~/.ssh/config
+</span></span></code></pre></div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">64
+</span><span class="hl"><span class="lnt">65
+</span></span><span class="hl"><span class="lnt">66
+</span></span><span class="hl"><span class="lnt">67
+</span></span><span class="hl"><span class="lnt">68
+</span></span><span class="hl"><span class="lnt">69
+</span></span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># maas-controller</span>
+</span></span><span class="line hl"><span class="cl">host maas-controller
+</span></span><span class="line hl"><span class="cl">  hostname 192.168.122.2
+</span></span><span class="line hl"><span class="cl">  user root
+</span></span><span class="line hl"><span class="cl">  preferredauthentications publickey
+</span></span><span class="line hl"><span class="cl">  identityfile ~/.ssh/maas-global
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>we can now login onto the maas-controller vm &amp;&amp; remove password based authentication for root user</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh maas-controller
+</span></span><span class="line"><span class="cl">nano /etc/ssh/sshd_config <span class="o">&amp;&amp;</span> systemctl restart sshd
+</span></span></code></pre></div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="hl"><span class="lnt">33
+</span></span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Authentication</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#LoginGraceTime 2m</span>
+</span></span><span class="line hl"><span class="cl">PermitRootLogin prohibit-password
+</span></span><span class="line"><span class="cl"><span class="c1">#StrictModes yes</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#MaxAuthTries 6</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#MaxSessions 10</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+<h3 class="relative group">maas installation 
+    <div id="maas-installation" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#maas-installation" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>at this point, you should have a ubuntu server vm, ssh root accessible, w/ your network interfaces configured (netplan)</p>
+<p>maas can be installed using apt or snap package managers, although i&rsquo;m not familiar w/ snap, i&rsquo;ll use it since maas is most working on it</p>
+<p>the latest stable maas version available as i&rsquo;m writing this post is <code>3.5</code>, you can see what&rsquo;s yours using</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">snap info maas <span class="p">|</span> grep latest
+</span></span></code></pre></div><p>here is my output</p>
+<blockquote>
+<p>tracking:     latest/edge<br>
+latest/stable:    &ndash;                                                    <br>
+latest/candidate: &ndash;                                                    <br>
+latest/beta:      &ndash;                                                    <br>
+latest/edge:      3.5.0~beta1-16547-g.bcbb6120f 2024-03-30 (34542)</p>
+</blockquote>
+<p>if you remove the pipe, you will see all the available releases</p>
+<p>note that the <mark>–</mark> is for &ldquo;there is not&rdquo;, &amp;&amp; the <mark>↑</mark> symbols are pointers for the above</p>
+<p>e.g.</p>
+<blockquote>
+<p>3.4/stable:       3.4.1-14343-g.a552d2522<br>
+3.4/candidate:    ↑                                                     <br>
+3.4/beta:         ↑</p>
+</blockquote>
+<p>3.4/beta, stable &amp;&amp; candidatate are all aliases for 3.4.1-14343-g.a552d2522</p>
+<p>w/ that said, i installed the latest release</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">snap install --channel<span class="o">=</span>latest/edge maas
+</span></span></code></pre></div><p>after that, some ports should be exposed by maas</p>
+<p>maas needs a database to work, even though you have a snap package for a non-production ready testing database <em>maas-test-db</em></p>
+<p>i&rsquo;ll install a new postgresql db for maas</p>
+<p>first, i export the variables i&rsquo;ll use for my commands</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MAAS_DBADDRESS</span><span class="o">=</span><span class="s2">&#34;127.0.0.1&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MAAS_DBUSER</span><span class="o">=</span>maas-db-user
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MAAS_DBPASS</span><span class="o">=</span>maas-db-password
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MAAS_DBNAME</span><span class="o">=</span>maas-psql-db
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MAAS_USER</span><span class="o">=</span>xeylou
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MAAS_USEREMAIL</span><span class="o">=</span>xeylou@proton.me
+</span></span></code></pre></div><p>feel free to modify yours as you like</p>
+<p>then i install postgresql</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install -y postgresql
+</span></span></code></pre></div><p>i will create a simple postgre user for the database connections using <code>$MAAS_DBUSER</code> &amp;&amp; <code>$MAAS_DBPASS</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo -i -u postgres psql -c <span class="s2">&#34;CREATE USER \&#34;</span><span class="nv">$MAAS_DBUSER</span><span class="s2">\&#34; WITH ENCRYPTED PASSWORD &#39;</span><span class="nv">$MAAS_DBPASS</span><span class="s2">&#39;&#34;</span>
+</span></span></code></pre></div><p>then i create a database associated w/ this user</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo -i -u postgres createdb -O <span class="s2">&#34;</span><span class="nv">$MAAS_DBUSER</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$MAAS_DBNAME</span><span class="s2">&#34;</span>
+</span></span></code></pre></div><p>&amp;&amp; the most complicate part (yes, it was), creating a line for this newly created db</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;host    </span><span class="nv">$MAAS_DBNAME</span><span class="s2">    </span><span class="nv">$MAAS_DBUSER</span><span class="s2">    0/0     md5&#34;</span> &gt;&gt; /etc/postgresql/14/main/pg_hba.conf
+</span></span></code></pre></div><p>&amp;&amp; you are basically done w/ the database configuration</p>
+<p>now, as i said before, i&rsquo;ll configure my maas controller as a region controller &amp;&amp; a rack controller</p>
+<p>in that process, i&rsquo;ll also tell the maas command line to use the postgre db</p>
+<p><em>(keep the maas web ui url prompted by pressing enter or change it at this step)</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">maas init region+rack --database-uri <span class="s2">&#34;postgres://</span><span class="nv">$MAAS_DBUSER</span><span class="s2">:</span><span class="nv">$MAAS_DBPASS</span><span class="s2">@</span><span class="nv">$MAAS_DBADDRESS</span><span class="s2">/</span><span class="nv">$MAAS_DBNAME</span><span class="s2">&#34;</span>
+</span></span></code></pre></div><p>once you are done, your maas controller is installed</p>
+<p>you only need to create an admin user to log into the web ui, use the rest api&hellip; &amp;&amp; such</p>
+<p><em>(enter a password twice, then press enter to skip importation)</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">maas createadmin --username<span class="o">=</span><span class="nv">$MAAS_USER</span> --email<span class="o">=</span><span class="nv">$MAAS_USEREMAIL</span>
+</span></span></code></pre></div><p>you can resume the installation on the web ui or continue using commands</p>
+<p>i&rsquo;ll show you both, starting w/ the web ui, http://192.168.122.2:5240/MAAS in my case</p>
+
+  
+  
+  
+  
+
+
+
+<div
+  
+    class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"
+  >
+
+  <span
+    
+      class="text-primary-400 ltr:pr-3 rtl:pl-3 flex items-center"
+    >
+
+    
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
+
+  </span>
+
+
+  </span>
+
+  <span
+    
+      class="dark:text-neutral-300"
+    ><strong>Note</strong>  click on the images to extend them, next time i&rsquo;ll zoom more when i do captures&hellip;</span>
+</div>
+
+<p><em>(login w/ your admin user $MAAS_USER &amp;&amp; its password created above)</em></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/00_hu21e966ce18324bcddb32839ab3df33d2_57974_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/00_hu21e966ce18324bcddb32839ab3df33d2_57974_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/00_hu21e966ce18324bcddb32839ab3df33d2_57974_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/00_hu21e966ce18324bcddb32839ab3df33d2_57974_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/00_hu21e966ce18324bcddb32839ab3df33d2_57974_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>here you can change the region name of your controller, &amp;&amp; also configure dns fowarders if you plan to use your controller as nodes dns (for custom records)</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/01_hue65a69bd259e5f6ac1cf9b6fde9a1c70_119335_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/01_hue65a69bd259e5f6ac1cf9b6fde9a1c70_119335_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/01_hue65a69bd259e5f6ac1cf9b6fde9a1c70_119335_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/01_hue65a69bd259e5f6ac1cf9b6fde9a1c70_119335_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/01_hue65a69bd259e5f6ac1cf9b6fde9a1c70_119335_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/02_hu8867f8eda8de8a6dc0aa38ec8153f53a_119309_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/02_hu8867f8eda8de8a6dc0aa38ec8153f53a_119309_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/02_hu8867f8eda8de8a6dc0aa38ec8153f53a_119309_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/02_hu8867f8eda8de8a6dc0aa38ec8153f53a_119309_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/02_hu8867f8eda8de8a6dc0aa38ec8153f53a_119309_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>then, it&rsquo;ll take you to the images settings, where you can download ubuntu or centos images for your nodes</p>
+<p>by default it&rsquo;ll download the ubuntu 20.04 image automatically &amp;&amp; you&rsquo;ll not able to delete it unless you change the &ldquo;default image&rdquo; in the settings&hellip;</p>
+<p>leave it as it is or download new images, as you wish</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/03_hu8867f8eda8de8a6dc0aa38ec8153f53a_120454_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/03_hu8867f8eda8de8a6dc0aa38ec8153f53a_120454_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/03_hu8867f8eda8de8a6dc0aa38ec8153f53a_120454_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/03_hu8867f8eda8de8a6dc0aa38ec8153f53a_120454_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/03_hu8867f8eda8de8a6dc0aa38ec8153f53a_120454_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/04_hu8867f8eda8de8a6dc0aa38ec8153f53a_100445_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/04_hu8867f8eda8de8a6dc0aa38ec8153f53a_100445_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/04_hu8867f8eda8de8a6dc0aa38ec8153f53a_100445_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/04_hu8867f8eda8de8a6dc0aa38ec8153f53a_100445_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/04_hu8867f8eda8de8a6dc0aa38ec8153f53a_100445_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>yepee</p>
+<p>now, it&rsquo;s time to import a ssh public key to add to the nodes after they&rsquo;ll get deployed, in order to ssh into them securely</p>
+<p>i used the same one as the maas controller, but you can an other one if you want to</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/05_hu8867f8eda8de8a6dc0aa38ec8153f53a_101835_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/05_hu8867f8eda8de8a6dc0aa38ec8153f53a_101835_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/05_hu8867f8eda8de8a6dc0aa38ec8153f53a_101835_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/05_hu8867f8eda8de8a6dc0aa38ec8153f53a_101835_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/05_hu8867f8eda8de8a6dc0aa38ec8153f53a_101835_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/06_hu8dedd6a3f073a416e15b7c74074718f7_99107_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/06_hu8dedd6a3f073a416e15b7c74074718f7_99107_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/06_hu8dedd6a3f073a416e15b7c74074718f7_99107_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/06_hu8dedd6a3f073a416e15b7c74074718f7_99107_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/06_hu8dedd6a3f073a416e15b7c74074718f7_99107_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>&amp;&amp; you are done w/ the maas (basic) installation</p>
+<p>to do everything i showed using commands</p>
+<p><em>(note that i connect to the maas api using the <code>maas login</code> command to do modifications)</em></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MASS_URL</span><span class="o">=</span>http://192.168.122.2:5240/MAAS
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">SSH_PUB_KEY</span><span class="o">=</span><span class="s2">&#34;ssh-ed25519 YOUR_SSH_PUB_KEY user@hostname&#34;</span>
+</span></span><span class="line"><span class="cl">maas apikey --username<span class="o">=</span><span class="nv">$MAAS_USER</span> &gt; <span class="nv">$MAAS_USER</span>-api-key-file
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MAAS_API_KEY</span><span class="o">=</span><span class="k">$(</span>cat <span class="nv">$MAAS_USER</span>-api-key-file<span class="k">)</span>
+</span></span><span class="line"><span class="cl">maas login <span class="nv">$MAAS_USER</span> <span class="nv">$MASS_URL</span> <span class="nv">$MAAS_API_KEY</span>
+</span></span><span class="line"><span class="cl">maas <span class="nv">$MAAS_USER</span> maas set-config <span class="nv">name</span><span class="o">=</span>upstream_dns <span class="nv">value</span><span class="o">=</span><span class="s2">&#34;8.8.8.8&#34;</span>
+</span></span><span class="line"><span class="cl">maas <span class="nv">$MAAS_USER</span> sshkeys create <span class="s2">&#34;key=</span><span class="nv">$SSH_PUB_KEY</span><span class="s2">&#34;</span>
+</span></span></code></pre></div>
+
+<h3 class="relative group">subnet configuration 
+    <div id="subnet-configuration" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#subnet-configuration" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>for my use case, i configured the maas controller to be a dhcp server for my maas-network</p>
+<p>going to the <code>Subnets</code> sections, i modified the <code>172.16.0.0/16</code> one</p>
+<p><em>(clicked on 172.16.0.0/16)</em></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>i edited it to add a <code>Gateway</code> &amp;&amp; a <code>DNS</code> for the hosts (the controller, 172.17.0.10); these infos are distributed by your controller when your nodes ask for leases</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screens-2/01_hu7c8fff12505b03ddb4f413c2b902f8a2_114631_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screens-2/01_hu7c8fff12505b03ddb4f413c2b902f8a2_114631_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screens-2/01_hu7c8fff12505b03ddb4f413c2b902f8a2_114631_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screens-2/01_hu7c8fff12505b03ddb4f413c2b902f8a2_114631_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screens-2/01_hu7c8fff12505b03ddb4f413c2b902f8a2_114631_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>i also <code>Reserve a dynamic range</code> for commissioning (172.16.0.20 -&gt; 172.16.0.30)</p>
+<p><em>(see below)</em></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screens-2/02_hu44d88795d1e3b2ca9099b9ed91cabdef_131372_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screens-2/02_hu44d88795d1e3b2ca9099b9ed91cabdef_131372_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screens-2/02_hu44d88795d1e3b2ca9099b9ed91cabdef_131372_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screens-2/02_hu44d88795d1e3b2ca9099b9ed91cabdef_131372_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screens-2/02_hu44d88795d1e3b2ca9099b9ed91cabdef_131372_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>to start the dhcp, go back on the <code>Subnets</code> section &amp;&amp; go on <code>Untagged</code> on your desire fabric <em>(nics for ubuntu&hellip; here i clicked on untagged for fabric-0)</em></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screens-2/00_hu7c8fff12505b03ddb4f413c2b902f8a2_100893_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>then <code>Configure DHCP</code></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screens-2/03_hu7c8fff12505b03ddb4f413c2b902f8a2_96197_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screens-2/03_hu7c8fff12505b03ddb4f413c2b902f8a2_96197_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screens-2/03_hu7c8fff12505b03ddb4f413c2b902f8a2_96197_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screens-2/03_hu7c8fff12505b03ddb4f413c2b902f8a2_96197_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screens-2/03_hu7c8fff12505b03ddb4f413c2b902f8a2_96197_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>choose the only rack controller you have, &amp;&amp; that is done</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screens-2/04_hu7c8fff12505b03ddb4f413c2b902f8a2_116648_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screens-2/04_hu7c8fff12505b03ddb4f413c2b902f8a2_116648_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screens-2/04_hu7c8fff12505b03ddb4f413c2b902f8a2_116648_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screens-2/04_hu7c8fff12505b03ddb4f413c2b902f8a2_116648_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screens-2/04_hu7c8fff12505b03ddb4f413c2b902f8a2_116648_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+
+
+<h3 class="relative group">commissionning process 
+    <div id="commissionning-process" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#commissionning-process" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>i created a vm on the maas-network, only booting over the network</p>
+<p>it gets an ip address by the controller dhcp &amp;&amp; then boot over the given image, here ubuntu 22.04 bc i changed it</p>
+<p>after a few minutes, the vm showed up on the <code>Machines</code> section, we still need to commission it &amp;&amp; deploy an image</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/17_hu9b3555b6c22d18a5f02a16354685ffd1_128388_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/17_hu9b3555b6c22d18a5f02a16354685ffd1_128388_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/17_hu9b3555b6c22d18a5f02a16354685ffd1_128388_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/17_hu9b3555b6c22d18a5f02a16354685ffd1_128388_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/17_hu9b3555b6c22d18a5f02a16354685ffd1_128388_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>but i got a problem, maas refused to provision it unless i chose a way to power it (ilo, idrac, pdu&hellip;) because it detects &amp;&amp; manages it</p>
+<p>since i don&rsquo;t have any other solutions than shutting down the vm for now</p>
+<p><em>(i didn&rsquo;t want to take time to check for virsh integration&hellip; although it is possible</em>) i selected <code>Manual</code></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/19_hu9b3555b6c22d18a5f02a16354685ffd1_141279_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/19_hu9b3555b6c22d18a5f02a16354685ffd1_141279_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/19_hu9b3555b6c22d18a5f02a16354685ffd1_141279_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/19_hu9b3555b6c22d18a5f02a16354685ffd1_141279_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/19_hu9b3555b6c22d18a5f02a16354685ffd1_141279_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/20_hu9b3555b6c22d18a5f02a16354685ffd1_135464_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/20_hu9b3555b6c22d18a5f02a16354685ffd1_135464_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/20_hu9b3555b6c22d18a5f02a16354685ffd1_135464_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/20_hu9b3555b6c22d18a5f02a16354685ffd1_135464_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/20_hu9b3555b6c22d18a5f02a16354685ffd1_135464_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>then, maas started commissionning it</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/21_hu9b3555b6c22d18a5f02a16354685ffd1_130460_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/21_hu9b3555b6c22d18a5f02a16354685ffd1_130460_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/21_hu9b3555b6c22d18a5f02a16354685ffd1_130460_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/21_hu9b3555b6c22d18a5f02a16354685ffd1_130460_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/21_hu9b3555b6c22d18a5f02a16354685ffd1_130460_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>a few seconds later, it showed up as ready</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/22_hu9b3555b6c22d18a5f02a16354685ffd1_127252_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/22_hu9b3555b6c22d18a5f02a16354685ffd1_127252_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/22_hu9b3555b6c22d18a5f02a16354685ffd1_127252_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/22_hu9b3555b6c22d18a5f02a16354685ffd1_127252_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/22_hu9b3555b6c22d18a5f02a16354685ffd1_127252_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>so i started <code>Deploy</code> it</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/23_hu9b3555b6c22d18a5f02a16354685ffd1_134610_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/23_hu9b3555b6c22d18a5f02a16354685ffd1_134610_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/23_hu9b3555b6c22d18a5f02a16354685ffd1_134610_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/23_hu9b3555b6c22d18a5f02a16354685ffd1_134610_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/23_hu9b3555b6c22d18a5f02a16354685ffd1_134610_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/24_hu9b3555b6c22d18a5f02a16354685ffd1_130311_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/24_hu9b3555b6c22d18a5f02a16354685ffd1_130311_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/24_hu9b3555b6c22d18a5f02a16354685ffd1_130311_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/24_hu9b3555b6c22d18a5f02a16354685ffd1_130311_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/24_hu9b3555b6c22d18a5f02a16354685ffd1_130311_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>after few minutes, the node was provisioned</p>
+<p><em>(don&rsquo;t mind the &ldquo;Failed testing&rdquo;, i was messing arround, yours will be fine w/ your ubuntu version on it)</em></p>
+<p>it has a question mark on power because he has no clue if it is powered on or not since he can&rsquo;t control/check its alimentation</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/hands-on-maas/maas-screenshots/25_hu14f96ce2acdfbab1e5789b4a66f39c4c_98681_330x0_resize_q75_box.jpg 330w,
+        /posts/hands-on-maas/maas-screenshots/25_hu14f96ce2acdfbab1e5789b4a66f39c4c_98681_660x0_resize_q75_box.jpg 660w,
+        /posts/hands-on-maas/maas-screenshots/25_hu14f96ce2acdfbab1e5789b4a66f39c4c_98681_1024x0_resize_q75_box.jpg 1024w,
+        /posts/hands-on-maas/maas-screenshots/25_hu14f96ce2acdfbab1e5789b4a66f39c4c_98681_1320x0_resize_q75_box.jpg 2x"
+        src="/posts/hands-on-maas/maas-screenshots/25_hu14f96ce2acdfbab1e5789b4a66f39c4c_98681_660x0_resize_q75_box.jpg"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>i added an entry on my <code>~/.ssh/config</code> for <code>maas-node-001</code> like i did for the controller to access it more easily over ssh</p>
+<p><em>(change your <code>identityfile</code> if you have configured your <code>$MAAS_USER</code> to use a different ssh key pair than the controller in the installation process)</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">71
+</span><span class="hl"><span class="lnt">72
+</span></span><span class="hl"><span class="lnt">73
+</span></span><span class="hl"><span class="lnt">74
+</span></span><span class="hl"><span class="lnt">75
+</span></span><span class="hl"><span class="lnt">76
+</span></span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># maas-node-001</span>
+</span></span><span class="line hl"><span class="cl">host maas-node-001
+</span></span><span class="line hl"><span class="cl">  hostname 172.16.0.2
+</span></span><span class="line hl"><span class="cl">  user ubuntu
+</span></span><span class="line hl"><span class="cl">  preferredauthentications publickey
+</span></span><span class="line hl"><span class="cl">  identityfile ~/.ssh/maas-global
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>then, you can use your maas-controller as an ssh proxy to access your maas-node-001</p>
+<p><em>(because you are not in the same network)</em></p>
+
+  
+  
+  
+  
+
+
+
+<div
+  
+    class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"
+  >
+
+  <span
+    
+      class="text-primary-400 ltr:pr-3 rtl:pl-3 flex items-center"
+    >
+
+    
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
+
+  </span>
+
+
+  </span>
+
+  <span
+    
+      class="dark:text-neutral-300"
+    ><strong>Note</strong>  if you don&rsquo;t understand well what ssh proxies are, or you want to discover more about it, they are in my <a href="https://xeylou.fr/posts/ssh-cheat-sheet/#ssh-bastions" target="_blank">ssh cheat-sheet</a></span>
+</div>
+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh -J maas-controller maas-node-001
+</span></span></code></pre></div><p>or, if you want to, you can specify the proxy in the <code>~/.ssh/config</code>, &amp;&amp; then just do <code>ssh maas-node-001</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="hl"><span class="lnt">77
+</span></span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># maas-node-001</span>
+</span></span><span class="line"><span class="cl">host maas-node-001
+</span></span><span class="line"><span class="cl">  hostname 172.16.0.2
+</span></span><span class="line"><span class="cl">  user ubuntu
+</span></span><span class="line"><span class="cl">  preferredauthentications publickey
+</span></span><span class="line"><span class="cl">  identityfile ~/.ssh/maas-global
+</span></span><span class="line hl"><span class="cl">  proxyjump maas-controller
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh maas-node-001
+</span></span></code></pre></div><p>you can now manage your servers, deploying images &amp;&amp; such, calling it through api or cli like i did for the installation above etc.</p>
+<p>you still need few other steps to get all things done (Internet access, ntp&hellip;)</p>
+<p>but if you have encountered errors or misunderstandings, i am here to answer your questions on discord or email</p>
+<p><em>(i&rsquo;m not a maas expert, i&rsquo;d be extremely grateful if you also consider dm me to explain that i&rsquo;m wrong)</em></p>
+
+
+<h3 class="relative group">final step 
+    <div id="final-step" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#final-step" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>maas use a different ntp client than the one shipped w/ ubuntu, chrony over systemd-timesyncd</p>
+<p>canonical recommend disabling timesync to avoid ntp client conflicts, such as synchronisation issues</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl disable --now systemd-timesyncd
+</span></span></code></pre></div><p>on the network side, your nodes can only use their local network, their local dns &amp;&amp; other stuff like accessing the outside w/ apt</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ping 172.16.0.10  <span class="c1"># nodes can ping their gateway</span>
+</span></span><span class="line"><span class="cl">dig maas-controller.maas  <span class="c1"># nodes can resolve</span>
+</span></span><span class="line"><span class="cl">dig google.com  <span class="c1"># nodes can resolve</span>
+</span></span></code></pre></div><p>but they cannot access the Internet yet, because you need to nat their addresses</p>
+<p>to do so, you need a dynamic nat or a static nat (dynamic to access the outside temporarly, static to permanently translate an outside address for your node to your node inside ip address in your maas-network)</p>
+<p>otherwise, nodes will not be able to ping the outside or such</p>
+<p>using <code>virt-manager</code>, you can use the nat bridge</p>
+<p>if you are not using libvirt, you can manually add the nat rules using iptables &amp;&amp; ip forward</p>
+<p>you first need to enable ip forward (moving packets from an interface to an other, like a router)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt install -y iptables-persistent
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;net.ipv4.ip_forward=1&#39;</span> &gt;&gt; /etc/sysctl.conf <span class="o">&amp;&amp;</span> sysctl -p /etc/sysctl.conf
+</span></span></code></pre></div><p>then, you can translate private ip addresses (on maas-network) over ones on your hosted-network &amp;&amp; do the translation (nat <em>network address translation</em>)</p>
+<p><em>(where <code>enp2s0</code> is your interface on 192.168.122.0/24)</em></p>
+<p>dynamic nat:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">iptables -t nat -A POSTROUTING -o enp2s0 -j MASQUERADE
+</span></span></code></pre></div><p>you can also permanently translate an external address (here 192.168.122.3) to your local node on 172.16.0.2</p>
+<p>usefull to host websites, services&hellip; doing static nat</p>
+<p>static nat:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">iptables -t nat -A PREROUTING -i enp2s0 -j DNAT -d 192.168.122.3 --to 172.16.0.2
+</span></span><span class="line"><span class="cl">iptables -t nat -A POSTROUTING -o enp1s0 -j SNAT -s 172.16.0.2 --to 192.168.122.3 
+</span></span></code></pre></div><p>now, you can <code>ping google.com</code> or whatever you need</p>
+<p>iptables can be used in a much more complex way, i prefered keep it simple</p>
+<p>you can think about it when you&rsquo;ll want to authorise natting for certain addresses only etc.</p>
+<p>thank you for reading, sincerely, have a good day!</p>
+<!-- note, j'ai mis le réseau maas-network en nat sur virt-manager, et la passerelle de mes noeuds c'est elle en 172.16.0.1 -->
+        </div>
+        
+        
+
+        
+        
+
+          
+      </div>
+     
+      
+      
+        
+        
+          
+          
+        
+      <script>
+        var oid = "views_posts\/hands-on-maas\/index.md"
+        var oid_likes = "likes_posts\/hands-on-maas\/index.md"
+      </script>
+      
+      
+      
+      <script type="text/javascript" src="/js/page.min.0860cf4e04fa2d72cc33ddba263083464d48f67de06114529043cb4623319efed4f484fd7f1730df5abea0e2da6f3538855634081d02f2d6e920b956f063e823.js" integrity="sha512-CGDPTgT6LXLMM926JjCDRk1I9n3gYRRSkEPLRiMxnv7U9IT9fxcw31q&#43;oOLabzU4hVY0CB0C8tbpILlW8GPoIw=="></script>
+  
+    </section>
+  <footer class="pt-8 max-w-prose print:hidden">
+
+    
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group mr-3" href="/posts/windows-container/">
+              <span
+                class="mr-3 text-neutral-700 group-hover:text-primary-600 ltr:inline rtl:hidden dark:text-neutral dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 text-neutral-700 group-hover:text-primary-600 ltr:hidden rtl:inline dark:text-neutral dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >windows containers</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2024-02-07 00:00:00 &#43;0000 UTC">2024-02-07</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    
+  </footer>
+</article>
+
+      <div id="top-scroller" class="pointer-events-none absolute top-[110vh] bottom-0 w-12 ltr:right-0 rtl:left-0">
+  <a href="#the-top"
+    class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 mb-16 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Scroll to top" title="Scroll to top">
+    &uarr;
+  </a>
+</div>
+    </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+  
+  <div class="flex items-center justify-between">
+
+    
+    
+
+    
+    
+
+  </div>
+  <script>
+    
+    mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+      margin: 24,
+      background: 'rgba(0,0,0,0.5)',
+      scrollOffset: 0,
+    })
+    
+  </script>
+  
+  
+  <script type="text/javascript" src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js" integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh]"
+  data-url="http://localhost:1313/"
+  style="z-index:500"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+  </div>
+</body>
+
+</html>

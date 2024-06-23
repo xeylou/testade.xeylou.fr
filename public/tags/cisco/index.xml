@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cisco on xeylou</title>
+    <link>http://localhost:1313/tags/cisco/</link>
+    <description>Recent content in Cisco on xeylou</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+    <lastBuildDate>Sun, 22 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cisco/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cisco hsrp</title>
+      <link>http://localhost:1313/posts/cisco-hsrp/</link>
+      <pubDate>Sun, 22 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/cisco-hsrp/</guid>
+      <description>utilisation du protocole</description>
+      
+    </item>
+    
+    <item>
+      <title>cisco ospf</title>
+      <link>http://localhost:1313/posts/cisco-ospf/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/cisco-ospf/</guid>
+      <description>compréhension du protocole</description>
+      
+    </item>
+    
+    <item>
+      <title>inter-vlan cisco</title>
+      <link>http://localhost:1313/posts/cisco-inter-vlan/</link>
+      <pubDate>Wed, 18 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/cisco-inter-vlan/</guid>
+      <description>prise en main du routage</description>
+      
+    </item>
+    
+    <item>
+      <title>ssh cisco ios</title>
+      <link>http://localhost:1313/posts/ssh-cisco-ios/</link>
+      <pubDate>Tue, 03 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/ssh-cisco-ios/</guid>
+      <description>authentification par</description>
+      
+    </item>
+    
+  </channel>
+</rss>

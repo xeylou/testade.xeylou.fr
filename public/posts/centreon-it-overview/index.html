@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth" data-default-appearance="dark"
+  data-auto-appearance="true"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    
+    <meta http-equiv="content-language" content="en" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <title>centreon it overview &middot; xeylou</title>
+    <meta name="title" content="centreon it overview &middot; xeylou" />
+    
+    <meta name="description" content="xeylou&#39;s website" />
+    <meta name="keywords" content="gnu/linux, monitoring, open-source, " />
+    
+    
+    <link rel="canonical" href="http://localhost:1313/posts/centreon-it-overview/" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link type="text/css" rel="stylesheet" href="/css/main.bundle.min.aee4ef2886429ada878717a2131b326c32ae5bec95c068360222ceaf5e81301ca3f2a897460b755f83fb37a5bc8b84aa598f0f2f8656650720dc76bd4759261d.css"
+      integrity="sha512-ruTvKIZCmtqHhxeiExsybDKuW&#43;yVwGg2AiLOr16BMByj8qiXRgt1X4P7N6W8i4SqWY8PL4ZWZQcg3Ha9R1kmHQ==" />
+    
+    
+    <script type="text/javascript" src="/js/appearance.min.516a16745bea5a9bd011138d254cc0fd3973cd55ce6e15f3dec763e7c7c2c7448f8fe7b54cca811cb821b0c7e12cd161caace1dd794ac3d34d40937cbcc9ee12.js"
+      integrity="sha512-UWoWdFvqWpvQERONJUzA/TlzzVXObhXz3sdj58fCx0SPj&#43;e1TMqBHLghsMfhLNFhyqzh3XlKw9NNQJN8vMnuEg=="></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script defer type="text/javascript" id="script-bundle" src="/js/main.bundle.min.d6c35110b5d7df8014403fbb81cd21a9d89daf9eb586c936e585e9d04adc204dce554aa737f81e8c902b9dea9e67bd63a977b77dedefb8a39430581ebc519207.js"
+      integrity="sha512-1sNRELXX34AUQD&#43;7gc0hqdidr561hsk25YXp0ErcIE3OVUqnN/gejJArneqeZ71jqXe3fe3vuKOUMFgevFGSBw==" data-copy="" data-copied=""></script>
+    
+    
+    <script src="/js/zoom.min.js"></script>
+    
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    
+    
+    
+    
+    
+    
+    <meta property="og:url" content="http://localhost:1313/posts/centreon-it-overview/">
+  <meta property="og:site_name" content="xeylou">
+  <meta property="og:title" content="centreon it overview">
+  <meta property="og:description" content="overviewing centreon it &amp; getting fully hands-on introduction # The last article in this series will be devoted to discover &amp; use Centreon IT.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-08-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2023-08-12T00:00:00+00:00">
+    <meta property="article:tag" content="Gnu/Linux">
+    <meta property="article:tag" content="Monitoring">
+    <meta property="article:tag" content="Open-Source">
+      <meta property="og:see_also" content="http://localhost:1313/posts/itop-tour/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/nagios-introduction/">
+
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="centreon it overview">
+  <meta name="twitter:description" content="overviewing centreon it &amp; getting fully hands-on introduction # The last article in this series will be devoted to discover &amp; use Centreon IT.">
+
+    
+    <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "articleSection": "Posts",
+    "name": "centreon it overview",
+    "headline": "centreon it overview",
+    
+    "abstract": "overviewing centreon it \u0026amp; getting fully hands-on introduction # The last article in this series will be devoted to discover \u0026amp; use Centreon IT.",
+    "inLanguage": "en",
+    "url" : "http:\/\/localhost:1313\/posts\/centreon-it-overview\/",
+    "author" : {
+      "@type": "Person",
+      "name": "xeylou"
+    },
+    "copyrightYear": "2023",
+    "dateCreated": "2023-08-12T00:00:00\u002b00:00",
+    "datePublished": "2023-08-12T00:00:00\u002b00:00",
+    
+    "dateModified": "2023-08-12T00:00:00\u002b00:00",
+    
+    "keywords": ["gnu/linux","monitoring","open-source"],
+    
+    "mainEntityOfPage": "true",
+    "wordCount": "2308"
+  }]
+  </script>
+
+
+    
+    
+    <meta name="author" content="xeylou" />
+    
+    
+    
+    <link href="https://discordapp.com/users/835863642498793483" rel="me" />
+    
+    
+    <link href="https://github.com/xeylou" rel="me" />
+    
+    
+    <link href="mailto:xeylou@proton.me" rel="me" />
+    
+    
+    
+    
+
+<script src="/lib/jquery/jquery.slim.min.js" integrity=""></script>
+
+
+
+  
+  
+  
+  
+  <script
+    defer
+    type="text/javascript"
+    src="/js/mermaid.bundle.9aab96d44f6ac9568364d8bc6faeb1120a4f4f78a1742ecd23e9401160647174f0551e09453104173597409a0f0c89370fa03e70a58d337298934f9267a77c7c.js"
+    integrity="sha512-mquW1E9qyVaDZNi8b66xEgpPT3ihdC7NI&#43;lAEWBkcXTwVR4JRTEEFzWXQJoPDIk3D6A&#43;cKWNM3KYk0&#43;SZ6d8fA=="
+  ></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+    
+    
+    <meta name="theme-color"/>
+    
+    
+  </head><body
+  class="flex flex-col h-screen px-6 m-auto text-lg leading-7 max-w-7xl bg-neutral text-neutral-900 dark:bg-neutral-800 dark:text-neutral sm:px-14 md:px-24 lg:px-32 scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600">
+  <div id="the-top" class="absolute flex self-center">
+    <a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+      href="#main-content"><span
+        class="font-bold text-primary-600 ltr:pr-2 rtl:pl-2 dark:text-primary-400">&darr;</span>Skip to main content</a>
+  </div>
+  
+  
+  <div class="min-h-[148px]"></div>
+<div class="fixed inset-x-0 pl-[24px] pr-[24px]" style="z-index:100">
+  <div id="menu-blur" class="absolute opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-2xl shadow-2xl"></div>
+  <div class="relative max-w-[64rem] ml-auto mr-auto">
+    <div style="padding-left:0;padding-right:0;padding-top:2px;padding-bottom:3px"
+    class="main-menu flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start space-x-3">
+    
+    
+    
+    <div>
+        <a href="/" class="flex">
+            <span class="sr-only">xeylou</span>
+
+            <img src="/img/xeylou_transparent_small.png" width="35" height="35"
+                class="logo max-h-[5rem] max-w-[5rem] object-scale-down object-left nozoom" alt="xeylou" />
+
+        </a>
+    </div>
+    
+    <div class="flex flex-1 items-center justify-between">
+        <nav class="flex space-x-3">
+
+            
+            <a href="/" class="text-base font-medium text-gray-500 hover:text-gray-900">xeylou</a>
+            
+
+        </nav>
+        <nav class="hidden md:flex items-center space-x-5 md:ml-12 h-12">
+
+            
+            
+            
+  <a href="/posts/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-base font-medium" title="">
+        Posts
+    </p>
+</a>
+
+
+
+            
+            
+  <a href="/now/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-base font-medium" title="">
+        Now
+    </p>
+</a>
+
+
+
+            
+            
+  <a href="/about/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+    
+    <p class="text-base font-medium" title="">
+        About
+    </p>
+</a>
+
+
+
+            
+            
+
+            
+
+
+            
+            <button id="search-button" aria-label="Search" class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+                title="">
+                
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+            
+
+
+            
+            
+            <div
+                class="ltr:mr-14 rtl:ml-14 flex items-center">
+                <button id="appearance-switcher" aria-label="Dark mode switcher" type="button" class="text-base hover:text-primary-600 dark:hover:text-primary-400">
+                    <div class="flex items-center justify-center dark:hidden">
+                        
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+
+                    </div>
+                    <div class="items-center justify-center hidden dark:flex">
+                        
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+
+                    </div>
+                </button>
+            </div>
+            
+
+        </nav>
+        <div class="flex md:hidden items-center space-x-5 md:ml-12 h-12">
+
+            <span></span>
+
+            
+
+
+            
+            <button id="search-button-mobile" aria-label="Search" class="text-base hover:text-primary-600 dark:hover:text-primary-400"
+                title="">
+                
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+            </button>
+            
+
+            
+            
+            <button id="appearance-switcher-mobile" aria-label="Dark mode switcher" type="button" class="text-base hover:text-primary-600 dark:hover:text-primary-400" style="margin-right:5px">
+                <div class="flex items-center justify-center dark:hidden">
+                    
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 256c0-123.8 100.3-224 223.8-224c11.36 0 29.7 1.668 40.9 3.746c9.616 1.777 11.75 14.63 3.279 19.44C245 86.5 211.2 144.6 211.2 207.8c0 109.7 99.71 193 208.3 172.3c9.561-1.805 16.28 9.324 10.11 16.95C387.9 448.6 324.8 480 255.8 480C132.1 480 32 379.6 32 256z"/></svg>
+
+  </span>
+
+
+                </div>
+                <div class="items-center justify-center hidden dark:flex">
+                    
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 159.1c-53.02 0-95.1 42.98-95.1 95.1S202.1 351.1 256 351.1s95.1-42.98 95.1-95.1S309 159.1 256 159.1zM509.3 347L446.1 255.1l63.15-91.01c6.332-9.125 1.104-21.74-9.826-23.72l-109-19.7l-19.7-109c-1.975-10.93-14.59-16.16-23.72-9.824L256 65.89L164.1 2.736c-9.125-6.332-21.74-1.107-23.72 9.824L121.6 121.6L12.56 141.3C1.633 143.2-3.596 155.9 2.736 164.1L65.89 256l-63.15 91.01c-6.332 9.125-1.105 21.74 9.824 23.72l109 19.7l19.7 109c1.975 10.93 14.59 16.16 23.72 9.824L256 446.1l91.01 63.15c9.127 6.334 21.75 1.107 23.72-9.822l19.7-109l109-19.7C510.4 368.8 515.6 356.1 509.3 347zM256 383.1c-70.69 0-127.1-57.31-127.1-127.1c0-70.69 57.31-127.1 127.1-127.1s127.1 57.3 127.1 127.1C383.1 326.7 326.7 383.1 256 383.1z"/></svg>
+
+  </span>
+
+
+                </div>
+            </button>
+            
+
+        </div>
+    </div>
+    <div class="-my-2 -mr-2 md:hidden">
+
+        <label id="menu-button" for="menu-controller" class="block">
+            <input type="checkbox" id="menu-controller" class="hidden" />
+            
+            <div class="cursor-pointer hover:text-primary-600 dark:hover:text-primary-400">
+                
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/></svg>
+
+  </span>
+
+
+            </div>
+            <div id="menu-wrapper" style="padding-top:5px;"
+                class="fixed inset-0 z-30 invisible w-screen h-screen m-0 overflow-auto transition-opacity opacity-0 cursor-default bg-neutral-100/50 backdrop-blur-sm dark:bg-neutral-900/50">
+                <ul
+                    class="flex space-y-2 mt-3 flex-col items-end w-full px-6 py-6 mx-auto overflow-visible list-none ltr:text-right rtl:text-left max-w-7xl">
+
+                    <li>
+                        <span
+                            class="cursor-pointer inline-block align-text-bottom hover:text-primary-600 dark:hover:text-primary-400">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+</span>
+                    </li>
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="/posts/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+        
+        <p class="text-bg font-bg" title="">
+            Posts
+        </p>
+    </a>
+</li>
+
+
+
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="/now/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+        
+        <p class="text-bg font-bg" title="">
+            Now
+        </p>
+    </a>
+</li>
+
+
+
+
+                    
+
+                    
+  <li class="mt-1">
+    <a href="/about/"  class="flex items-center text-gray-500 hover:text-primary-600 dark:hover:text-primary-400">
+        
+        <p class="text-bg font-bg" title="">
+            About
+        </p>
+    </a>
+</li>
+
+
+
+
+                    
+
+                </ul>
+                
+                
+
+            </div>
+        </label>
+    </div>
+</div>
+
+
+
+
+<script>
+    (function () {
+        var $mainmenu = $('.main-menu');
+        var path = window.location.pathname;
+        $mainmenu.find('a[href="' + path + '"]').each(function (i, e) {
+            $(e).children('p').addClass('active');
+        });
+    })();
+</script>
+
+
+  </div>
+</div>
+<script>
+  window.addEventListener('scroll', function (e) {
+    var scroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    var background_blur = document.getElementById('menu-blur');
+    background_blur.style.opacity = (scroll / 300);
+  });
+</script>
+
+  
+  <div class="relative flex flex-col grow">
+    <main id="main-content" class="grow">
+      
+
+
+<article>
+  
+
+  <header id="single_header" class="mt-5 max-w-prose">
+    
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+      centreon it overview
+    </h1>
+    <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="flex flex-row flex-wrap items-center">
+  
+  
+  <time datetime="2023-08-12 00:00:00 &#43;0000 UTC">2023-08-12</time><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">11 mins</span>
+  
+
+  
+  
+</div>
+
+
+<div class="flex flex-row flex-wrap items-center">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+
+
+
+<div class="flex flex-row flex-wrap items-center">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <span style="margin-top:0.5rem" class="mr-2" onclick="window.open(&#34;/tags/gnu/linux/&#34;,'_self');">
+    <span class="flex" style="cursor: pointer;">
+  <span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Gnu/Linux
+  </span>
+</span>
+  </span>
+  
+  <span style="margin-top:0.5rem" class="mr-2" onclick="window.open(&#34;/tags/monitoring/&#34;,'_self');">
+    <span class="flex" style="cursor: pointer;">
+  <span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Monitoring
+  </span>
+</span>
+  </span>
+  
+  <span style="margin-top:0.5rem" class="mr-2" onclick="window.open(&#34;/tags/open-source/&#34;,'_self');">
+    <span class="flex" style="cursor: pointer;">
+  <span class="rounded-md border border-primary-400 px-1 py-[1px] text-xs font-normal text-primary-700 dark:border-primary-600 dark:text-primary-400">
+    Open-Source
+  </span>
+</span>
+  </span>
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+
+
+
+    </div>
+
+    
+    
+    
+    
+    
+
+    
+
+    
+      
+      
+        
+        
+<div class="flex author">
+  
+    
+    
+      
+    
+    
+      
+        
+      
+      <img class="!mt-0 !mb-0 h-24 w-24 rounded-full ltr:mr-4 rtl:ml-4" width="96" height="96"
+      alt="xeylou" src="/img/xeylou_transparent_hue3c50861ea44393a8560d0baa31d0d0b_533896_192x192_fill_box_center_3.png" />
+    
+  
+  <div class="place-self-center">
+    
+    <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+      Author
+    </div>
+    <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+      xeylou
+    </div>
+    
+    
+    <div class="text-2xl sm:text-lg">
+  <div class="flex flex-wrap text-neutral-400 dark:text-neutral-500">
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="https://discordapp.com/users/835863642498793483"
+          target="_blank"
+          aria-label="Discord"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"/></svg>
+
+  </span>
+
+</span></a
+        >
+      
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="https://github.com/xeylou"
+          target="_blank"
+          aria-label="Github"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+
+  </span>
+
+</span></a
+        >
+      
+    
+      
+        <a
+          class="px-1 hover:text-primary-700 dark:hover:text-primary-400"
+          href="mailto:xeylou@proton.me"
+          target="_blank"
+          aria-label="Email"
+          rel="me noopener noreferrer"
+          ><span class="inline-block align-text-bottom">
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M207.8 20.73c-93.45 18.32-168.7 93.66-187 187.1c-27.64 140.9 68.65 266.2 199.1 285.1c19.01 2.888 36.17-12.26 36.17-31.49l.0001-.6631c0-15.74-11.44-28.88-26.84-31.24c-84.35-12.98-149.2-86.13-149.2-174.2c0-102.9 88.61-185.5 193.4-175.4c91.54 8.869 158.6 91.25 158.6 183.2l0 16.16c0 22.09-17.94 40.05-40 40.05s-40.01-17.96-40.01-40.05v-120.1c0-8.847-7.161-16.02-16.01-16.02l-31.98 .0036c-7.299 0-13.2 4.992-15.12 11.68c-24.85-12.15-54.24-16.38-86.06-5.106c-38.75 13.73-68.12 48.91-73.72 89.64c-9.483 69.01 43.81 128 110.9 128c26.44 0 50.43-9.544 69.59-24.88c24 31.3 65.23 48.69 109.4 37.49C465.2 369.3 496 324.1 495.1 277.2V256.3C495.1 107.1 361.2-9.332 207.8 20.73zM239.1 304.3c-26.47 0-48-21.56-48-48.05s21.53-48.05 48-48.05s48 21.56 48 48.05S266.5 304.3 239.1 304.3z"/></svg>
+
+  </span>
+
+</span></a
+        >
+      
+    
+  </div>
+
+</div>
+  </div>
+</div>
+
+      
+
+      
+
+      
+      <div class="mb-5"></div>
+      
+
+    
+
+  </header>
+  
+  <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+    
+     <div
+      class="order-first lg:ml-auto px-0 lg:order-last ltr:lg:pl-8 rtl:lg:pr-8">
+      <div class="toc ltr:pl-5 rtl:pr-5 print:hidden lg:sticky lg:top-[140px]">
+
+         <details open id="TOCView"
+  class="toc-right mt-0 overflow-y-scroll overscroll-contain scrollbar-thin scrollbar-track-neutral-200 scrollbar-thumb-neutral-400 dark:scrollbar-track-neutral-800 dark:scrollbar-thumb-neutral-600 rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 hidden lg:block">
+  <summary
+    class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="min-w-[220px] py-2 border-dotted ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">introduction</a>
+      <ul>
+        <li><a href="#presentation">presentation</a></li>
+      </ul>
+    </li>
+    <li><a href="#namely">namely</a>
+      <ul>
+        <li><a href="#organisation">organisation</a></li>
+        <li><a href="#hosting">hosting</a></li>
+        <li><a href="#connectors--plugins">connectors &amp; plugins</a></li>
+      </ul>
+    </li>
+    <li><a href="#deploying">deploying</a>
+      <ul>
+        <li><a href="#requirements">requirements</a></li>
+        <li><a href="#infrastructure">infrastructure</a></li>
+        <li><a href="#installation">installation</a></li>
+        <li><a href="#snmp-plugins">snmp plugins</a></li>
+        <li><a href="#linux-host">linux host</a></li>
+        <li><a href="#windows-host">windows host</a></li>
+        <li><a href="#adding-hosts">adding hosts</a></li>
+        <li><a href="#adding-services">adding services</a></li>
+        <li><a href="#debugging">debugging</a></li>
+      </ul>
+    </li>
+    <li><a href="#close">close</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+<details class="toc-inside mt-0 overflow-hidden rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 lg:hidden">
+  <summary
+    class="py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
+    Table of Contents
+  </summary>
+  <div
+    class="py-2 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">introduction</a>
+      <ul>
+        <li><a href="#presentation">presentation</a></li>
+      </ul>
+    </li>
+    <li><a href="#namely">namely</a>
+      <ul>
+        <li><a href="#organisation">organisation</a></li>
+        <li><a href="#hosting">hosting</a></li>
+        <li><a href="#connectors--plugins">connectors &amp; plugins</a></li>
+      </ul>
+    </li>
+    <li><a href="#deploying">deploying</a>
+      <ul>
+        <li><a href="#requirements">requirements</a></li>
+        <li><a href="#infrastructure">infrastructure</a></li>
+        <li><a href="#installation">installation</a></li>
+        <li><a href="#snmp-plugins">snmp plugins</a></li>
+        <li><a href="#linux-host">linux host</a></li>
+        <li><a href="#windows-host">windows host</a></li>
+        <li><a href="#adding-hosts">adding hosts</a></li>
+        <li><a href="#adding-services">adding services</a></li>
+        <li><a href="#debugging">debugging</a></li>
+      </ul>
+    </li>
+    <li><a href="#close">close</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+<script>
+
+  var margin = 200;
+  var marginError = 50;
+
+  (function () {
+    var $window = $(window);
+    var $toc = $('#TOCView');
+    var tocHeight = $toc.height();
+
+    function onResize() {
+      var windowAndMarginHeight = $window.height() - margin;
+      if(tocHeight >= windowAndMarginHeight) {
+        $toc.css("overflow-y", "scroll")
+        $toc.css("max-height", (windowAndMarginHeight + marginError) + "px")
+      } else {
+        $toc.css("overflow-y", "hidden")
+        $toc.css("max-height", "9999999px")
+      }
+    }
+
+    $window.on('resize', onResize);
+    $(document).ready(onResize);
+  })();
+
+
+
+  (function () {
+    var $toc = $('#TableOfContents');
+    if ($toc.length > 0) {
+      var $window = $(window);
+
+      function onScroll() {
+        var currentScroll = $window.scrollTop();
+        var h = $('.anchor');
+        var id = "";
+        h.each(function (i, e) {
+          e = $(e);
+          if (e.offset().top - $(window).height()/3 <= currentScroll) {
+            id = decodeURIComponent(e.attr('id'));
+          }
+        });
+        var active = $toc.find('a.active');      
+        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+        active.each(function (i, e) {
+           
+            $(e).removeClass('active').siblings('ul').hide();
+          
+        });
+        $toc.find('a[href="#' + id + '"]').addClass('active')
+        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+          $(e).children('a').parents('ul').show();          
+        });
+      }
+
+      $window.on('scroll', onScroll);
+      $(document).ready(function () {
+         
+          $toc.find('a').parent('li').find('ul').hide();
+        
+        onScroll();
+      });
+    }
+  })();
+
+
+</script>
+   </div>
+      </div>
+      
+
+      <div class="min-w-0 min-h-0 max-w-fit">
+        
+        
+<details style="margin-left:0px" class="mt-2 mb-5 overflow-hidden rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5" >
+    
+    <summary
+        class="py-1 text-lg font-semibold cursor-pointer bg-primary-200 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-primary-800 dark:text-neutral-100">
+        Exploring Monitoring Solutions - This article is part of a series.
+    </summary>
+    
+    
+    
+    <div
+        class="py-1 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+        <a href="http://localhost:1313/posts/nagios-introduction/">
+            Part 1: nagios introduction
+        </a>
+    </div>
+    
+    
+    
+    <div
+        class="py-1 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+        <a href="http://localhost:1313/posts/itop-tour/">
+            Part 2: combodo itop tour
+        </a>
+    </div>
+    
+    
+    
+    <div
+        class="py-1 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+        Part 3: This Article
+    </div>
+    
+    
+
+
+</details>
+
+
+
+        <div class="article-content max-w-prose mb-20">
+          <!-- prologue -->
+<div class="lead text-neutral-500 dark:text-neutral-400 !mb-9 text-xl">
+  overviewing centreon it <br>
+&amp; getting fully hands-on
+</div>
+
+<!-- article -->
+
+
+<h2 class="relative group">introduction 
+    <div id="introduction" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>The last article in this series will be devoted to discover &amp; use Centreon IT.</p>
+<p>Feel free to correct me by email if i&rsquo;ve said something wrong.</p>
+
+
+<h3 class="relative group">presentation 
+    <div id="presentation" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#presentation" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p><a href="https://www.centreon.com" target="_blank">Centreon IT</a> is a french open-source based monitoring solution.</p>
+<p>It is highly <a href="https://www.centreon.com/centreon-and-nagios-3-milestones-to-understand-their-distinctiveness/" target="_blank">inspired by Nagios</a>, since it was a Nagios frontend at its beginning.</p>
+<p>Centreon&rsquo;s solutions has the same Nagios&rsquo; plugins &amp; hosts systems but can keep their hands on the plugins with their repository - where <a href="https://www.xeylou.fr/posts/nagios-introduction/#fundamentals" target="_blank">the community can freely publish them for Nagios</a>.</p>
+<p>Centreon is a profit-oriented company who has a business model based on licensing the number of hosts monitored.</p>
+<!-- 
+
+Quotation is based on the number of equipment devices being monitored. Prices start at 250 monitored devices, then 500, 1000, 2000… sky is the limit. Subscriptions include software licenses, access to our Support team by phone or by mail and unlimited software updates. And Managed Service Providers can benefit from a Pay-per-Use pricing model specifically designed to help them grow their business.
+
+-->
+<p>The free solution called Centreon IT-100 is licensed for 100 monitored hosts only - their <a href="https://www.centreon.com/free-trial/" target="_blank">Free Trial</a>. Other differences with the commercial editions are listed in their <a href="https://www.centreon.com/centreon-editions/" target="_blank">comparison table</a>.</p>
+
+
+<h2 class="relative group">namely 
+    <div id="namely" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#namely" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>Informations on how Centreon IT works &amp; its specific features.</p>
+
+
+<h3 class="relative group">organisation 
+    <div id="organisation" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#organisation" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>Centreon claims their solutions can be hosted on site, called <code>OnPrem</code>, or cloud-based, called <code>Cloud</code>.</p>
+<p>Centreon instances always works with a Central Server, called <code>centreon-central</code> used to configure monitoring, display &amp; operate the collected data.</p>
+<p>To monitor multiple sites, instances can be deployed &amp; attached to the Central Server, the <code>Remote Servers</code>.</p>
+<p>Monitored data is gathered using <code>Pollers</code>, attached to the Central or a Remote Server.</p>
+<p>Here is what a <code>Centreon OnPrem</code> distributed architecture should looks like according to Centreon.</p>
+<div class="mermaid" align="center">
+  
+%%{init: {'theme':'dark'}}%%
+graph TD
+central[Central Server]
+remote0[Remote Server]
+remote1[Remote Server]
+remote2[Remote Server]
+poller0((Poller))
+poller1((Poller))
+poller2((Poller))
+poller3((Poller))
+poller4((Poller))
+poller5((Poller))
+
+central---remote0 & remote1 & remote2
+remote0---poller0 & poller1
+remote1---poller2 & poller3
+remote2---poller4 & poller5
+
+</div>
+
+<p>The <code>Centreon Cloud</code> architecture does away with Remote Servers, as Pollers are connected to the Central Server via the cloud - using a vpn.</p>
+<div class="mermaid" align="center">
+  
+%%{init: {'theme':'dark'}}%%
+graph TD
+central[Central Server]
+poller0((Poller))
+poller1((Poller))
+poller2((Poller))
+
+central --- poller0 & poller1 & poller2
+
+</div>
+
+
+
+<h3 class="relative group">hosting 
+    <div id="hosting" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#hosting" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p><a href="https://docs.centreon.com/" target="_blank">Centreon documentation</a> guides to host onprem &amp; cloud solutions on different supports.</p>
+<p>For an overview, they give <code>*.ovf</code> &amp; <code>*.ova</code> images for virtual box &amp; vmware respectively.</p>
+<!-- https://download.centreon.com/#Appliances/ -->
+<p>Installations alongside gnu/linux distros is preferable for production use.</p>
+<!-- https://docs.centreon.com/docs/installation/installation-of-a-central-server/using-packages/ -->
+<p>The documentation guides it for RHEL, Alma/Oracle/Rocky Linux since they are rhel based distros - <em>(or &ldquo;were&rdquo; since <a href="https://www.redhat.com/en/blog/furthering-evolution-centos-stream" target="_blank">rhel closed their source</a>)</em>.</p>
+<p>Less attention is putted on Debian, the documentation is deprecated for it.</p>
+<!-- https://docs.centreon.com/docs/21.10/installation/installation-of-a-central-server/using-centreon-iso/ -->
+<!-- https://download.centreon.com/#version-21-10/ -->
+<p>In the past - until ver. 21.10, they used to create <code>*.iso</code> images to install their solutions alongside centos.</p>
+
+
+<h3 class="relative group">connectors &amp; plugins 
+    <div id="connectors--plugins" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#connectors--plugins" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<!-- https://docs.centreon.com/cloud/monitoring/pluginpacks/ -->
+<p>Data collection performed by Centreon models called <code>Monitoring Connectors</code> which have <code>Plugins</code> assets.</p>
+<p>Plugins have the same function as Nagios ones.</p>
+<p>Installed &amp; used by pollers, they are sets of commands to monitor various kinds of metrics, on differents type of hosts regarding many protocols.</p>
+<p>Plugins &amp; connectors are maintained in their <a href="https://github.com/centreon/centreon-plugins" target="_blank">centreon-plugins</a> &amp; <a href="https://github.com/centreon/centreon-connectors" target="_blank">centreon-connectors</a> repositories, where it seems community can contribute.</p>
+<!-- https://docs.centreon.com/docs/21.10/monitoring/pluginpacks/ -->
+<!-- https://docs.centreon.com/docs/administration/licenses/ -->
+<p>Although it&rsquo;s opensource, a license is required to access the full Plugin Pack on their solutions.</p>
+
+
+<h2 class="relative group">deploying 
+    <div id="deploying" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#deploying" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>Installing Centreon IT-100, doing a simple windows &amp; linux hosts monitoring.</p>
+
+
+<h3 class="relative group">requirements 
+    <div id="requirements" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#requirements" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>The infrastructure size depends on the number of hosts to monitor.</p>
+<p>Centreon recommends using lvm to manage their file systems - working fine without, but should be planned for production use.</p>
+<p>A stand-alone central server is used under 500 hosts. Pollers every 500 hosts are expected with a database server if more than 2'500 hosts.</p>
+<p>For production use, it would be a good idea to think about scalability.</p>
+<p>Since there would be too much information to display (partitionning, specs, infrastructure), i let you refer to their <a href="https://docs.centreon.com/docs/installation/prerequisites/#characteristics-of-the-servers" target="_blank">infrastructure sizes charts</a>.</p>
+
+
+<h3 class="relative group">infrastructure 
+    <div id="infrastructure" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#infrastructure" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>An infrastructure similar to that used in the <a href="https://www.xeylou.fr/posts/nagios-introduction/#infrastructure" target="_blank">nagios article</a> will be deployed.</p>
+<p>Following the <a href="#requirements">requirements</a> - <em>partially since it is not for production use</em>, a stand-alone Central server will be deployed with its poller.</p>
+<p>Here is what the used infrastructure looks like.</p>
+<div class="mermaid" align="center">
+  
+%%{init: {'theme':'dark'}}%%
+graph TD
+
+subgraph lan[LAN]
+router{Router}
+switch[Switch]
+centreon(Centreon Central Server<br><font color="#a9a9a9">192.168.122.166</font>)
+linux(Debian Host<br><font color="#a9a9a9">192.168.122.164</font>)
+win(Windows Host<br><font color="#a9a9a9">192.168.122.251</font>)
+mariadb[(MariaDB server)]
+poller((Poller))
+end
+
+wan{WAN}---router
+router---switch
+switch---centreon
+switch---linux
+switch---win
+centreon-.-mariadb & poller
+
+
+</div>
+
+
+
+<h3 class="relative group">installation 
+    <div id="installation" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#installation" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>Centreon IT will be installed without license on Debian 11.</p>
+<p>I made an installation script available on <a href="https://github.com/xeylou/centreon-it-overview/blob/main/debian-centreon-install.sh" target="_blank">Github</a>.</p>
+<p>This script installs Centreon IT from added Centreon&rsquo;s apt repositories &amp; install a secured mysql server through mariadb.</p>
+<p>To execute it, run the following commands.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir testing <span class="o">&amp;&amp;</span> <span class="nb">cd</span> testing
+</span></span><span class="line"><span class="cl">wget https://raw.githubusercontent.com/xeylou/centreon-it-overview/main/debian-centreon-install.sh
+</span></span><span class="line"><span class="cl">chmod +x debian-centreon-install.sh
+</span></span><span class="line"><span class="cl">./debian-centreon-install.sh
+</span></span></code></pre></div><p>Installation can be resumed going on the Centreon web interface <code>http://192.168.122.166</code>.</p>
+<p><em>(cannot highlight forms natively, so i specify the changes, otherwise i just do next, install or finish)</em></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/00_hu15c53fd71859335ad842e1685e9d4412_132506_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/00_hu15c53fd71859335ad842e1685e9d4412_132506_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/00_hu15c53fd71859335ad842e1685e9d4412_132506_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/00_hu15c53fd71859335ad842e1685e9d4412_132506_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/00_hu15c53fd71859335ad842e1685e9d4412_132506_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/01_hud2e8961411ccb570f4132f0cd48fb626_169782_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/01_hud2e8961411ccb570f4132f0cd48fb626_169782_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/01_hud2e8961411ccb570f4132f0cd48fb626_169782_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/01_hud2e8961411ccb570f4132f0cd48fb626_169782_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/01_hud2e8961411ccb570f4132f0cd48fb626_169782_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>More dependencies than the ones loaded could be presented as <code>Not loaded</code> for debugging (if not using the script).</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/02_hud2e8961411ccb570f4132f0cd48fb626_202453_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/02_hud2e8961411ccb570f4132f0cd48fb626_202453_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/02_hud2e8961411ccb570f4132f0cd48fb626_202453_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/02_hud2e8961411ccb570f4132f0cd48fb626_202453_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/02_hud2e8961411ccb570f4132f0cd48fb626_202453_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/03_hud2e8961411ccb570f4132f0cd48fb626_188763_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/03_hud2e8961411ccb570f4132f0cd48fb626_188763_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/03_hud2e8961411ccb570f4132f0cd48fb626_188763_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/03_hud2e8961411ccb570f4132f0cd48fb626_188763_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/03_hud2e8961411ccb570f4132f0cd48fb626_188763_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/04_hu0a87013f09e98566cbe5b308524621db_145269_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/04_hu0a87013f09e98566cbe5b308524621db_145269_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/04_hu0a87013f09e98566cbe5b308524621db_145269_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/04_hu0a87013f09e98566cbe5b308524621db_145269_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/04_hu0a87013f09e98566cbe5b308524621db_145269_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Creation of an admin account for the Centreon interface.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/05_hu4de29103cf08483f81bc5a4b9304623b_196368_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/05_hu4de29103cf08483f81bc5a4b9304623b_196368_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/05_hu4de29103cf08483f81bc5a4b9304623b_196368_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/05_hu4de29103cf08483f81bc5a4b9304623b_196368_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/05_hu4de29103cf08483f81bc5a4b9304623b_196368_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Connexion to the db server. The root password was asked &amp; created by the script at the end.</p>
+<p>Used <code>localhost</code> (so 127.0.0.1 or ::1) for the db server ip address, since its hosted on the same host as the future centreon central server.</p>
+<p>Creation of a db user to perform data querries - for security purposes, not doign them with an admin one.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/06_hu4de29103cf08483f81bc5a4b9304623b_172881_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/06_hu4de29103cf08483f81bc5a4b9304623b_172881_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/06_hu4de29103cf08483f81bc5a4b9304623b_172881_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/06_hu4de29103cf08483f81bc5a4b9304623b_172881_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/06_hu4de29103cf08483f81bc5a4b9304623b_172881_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/07_hudd719387b85b33c8ccb14d4b02d30795_241892_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/07_hudd719387b85b33c8ccb14d4b02d30795_241892_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/07_hudd719387b85b33c8ccb14d4b02d30795_241892_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/07_hudd719387b85b33c8ccb14d4b02d30795_241892_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/07_hudd719387b85b33c8ccb14d4b02d30795_241892_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/08_huaa72b17eed635204b4b7e2fe831fac3c_242133_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/08_huaa72b17eed635204b4b7e2fe831fac3c_242133_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/08_huaa72b17eed635204b4b7e2fe831fac3c_242133_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/08_huaa72b17eed635204b4b7e2fe831fac3c_242133_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/08_huaa72b17eed635204b4b7e2fe831fac3c_242133_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/09_huaa72b17eed635204b4b7e2fe831fac3c_345279_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/09_huaa72b17eed635204b4b7e2fe831fac3c_345279_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/09_huaa72b17eed635204b4b7e2fe831fac3c_345279_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/09_huaa72b17eed635204b4b7e2fe831fac3c_345279_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/09_huaa72b17eed635204b4b7e2fe831fac3c_345279_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/10_hud094adb001ced3e676a946d482bd54e9_1061491_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/10_hud094adb001ced3e676a946d482bd54e9_1061491_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/10_hud094adb001ced3e676a946d482bd54e9_1061491_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/10_hud094adb001ced3e676a946d482bd54e9_1061491_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/10_hud094adb001ced3e676a946d482bd54e9_1061491_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Login created step <code>5 Admin information</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/11_hue3ea96ada98eac0ff969865da8c68b62_185925_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/11_hue3ea96ada98eac0ff969865da8c68b62_185925_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/11_hue3ea96ada98eac0ff969865da8c68b62_185925_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/11_hue3ea96ada98eac0ff969865da8c68b62_185925_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/11_hue3ea96ada98eac0ff969865da8c68b62_185925_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>This is the after-loggin page.</p>
+<p>After the installation, the Central server poller is not working.</p>
+<p>Additionnal steps are required to start monitoring.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/12_hue3ea96ada98eac0ff969865da8c68b62_239541_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/12_hue3ea96ada98eac0ff969865da8c68b62_239541_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/12_hue3ea96ada98eac0ff969865da8c68b62_239541_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/12_hue3ea96ada98eac0ff969865da8c68b62_239541_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/12_hue3ea96ada98eac0ff969865da8c68b62_239541_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Go to the poller section to see it.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/13_hu2b44dc51839a2279671dff49e0e0b5bd_209893_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/13_hu2b44dc51839a2279671dff49e0e0b5bd_209893_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/13_hu2b44dc51839a2279671dff49e0e0b5bd_209893_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/13_hu2b44dc51839a2279671dff49e0e0b5bd_209893_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/13_hu2b44dc51839a2279671dff49e0e0b5bd_209893_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/14_hu2b44dc51839a2279671dff49e0e0b5bd_210722_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/14_hu2b44dc51839a2279671dff49e0e0b5bd_210722_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/14_hu2b44dc51839a2279671dff49e0e0b5bd_210722_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/14_hu2b44dc51839a2279671dff49e0e0b5bd_210722_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/14_hu2b44dc51839a2279671dff49e0e0b5bd_210722_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Need to click on <code>Export configuration</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/15_huc41498bdd2cd4c9ede0b1e97345d69e5_210996_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/15_huc41498bdd2cd4c9ede0b1e97345d69e5_210996_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/15_huc41498bdd2cd4c9ede0b1e97345d69e5_210996_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/15_huc41498bdd2cd4c9ede0b1e97345d69e5_210996_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/15_huc41498bdd2cd4c9ede0b1e97345d69e5_210996_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Select the <code>Central</code> poller.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/16_huc41498bdd2cd4c9ede0b1e97345d69e5_201182_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/16_huc41498bdd2cd4c9ede0b1e97345d69e5_201182_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/16_huc41498bdd2cd4c9ede0b1e97345d69e5_201182_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/16_huc41498bdd2cd4c9ede0b1e97345d69e5_201182_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/16_huc41498bdd2cd4c9ede0b1e97345d69e5_201182_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Check <code>Move Export File</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/17_huc41498bdd2cd4c9ede0b1e97345d69e5_201527_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/17_huc41498bdd2cd4c9ede0b1e97345d69e5_201527_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/17_huc41498bdd2cd4c9ede0b1e97345d69e5_201527_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/17_huc41498bdd2cd4c9ede0b1e97345d69e5_201527_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/17_huc41498bdd2cd4c9ede0b1e97345d69e5_201527_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Then <code>Export</code>.</p>
+<p>After that, run the following commands, keep their order without modifying them.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl restart cbd centengine
+</span></span><span class="line"><span class="cl">systemctl restart gorgoned
+</span></span><span class="line"><span class="cl">systemctl start snmptrapd centreontrapd
+</span></span><span class="line"><span class="cl">systemctl start snmpd
+</span></span></code></pre></div><p>Then the poller starts working.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/18_hu8b0c55fa5166e87b73eb2e236c0713db_215085_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/18_hu8b0c55fa5166e87b73eb2e236c0713db_215085_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/18_hu8b0c55fa5166e87b73eb2e236c0713db_215085_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/18_hu8b0c55fa5166e87b73eb2e236c0713db_215085_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/18_hu8b0c55fa5166e87b73eb2e236c0713db_215085_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p><em>(the red circle at top left, to the right of Pollers logo disappears later, see screenshots below)</em></p>
+
+
+<h3 class="relative group">snmp plugins 
+    <div id="snmp-plugins" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#snmp-plugins" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>Centreon recommends using their snmp implementation plugins to gather metrics - <em>cpu load, memory usage etc.</em></p>
+<p>Usage of the snmp protocol garantees the monitoring to work as intended since the protocol is universal - rather than installing an agent.</p>
+<p>Plugins can be added using the web interface or by using the system package manager (dnf for rhel based distros &amp; apt for the debian family).</p>
+<p>Here is the installation of the needed snmp plugins using the web interface.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/19_hue3ea96ada98eac0ff969865da8c68b62_226380_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/19_hue3ea96ada98eac0ff969865da8c68b62_226380_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/19_hue3ea96ada98eac0ff969865da8c68b62_226380_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/19_hue3ea96ada98eac0ff969865da8c68b62_226380_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/19_hue3ea96ada98eac0ff969865da8c68b62_226380_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/20_hu936e3cad41cf6ff35b4c326987a5e911_395837_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/20_hu936e3cad41cf6ff35b4c326987a5e911_395837_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/20_hu936e3cad41cf6ff35b4c326987a5e911_395837_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/20_hu936e3cad41cf6ff35b4c326987a5e911_395837_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/20_hu936e3cad41cf6ff35b4c326987a5e911_395837_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Adding the linux snmp plugin clicking <code>+</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/21_hu936e3cad41cf6ff35b4c326987a5e911_416760_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/21_hu936e3cad41cf6ff35b4c326987a5e911_416760_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/21_hu936e3cad41cf6ff35b4c326987a5e911_416760_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/21_hu936e3cad41cf6ff35b4c326987a5e911_416760_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/21_hu936e3cad41cf6ff35b4c326987a5e911_416760_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p><code>Base Pack</code> is an expected dependency that will be installed choosing <code>Apply</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/22_hu936e3cad41cf6ff35b4c326987a5e911_396983_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/22_hu936e3cad41cf6ff35b4c326987a5e911_396983_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/22_hu936e3cad41cf6ff35b4c326987a5e911_396983_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/22_hu936e3cad41cf6ff35b4c326987a5e911_396983_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/22_hu936e3cad41cf6ff35b4c326987a5e911_396983_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Doing the same for windows snmp plugin, no more dependency needed.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debian-snmp/23_hu941b306252c908c7574436bd86dfef3a_396406_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debian-snmp/23_hu941b306252c908c7574436bd86dfef3a_396406_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debian-snmp/23_hu941b306252c908c7574436bd86dfef3a_396406_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debian-snmp/23_hu941b306252c908c7574436bd86dfef3a_396406_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debian-snmp/23_hu941b306252c908c7574436bd86dfef3a_396406_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Result.</p>
+<p>On wanted monitored hosts, snmp must be configured and working.</p>
+<!--
+
+apt install -y snmp
+nano /etc/snmp/snmp.conf
+
+-->
+
+
+<h3 class="relative group">linux host 
+    <div id="linux-host" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#linux-host" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+
+  
+  
+  
+  
+
+
+
+<div
+  
+    class="flex px-4 py-3 rounded-md bg-primary-100 dark:bg-primary-900"
+  >
+
+  <span
+    
+      class="text-primary-400 ltr:pr-3 rtl:pl-3 flex items-center"
+    >
+
+    
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c17.67 0 32 14.33 32 32c0 17.67-14.33 32-32 32S224 177.7 224 160C224 142.3 238.3 128 256 128zM296 384h-80C202.8 384 192 373.3 192 360s10.75-24 24-24h16v-64H224c-13.25 0-24-10.75-24-24S210.8 224 224 224h32c13.25 0 24 10.75 24 24v88h16c13.25 0 24 10.75 24 24S309.3 384 296 384z"/></svg>
+
+  </span>
+
+
+  </span>
+
+  <span
+    
+      class="dark:text-neutral-300"
+    ><strong>Note</strong> I&rsquo;ve explained what were done with snmp rather than just <em>throwing you my script</em> as you may need this explainations to monitor other devices like switches or routers. <em>(which doesn&rsquo;t mean i haven&rsquo;t <a href="http://github.com/xeylou/centreon-it-overview" target="_blank">made one</a>)</em></span>
+</div>
+
+<p>For our needs, according to the <a href="https://wiki.debian.org/SNMP" target="_blank">debian snmp page</a>, a repo needs to be added to <code>/etc/apt/source.list</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1"># deb cdrom:[Debian GNU/Linux 11.7.0 _Bullseye_ - Official amd64 NETINST 20230429-11:49]/ bullseye main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1">#deb cdrom:[Debian GNU/Linux 11.7.0 _Bullseye_ - Official amd64 NETINST 20230429-11:49]/ bullseye main</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">deb http://deb.debian.org/debian/ bullseye main
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">deb-src http://deb.debian.org/debian/ bullseye main
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">deb http://security.debian.org/debian-security bullseye-security main
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">deb-src http://security.debian.org/debian-security bullseye-security main
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"># bullseye-updates, to get updates before a point release is made;</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"># see https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_updates_and_backports</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">deb http://deb.debian.org/debian/ bullseye-updates main
+</span></span><span class="line"><span class="ln">14</span><span class="cl">deb-src http://deb.debian.org/debian/ bullseye-updates main
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1"># This system was installed using small removable media</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1"># (e.g. netinst, live or single CD). The matching &#34;deb cdrom&#34;</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1"># entries were disabled at the end of the installation process.</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"># For information about how to configure apt package sources,</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="c1"># see the sources.list(5) manual.</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">
+</span></span><span class="line hl"><span class="ln">22</span><span class="cl"><span class="c1"># snmp needs</span>
+</span></span><span class="line hl"><span class="ln">23</span><span class="cl">deb http://httpredir.debian.org/debian bullseye contrib non-free
+</span></span></code></pre></div><!-- 
+https://www.enzo-lefort.fr/pdf/SISR5/TP%20_Centreon_SNMP_LEFORT.pdf
+https://pixelabs.fr/configuration-snmp-windows-linux-esxi/
+https://blog.foulquier.info/tutoriels/supervision/mise-en-place-d-une-supervision-systeme-sur-debian-7-avec-snmpd-et-centreon-3-0
+-->
+<p>After that, the needed packages can be installed.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt update
+</span></span><span class="line"><span class="cl">apt install -y snmp snmptrapd snmp-mibs-downloader
+</span></span></code></pre></div><p>Checking if the snmp service is running properly.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl status snmpd
+</span></span></code></pre></div><p>If not, it needs to be started.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl start snmpd
+</span></span></code></pre></div><p>Before making changes to the snmp daemon configuration file <code>/etc/snmp/snmpd.conf</code>, a backup is always welcome.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp /etc/snmp/snmpd.conf<span class="o">{</span>,.old<span class="o">}</span>
+</span></span></code></pre></div><p>The snmp protocol will listen for connections on all interfaces on port 161 udp for ipv4 &amp; ipv6.</p>
+<p>SNMP will wait for a specific ip address under a certain <code>community</code> called public here.</p>
+<p>Modifications are done in <code>/etc/snmp/snmpd.conf</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">41</span><span class="cl"><span class="c1"># agentaddress: The IP address and port number that the agent will listen on.</span>
+</span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="c1">#   By default the agent listens to any and all traffic from any</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl"><span class="c1">#   interface on the default SNMP port (161).  This allows you to</span>
+</span></span><span class="line"><span class="ln">44</span><span class="cl"><span class="c1">#   specify which address, interface, transport type and port(s) that you</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl"><span class="c1">#   want the agent to listen on.  Multiple definitions of this token</span>
+</span></span><span class="line"><span class="ln">46</span><span class="cl"><span class="c1">#   are concatenated together (using &#39;:&#39;s).</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl"><span class="c1">#   arguments: [transport:]port[@interface/address],...</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">
+</span></span><span class="line hl"><span class="ln">49</span><span class="cl">agentaddress  udp:0.0.0.0:161,udp6:<span class="o">[</span>::<span class="o">]</span>:161
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">67</span><span class="cl"><span class="c1"># rocommunity: a SNMPv1/SNMPv2c read-only access community name</span>
+</span></span><span class="line"><span class="ln">68</span><span class="cl"><span class="c1">#   arguments:  community [default|hostname|network/bits] [oid | -V view]</span>
+</span></span><span class="line"><span class="ln">69</span><span class="cl">
+</span></span><span class="line"><span class="ln">70</span><span class="cl"><span class="c1"># Read-only access to everyone to the systemonly view</span>
+</span></span><span class="line"><span class="ln">71</span><span class="cl"><span class="c1"># rocommunity  public default -V systemonly</span>
+</span></span><span class="line"><span class="ln">72</span><span class="cl"><span class="c1"># rocommunity6 public default -V systemonly</span>
+</span></span><span class="line hl"><span class="ln">73</span><span class="cl">rocommunity public 192.168.122.166
+</span></span></code></pre></div><p>After that, the snmp service needs to be restarted.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl restart snmpd
+</span></span></code></pre></div><p>This command can be run from the Centreon Central Server to check if the configuration is working.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">snmpwalk -v2c 192.168.122.164 -c public
+</span></span></code></pre></div><p>If it does, a lot of text will be displayed rather than this output: <em>Timeout: No Response from 192.168.122.164</em>.</p>
+<p><em>(if you are working with snmp layer: this command retrieves records from mib by going through each oid running automatic getnext requests, so you don&rsquo;t need a command for each oid or node, on snmp ver. 2c asked with &ldquo;public&rdquo; community)</em></p>
+
+
+<h3 class="relative group">windows host 
+    <div id="windows-host" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#windows-host" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>The windows host is a windows server.</p>
+<p>The snmp protocol will be enabled on it, authorizing only the centron-central to communicate via a community named <code>public</code>.</p>
+<p>On the Server Manager window.</p>
+<p><em>(here i can nicely highlight the forms)</em></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/00_hu5a5a61c4a088d3bd766313be30cdd048_473982_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/00_hu5a5a61c4a088d3bd766313be30cdd048_473982_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/00_hu5a5a61c4a088d3bd766313be30cdd048_473982_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/00_hu5a5a61c4a088d3bd766313be30cdd048_473982_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/00_hu5a5a61c4a088d3bd766313be30cdd048_473982_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/01_huaecf12ba9e91feff05773c332031ebdf_422857_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/01_huaecf12ba9e91feff05773c332031ebdf_422857_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/01_huaecf12ba9e91feff05773c332031ebdf_422857_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/01_huaecf12ba9e91feff05773c332031ebdf_422857_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/01_huaecf12ba9e91feff05773c332031ebdf_422857_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/02_hub7781ed097d0f157913be60bb9c2137b_305058_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/02_hub7781ed097d0f157913be60bb9c2137b_305058_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/02_hub7781ed097d0f157913be60bb9c2137b_305058_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/02_hub7781ed097d0f157913be60bb9c2137b_305058_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/02_hub7781ed097d0f157913be60bb9c2137b_305058_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/03_hu2e687d5815c179854e2fb2ace616332e_371771_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/03_hu2e687d5815c179854e2fb2ace616332e_371771_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/03_hu2e687d5815c179854e2fb2ace616332e_371771_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/03_hu2e687d5815c179854e2fb2ace616332e_371771_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/03_hu2e687d5815c179854e2fb2ace616332e_371771_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Select the hostname of the windows server.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/04_hu71ae0b6529fecc4a9dd481ac2975e280_459068_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/04_hu71ae0b6529fecc4a9dd481ac2975e280_459068_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/04_hu71ae0b6529fecc4a9dd481ac2975e280_459068_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/04_hu71ae0b6529fecc4a9dd481ac2975e280_459068_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/04_hu71ae0b6529fecc4a9dd481ac2975e280_459068_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>No need to add anything, just go <code>Next</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/05_hu2c27b4261e997ed8466552dc946e0129_561611_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/05_hu2c27b4261e997ed8466552dc946e0129_561611_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/05_hu2c27b4261e997ed8466552dc946e0129_561611_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/05_hu2c27b4261e997ed8466552dc946e0129_561611_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/05_hu2c27b4261e997ed8466552dc946e0129_561611_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Search for the <code>SNMP Service</code> &amp; enable <code>SNMP WMI Provider</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/07_hu2c27b4261e997ed8466552dc946e0129_566178_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/07_hu2c27b4261e997ed8466552dc946e0129_566178_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/07_hu2c27b4261e997ed8466552dc946e0129_566178_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/07_hu2c27b4261e997ed8466552dc946e0129_566178_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/07_hu2c27b4261e997ed8466552dc946e0129_566178_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Right after that go <code>Next</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/08_hu222f8c644f56bef0f80214f92b8182a2_344498_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/08_hu222f8c644f56bef0f80214f92b8182a2_344498_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/08_hu222f8c644f56bef0f80214f92b8182a2_344498_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/08_hu222f8c644f56bef0f80214f92b8182a2_344498_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/08_hu222f8c644f56bef0f80214f92b8182a2_344498_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/09_hu8c7f4da7f04148dd1f6a0a16922f06ad_294878_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/09_hu8c7f4da7f04148dd1f6a0a16922f06ad_294878_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/09_hu8c7f4da7f04148dd1f6a0a16922f06ad_294878_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/09_hu8c7f4da7f04148dd1f6a0a16922f06ad_294878_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/09_hu8c7f4da7f04148dd1f6a0a16922f06ad_294878_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>The snmp service needs to be configured in the Server Manager window.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/10_huab815d1cc21535a725bbb7a7cabd79ce_625676_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/10_huab815d1cc21535a725bbb7a7cabd79ce_625676_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/10_huab815d1cc21535a725bbb7a7cabd79ce_625676_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/10_huab815d1cc21535a725bbb7a7cabd79ce_625676_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/10_huab815d1cc21535a725bbb7a7cabd79ce_625676_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Find the <code>SNMP Service</code> among the services.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/11_hu6dfa331a8f533da1434e60b73b849cd8_712749_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/11_hu6dfa331a8f533da1434e60b73b849cd8_712749_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/11_hu6dfa331a8f533da1434e60b73b849cd8_712749_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/11_hu6dfa331a8f533da1434e60b73b849cd8_712749_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/11_hu6dfa331a8f533da1434e60b73b849cd8_712749_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/12_hu1fed74bfc52d1a229b52fb26c63fac30_506209_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/12_hu1fed74bfc52d1a229b52fb26c63fac30_506209_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/12_hu1fed74bfc52d1a229b52fb26c63fac30_506209_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/12_hu1fed74bfc52d1a229b52fb26c63fac30_506209_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/12_hu1fed74bfc52d1a229b52fb26c63fac30_506209_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Add a <code>community</code>, here public, the same as the one configured on the debian host.</p>
+<p><code>Read Only</code> is preferable because nothing has to be changed, just the metrics to be gathered.</p>
+<p>The Centreon server needs to be trusted by entering its ip address.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/15_hu1fed74bfc52d1a229b52fb26c63fac30_506569_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/15_hu1fed74bfc52d1a229b52fb26c63fac30_506569_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/15_hu1fed74bfc52d1a229b52fb26c63fac30_506569_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/15_hu1fed74bfc52d1a229b52fb26c63fac30_506569_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/15_hu1fed74bfc52d1a229b52fb26c63fac30_506569_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Let&rsquo;s click <code>Ok</code> (does <code>Apply</code> &amp; quit).</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-winsrv-snmp/17_hu2d6e8557c251952cab585a6239622fa0_714895_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-winsrv-snmp/17_hu2d6e8557c251952cab585a6239622fa0_714895_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-winsrv-snmp/17_hu2d6e8557c251952cab585a6239622fa0_714895_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-winsrv-snmp/17_hu2d6e8557c251952cab585a6239622fa0_714895_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-winsrv-snmp/17_hu2d6e8557c251952cab585a6239622fa0_714895_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Then <code>Restart</code> the service to make the changes take effect.</p>
+<p>The same command used to check the connectivity of the debian host can be used for the windows one, changing the ip address.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">snmpwalk -v2c 192.168.122.251 -c public
+</span></span></code></pre></div>
+
+<h3 class="relative group">adding hosts 
+    <div id="adding-hosts" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#adding-hosts" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>Before adding the hosts to Centreon, it would be pleasant to check their snmp connectivity.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">snmpwalk -v2c 192.168.122.251 -c public
+</span></span><span class="line"><span class="cl">snmpwalk -v2c 192.168.122.164 -c public
+</span></span></code></pre></div><p>If the Centreon server can reach them, they can be added to its interface.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/00_hufc595b30e2acaffacf2f3ec6341fda5d_168687_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/00_hufc595b30e2acaffacf2f3ec6341fda5d_168687_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/00_hufc595b30e2acaffacf2f3ec6341fda5d_168687_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/00_hufc595b30e2acaffacf2f3ec6341fda5d_168687_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/00_hufc595b30e2acaffacf2f3ec6341fda5d_168687_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Go to the <code>Hosts</code> configuration.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/01_hua463c4eda8830e3344878a14e07537a6_137313_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/01_hua463c4eda8830e3344878a14e07537a6_137313_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/01_hua463c4eda8830e3344878a14e07537a6_137313_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/01_hua463c4eda8830e3344878a14e07537a6_137313_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/01_hua463c4eda8830e3344878a14e07537a6_137313_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Click on <code>Add</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/02_hue13ad2029dcc5baa9b2b7835c567ddfb_188913_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/02_hue13ad2029dcc5baa9b2b7835c567ddfb_188913_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/02_hue13ad2029dcc5baa9b2b7835c567ddfb_188913_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/02_hue13ad2029dcc5baa9b2b7835c567ddfb_188913_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/02_hue13ad2029dcc5baa9b2b7835c567ddfb_188913_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Filling with the informations for <a href="#linux-host">debian host</a> &amp; some arbitraty ones.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/03_hue9ec98c0e6e7253cbb7574d92daeed0a_260808_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/03_hue9ec98c0e6e7253cbb7574d92daeed0a_260808_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/03_hue9ec98c0e6e7253cbb7574d92daeed0a_260808_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/03_hue9ec98c0e6e7253cbb7574d92daeed0a_260808_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/03_hue9ec98c0e6e7253cbb7574d92daeed0a_260808_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p><code>Save</code>.</p>
+<p><em>(the Default equals Yes for the two cases)</em></p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/04_hu40ca139c8fd147e2d340efa3cd6ff7c3_261922_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/04_hu40ca139c8fd147e2d340efa3cd6ff7c3_261922_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/04_hu40ca139c8fd147e2d340efa3cd6ff7c3_261922_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/04_hu40ca139c8fd147e2d340efa3cd6ff7c3_261922_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/04_hu40ca139c8fd147e2d340efa3cd6ff7c3_261922_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/05_hue9ec98c0e6e7253cbb7574d92daeed0a_264160_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/05_hue9ec98c0e6e7253cbb7574d92daeed0a_264160_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/05_hue9ec98c0e6e7253cbb7574d92daeed0a_264160_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/05_hue9ec98c0e6e7253cbb7574d92daeed0a_264160_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/05_hue9ec98c0e6e7253cbb7574d92daeed0a_264160_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Doing the same for the <a href="#windows-host">windows host</a> informations.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/06_hua463c4eda8830e3344878a14e07537a6_163041_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/06_hua463c4eda8830e3344878a14e07537a6_163041_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/06_hua463c4eda8830e3344878a14e07537a6_163041_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/06_hua463c4eda8830e3344878a14e07537a6_163041_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/06_hua463c4eda8830e3344878a14e07537a6_163041_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>The host are added, should looks like so.</p>
+<p>The pollers need to actualize their configuration files to starts monitoring the hosts.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/07_hua463c4eda8830e3344878a14e07537a6_192817_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/07_hua463c4eda8830e3344878a14e07537a6_192817_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/07_hua463c4eda8830e3344878a14e07537a6_192817_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/07_hua463c4eda8830e3344878a14e07537a6_192817_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/07_hua463c4eda8830e3344878a14e07537a6_192817_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/08_hud7a142d5a1133f6ac2ee7515820fd708_170238_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/08_hud7a142d5a1133f6ac2ee7515820fd708_170238_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/08_hud7a142d5a1133f6ac2ee7515820fd708_170238_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/08_hud7a142d5a1133f6ac2ee7515820fd708_170238_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/08_hud7a142d5a1133f6ac2ee7515820fd708_170238_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p><em>(note the red Yes on Conf Changed)</em>
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/09_hu30851aedbdd4e14a72643069a13ea73b_147983_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/09_hu30851aedbdd4e14a72643069a13ea73b_147983_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/09_hu30851aedbdd4e14a72643069a13ea73b_147983_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/09_hu30851aedbdd4e14a72643069a13ea73b_147983_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/09_hu30851aedbdd4e14a72643069a13ea73b_147983_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Export the configuration in a file for pollers <em><strong>but this time also restart them</strong></em>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/10_hua1cecaee5f50c1422bd052e1f47e55c5_178827_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/10_hua1cecaee5f50c1422bd052e1f47e55c5_178827_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/10_hua1cecaee5f50c1422bd052e1f47e55c5_178827_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/10_hua1cecaee5f50c1422bd052e1f47e55c5_178827_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/10_hua1cecaee5f50c1422bd052e1f47e55c5_178827_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>To see the hosts &amp; their services status.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/11_hufc595b30e2acaffacf2f3ec6341fda5d_231986_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/11_hufc595b30e2acaffacf2f3ec6341fda5d_231986_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/11_hufc595b30e2acaffacf2f3ec6341fda5d_231986_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/11_hufc595b30e2acaffacf2f3ec6341fda5d_231986_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/11_hufc595b30e2acaffacf2f3ec6341fda5d_231986_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>After 5 minutes or a <code>Force check</code>.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/12_hu30738e9c1a13c0778fdaa9a0ad5014f6_232983_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/12_hu30738e9c1a13c0778fdaa9a0ad5014f6_232983_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/12_hu30738e9c1a13c0778fdaa9a0ad5014f6_232983_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/12_hu30738e9c1a13c0778fdaa9a0ad5014f6_232983_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/12_hu30738e9c1a13c0778fdaa9a0ad5014f6_232983_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-centreon-add/13_hudeadcea48b93bc062fec946dbdb39df4_233202_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-centreon-add/13_hudeadcea48b93bc062fec946dbdb39df4_233202_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-centreon-add/13_hudeadcea48b93bc062fec946dbdb39df4_233202_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-centreon-add/13_hudeadcea48b93bc062fec946dbdb39df4_233202_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-centreon-add/13_hudeadcea48b93bc062fec946dbdb39df4_233202_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Incomming ping (echo requests) are blocked by the windows firewall by default in windows client &amp; server.</p>
+<p>Although it is marked as critical, it doesn&rsquo;t shows up like so in the services section at the top left&hellip;</p>
+
+
+<h3 class="relative group">adding services 
+    <div id="adding-services" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#adding-services" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>More services can be monitored by adding them into the centreon interface.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-add-services/00_hu643e2d5cfd47c4611879cfaf602f3bd5_267093_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-add-services/00_hu643e2d5cfd47c4611879cfaf602f3bd5_267093_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-add-services/00_hu643e2d5cfd47c4611879cfaf602f3bd5_267093_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-add-services/00_hu643e2d5cfd47c4611879cfaf602f3bd5_267093_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-add-services/00_hu643e2d5cfd47c4611879cfaf602f3bd5_267093_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-add-services/01_hu643e2d5cfd47c4611879cfaf602f3bd5_246841_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-add-services/01_hu643e2d5cfd47c4611879cfaf602f3bd5_246841_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-add-services/01_hu643e2d5cfd47c4611879cfaf602f3bd5_246841_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-add-services/01_hu643e2d5cfd47c4611879cfaf602f3bd5_246841_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-add-services/01_hu643e2d5cfd47c4611879cfaf602f3bd5_246841_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Click on <code>Add</code>.
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-add-services/02_hua44d616f22a3d731b9793f35dc08f955_218137_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-add-services/02_hua44d616f22a3d731b9793f35dc08f955_218137_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-add-services/02_hua44d616f22a3d731b9793f35dc08f955_218137_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-add-services/02_hua44d616f22a3d731b9793f35dc08f955_218137_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-add-services/02_hua44d616f22a3d731b9793f35dc08f955_218137_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>Services to monitor can be added according to what plugins are installed in the Centreon server.</p>
+<p>The sheet with an eye is a small documentation on the command arguments, parameters, etc.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-add-services/03_hu20fd7243dd5269617db2cf9676c591a0_204739_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-add-services/03_hu20fd7243dd5269617db2cf9676c591a0_204739_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-add-services/03_hu20fd7243dd5269617db2cf9676c591a0_204739_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-add-services/03_hu20fd7243dd5269617db2cf9676c591a0_204739_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-add-services/03_hu20fd7243dd5269617db2cf9676c591a0_204739_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>The Default options are Yes in the three cases.</p>
+<p>An then export the configuration &amp; restart the pollers to make changes take effect, like did at the end of <a href="#adding-hosts">adding hosts</a>.<br>
+<em>(to avoid putting a third time the captures how to do it)</em></p>
+
+
+<h3 class="relative group">debugging 
+    <div id="debugging" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#debugging" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>Passives checks commands can be seen, helping a lot for debugging.</p>
+<p>It can also helps for active monitoring without dealing with the Centreon interface.</p>
+<p>Here is how to do so with the swap services.</p>
+<p>
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debugging/00_hua1cecaee5f50c1422bd052e1f47e55c5_178827_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debugging/00_hua1cecaee5f50c1422bd052e1f47e55c5_178827_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debugging/00_hua1cecaee5f50c1422bd052e1f47e55c5_178827_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debugging/00_hua1cecaee5f50c1422bd052e1f47e55c5_178827_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debugging/00_hua1cecaee5f50c1422bd052e1f47e55c5_178827_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+
+
+    <figure>
+      <img
+        class="my-0 rounded-md"
+        loading="lazy"
+        srcset="
+        /posts/centreon-it-overview/325-debugging/01_hu44d4a1a86095418f3f873eef335ed13b_274762_330x0_resize_box_3.png 330w,
+        /posts/centreon-it-overview/325-debugging/01_hu44d4a1a86095418f3f873eef335ed13b_274762_660x0_resize_box_3.png 660w,
+        /posts/centreon-it-overview/325-debugging/01_hu44d4a1a86095418f3f873eef335ed13b_274762_1024x0_resize_box_3.png 1024w,
+        /posts/centreon-it-overview/325-debugging/01_hu44d4a1a86095418f3f873eef335ed13b_274762_1320x0_resize_box_3.png 2x"
+        src="/posts/centreon-it-overview/325-debugging/01_hu44d4a1a86095418f3f873eef335ed13b_274762_660x0_resize_box_3.png"
+        alt=""
+      />
+      
+    </figure>
+</p>
+<p>The syntax is the same for the windows &amp; the linux smp plugins except the <code>--plugin</code> option.</p>
+<p>The services commands syntax are the same, the <code>--mode</code> option change for <code>cpu</code>, <code>load</code>, <code>memory</code>, <code>uptime</code>, etc.</p>
+
+
+<h2 class="relative group">close 
+    <div id="close" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#close" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>Here are some commands that helped me (hope can help you) for debugging - apart from connectivity debugging, because i had to debug a lot compared to itop or nagios</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">systemctl status cbd
+</span></span><span class="line"><span class="cl">systemctl status gorgoned
+</span></span><span class="line"><span class="cl">systemctl status centreon
+</span></span><span class="line"><span class="cl">systemctl status centengine
+</span></span><span class="line"><span class="cl">systemctl status snmptrapd
+</span></span></code></pre></div><p><em>(btw the centreon service has never been active&hellip;)</em></p>
+<p>There are many more services to know &amp; check to understand a problem at the beginning.</p>
+<p>In Nagios, for the same kind of interface (checking hosts services) you just have the nagios service to check for errors.</p>
+<p>For centreon, the gathering, the processing, the display parts &amp; more are seperate ones.</p>
+<p>It&rsquo;s better seperating parts of codes for debugging or reliability, but having a single service that reports all problems can be pleasant (or just not so many services).</p>
+<p>I got hard times to find were a problem could come from sometimes, since the numbers of potential services problem was huge.</p>
+<p>I also understand that centreon as more features (graphs etc.) than nagios base, not xi.</p>
+<p>Centreon uses nagios plugins, in the same directory as nagios does by default&hellip;</p>
+<p>Nagios has a <a href="https://www.nagios.com/products/security/" target="_blank">page dedicated to CVEs</a> to prove their concern &amp; patches. There may be one, but i haven&rsquo;t found a &ldquo;security concern&rdquo; or issues page&quot; for Centreon.</p>
+<p>That&rsquo;s disappointing since monitoring systems needs to be very aware of their security.</p>
+<p>Centreon systems were also targetted by russian attackers (<a href="https://thehackernews.com/2021/02/hackers-exploit-it-monitoring-tool.html" target="_blank">article 1</a>, <a href="https://www.wired.com/story/sandworm-centreon-russia-hack/" target="_blank">article 2</a>).</p>
+<p>It is a very good idea to display the command used to check a service, i think i hadn&rsquo;t seen that in nagios.</p>
+
+        </div>
+        
+        
+
+        
+<details style="margin-left:0px" class="mt-2 mb-5 overflow-hidden rounded-lg ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5">
+    
+    <summary
+        class="py-1 text-lg font-semibold cursor-pointer bg-primary-200 text-neutral-800 ltr:-ml-5 ltr:pl-5 rtl:-mr-5 rtl:pr-5 dark:bg-primary-800 dark:text-neutral-100">
+        Exploring Monitoring Solutions - This article is part of a series.
+    </summary>
+    
+    
+    
+    <div
+        class="py-1 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+        <a href="http://localhost:1313/posts/nagios-introduction/">
+            Part 1: nagios introduction
+        </a>
+    </div>
+    
+    
+    
+    <div
+        class="py-1 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+        <a href="http://localhost:1313/posts/itop-tour/">
+            Part 2: combodo itop tour
+        </a>
+    </div>
+    
+    
+    
+    <div
+        class="py-1 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
+        Part 3: This Article
+    </div>
+    
+    
+
+
+</details>
+
+        
+
+          
+      </div>
+     
+      
+      
+        
+        
+          
+          
+        
+      <script>
+        var oid = "views_posts\/centreon-it-overview\/index.md"
+        var oid_likes = "likes_posts\/centreon-it-overview\/index.md"
+      </script>
+      
+      
+      
+      <script type="text/javascript" src="/js/page.min.0860cf4e04fa2d72cc33ddba263083464d48f67de06114529043cb4623319efed4f484fd7f1730df5abea0e2da6f3538855634081d02f2d6e920b956f063e823.js" integrity="sha512-CGDPTgT6LXLMM926JjCDRk1I9n3gYRRSkEPLRiMxnv7U9IT9fxcw31q&#43;oOLabzU4hVY0CB0C8tbpILlW8GPoIw=="></script>
+  
+    </section>
+  <footer class="pt-8 max-w-prose print:hidden">
+
+    
+  
+    
+    
+    
+    <div class="pt-8">
+      <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+      <div class="flex justify-between pt-3">
+        <span>
+          
+            <a class="flex group mr-3" href="/posts/itop-tour/">
+              <span
+                class="mr-3 text-neutral-700 group-hover:text-primary-600 ltr:inline rtl:hidden dark:text-neutral dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+              <span
+                class="ml-3 text-neutral-700 group-hover:text-primary-600 ltr:hidden rtl:inline dark:text-neutral dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >combodo itop tour</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-08-05 00:00:00 &#43;0000 UTC">2023-08-05</time>
+                  
+                </span>
+              </span>
+            </a>
+          
+        </span>
+        <span>
+          
+            <a class="flex text-right group ml-3" href="/posts/ssh-cheat-sheet/">
+              <span class="flex flex-col">
+                <span
+                  class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+                  >ssh explored</span
+                >
+                <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+                  
+                    <time datetime="2023-08-19 00:00:00 &#43;0000 UTC">2023-08-19</time>
+                  
+                </span>
+              </span>
+              <span
+                class="ml-3 text-neutral-700 group-hover:text-primary-600 ltr:inline rtl:hidden dark:text-neutral dark:group-hover:text-primary-400"
+                >&rarr;</span
+              >
+              <span
+                class="mr-3 text-neutral-700 group-hover:text-primary-600 ltr:hidden rtl:inline dark:text-neutral dark:group-hover:text-primary-400"
+                >&larr;</span
+              >
+            </a>
+          
+        </span>
+      </div>
+    </div>
+  
+
+
+    
+  </footer>
+</article>
+
+      <div id="top-scroller" class="pointer-events-none absolute top-[110vh] bottom-0 w-12 ltr:right-0 rtl:left-0">
+  <a href="#the-top"
+    class="pointer-events-auto sticky top-[calc(100vh-5.5rem)] flex h-12 w-12 mb-16 items-center justify-center rounded-full bg-neutral/50 text-xl text-neutral-700 hover:text-primary-600 dark:bg-neutral-800/50 dark:text-neutral dark:hover:text-primary-400"
+    aria-label="Scroll to top" title="Scroll to top">
+    &uarr;
+  </a>
+</div>
+    </main><footer id="site-footer" class="py-10 print:hidden">
+  
+  
+    
+  
+  <div class="flex items-center justify-between">
+
+    
+    
+
+    
+    
+
+  </div>
+  <script>
+    
+    mediumZoom(document.querySelectorAll("img:not(.nozoom)"), {
+      margin: 24,
+      background: 'rgba(0,0,0,0.5)',
+      scrollOffset: 0,
+    })
+    
+  </script>
+  
+  
+  <script type="text/javascript" src="/js/process.min.ee03488f19c93c2efb199e2e3014ea5f3cb2ce7d45154adb3399a158cac27ca52831db249ede5bb602700ef87eb02434139de0858af1818ab0fb4182472204a4.js" integrity="sha512-7gNIjxnJPC77GZ4uMBTqXzyyzn1FFUrbM5mhWMrCfKUoMdsknt5btgJwDvh&#43;sCQ0E53ghYrxgYqw&#43;0GCRyIEpA=="></script>
+  
+  
+</footer>
+<div
+  id="search-wrapper"
+  class="invisible fixed inset-0 flex h-screen w-screen cursor-default flex-col bg-neutral-500/50 p-4 backdrop-blur-sm dark:bg-neutral-900/50 sm:p-6 md:p-[10vh] lg:p-[12vh]"
+  data-url="http://localhost:1313/"
+  style="z-index:500"
+>
+  <div
+    id="search-modal"
+    class="flex flex-col w-full max-w-3xl min-h-0 mx-auto border rounded-md shadow-lg top-20 border-neutral-200 bg-neutral dark:border-neutral-700 dark:bg-neutral-800"
+  >
+    <header class="relative z-10 flex items-center justify-between flex-none px-2">
+      <form class="flex items-center flex-auto min-w-0">
+        <div class="flex items-center justify-center w-8 h-8 text-neutral-400">
+          
+
+  <span class="relative block icon">
+    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"/></svg>
+
+  </span>
+
+
+        </div>
+        <input
+          type="search"
+          id="search-query"
+          class="flex flex-auto h-12 mx-1 bg-transparent appearance-none focus:outline-dotted focus:outline-2 focus:outline-transparent"
+          placeholder="Search"
+          tabindex="0"
+        />
+      </form>
+      <button
+        id="close-search-button"
+        class="flex items-center justify-center w-8 h-8 text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
+        title="Close (Esc)"
+      >
+        
+
+  <span class="relative block icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"/></svg>
+
+  </span>
+
+
+      </button>
+    </header>
+    <section class="flex-auto px-2 overflow-auto">
+      <ul id="search-results">
+        
+      </ul>
+    </section>
+  </div>
+</div>
+
+  </div>
+</body>
+
+</html>

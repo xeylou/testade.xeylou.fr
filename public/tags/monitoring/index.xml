@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Monitoring on xeylou</title>
+    <link>http://localhost:1313/tags/monitoring/</link>
+    <description>Recent content in Monitoring on xeylou</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+    <lastBuildDate>Fri, 01 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/monitoring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>security notions</title>
+      <link>http://localhost:1313/posts/security-notions/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/security-notions/</guid>
+      <description>taking a tour &amp;amp; understanding</description>
+      
+    </item>
+    
+    <item>
+      <title>centreon it overview</title>
+      <link>http://localhost:1313/posts/centreon-it-overview/</link>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/centreon-it-overview/</guid>
+      <description>overviewing centreon it &amp;amp; getting fully hands-on introduction # The last article in this series will be devoted to discover &amp;amp; use Centreon IT.</description>
+      
+    </item>
+    
+    <item>
+      <title>combodo itop tour</title>
+      <link>http://localhost:1313/posts/itop-tour/</link>
+      <pubDate>Sat, 05 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/itop-tour/</guid>
+      <description>combodo itop tour &amp;amp; creating a living</description>
+      
+    </item>
+    
+    <item>
+      <title>nagios introduction</title>
+      <link>http://localhost:1313/posts/nagios-introduction/</link>
+      <pubDate>Tue, 25 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/nagios-introduction/</guid>
+      <description>understanding Nagios principles &amp;amp; deploying</description>
+      
+    </item>
+    
+  </channel>
+</rss>

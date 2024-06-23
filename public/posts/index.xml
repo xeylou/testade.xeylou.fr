@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on xeylou</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on xeylou</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+    <lastBuildDate>Mon, 29 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>hands on maas</title>
+      <link>http://localhost:1313/posts/hands-on-maas/</link>
+      <pubDate>Sun, 31 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/hands-on-maas/</guid>
+      <description>getting hands on maas using qemu/kvm</description>
+      
+    </item>
+    
+    <item>
+      <title>windows containers</title>
+      <link>http://localhost:1313/posts/windows-container/</link>
+      <pubDate>Wed, 07 Feb 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/windows-container/</guid>
+      <description>discovering windows images</description>
+      
+    </item>
+    
+    <item>
+      <title>work thoughts</title>
+      <link>http://localhost:1313/posts/work-thoughts/</link>
+      <pubDate>Sat, 23 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/work-thoughts/</guid>
+      <description>writing some thoughts,</description>
+      
+    </item>
+    
+    <item>
+      <title>cisco hsrp</title>
+      <link>http://localhost:1313/posts/cisco-hsrp/</link>
+      <pubDate>Sun, 22 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/cisco-hsrp/</guid>
+      <description>utilisation du protocole</description>
+      
+    </item>
+    
+    <item>
+      <title>cisco ospf</title>
+      <link>http://localhost:1313/posts/cisco-ospf/</link>
+      <pubDate>Fri, 20 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/cisco-ospf/</guid>
+      <description>compréhension du protocole</description>
+      
+    </item>
+    
+    <item>
+      <title>inter-vlan cisco</title>
+      <link>http://localhost:1313/posts/cisco-inter-vlan/</link>
+      <pubDate>Wed, 18 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/cisco-inter-vlan/</guid>
+      <description>prise en main du routage</description>
+      
+    </item>
+    
+    <item>
+      <title>ssh cisco ios</title>
+      <link>http://localhost:1313/posts/ssh-cisco-ios/</link>
+      <pubDate>Tue, 03 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/ssh-cisco-ios/</guid>
+      <description>authentification par</description>
+      
+    </item>
+    
+    <item>
+      <title>postfix workshop</title>
+      <link>http://localhost:1313/posts/postfix-workshop/</link>
+      <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/postfix-workshop/</guid>
+      <description>installation d&amp;rsquo;un serveur mail mx postfix</description>
+      
+    </item>
+    
+    <item>
+      <title>bind9 workshop</title>
+      <link>http://localhost:1313/posts/bind9-workshop/</link>
+      <pubDate>Wed, 27 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/bind9-workshop/</guid>
+      <description>installation d&amp;rsquo;une infrastructure dns bind9 introduction # les deux premiers tp portaient sur l&amp;rsquo;installation d&amp;rsquo;une infrastructure dns avec bind9</description>
+      
+    </item>
+    
+    <item>
+      <title>security notions</title>
+      <link>http://localhost:1313/posts/security-notions/</link>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/security-notions/</guid>
+      <description>taking a tour &amp;amp; understanding</description>
+      
+    </item>
+    
+    <item>
+      <title>software in windows</title>
+      <link>http://localhost:1313/posts/win-pkgs-mngers/</link>
+      <pubDate>Mon, 21 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/win-pkgs-mngers/</guid>
+      <description>software management differences</description>
+      
+    </item>
+    
+    <item>
+      <title>ssh explored</title>
+      <link>http://localhost:1313/posts/ssh-cheat-sheet/</link>
+      <pubDate>Sat, 19 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/ssh-cheat-sheet/</guid>
+      <description>introduction # here i expose my ssh usages &amp;amp; some advanced notions about it</description>
+      
+    </item>
+    
+    <item>
+      <title>centreon it overview</title>
+      <link>http://localhost:1313/posts/centreon-it-overview/</link>
+      <pubDate>Sat, 12 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/centreon-it-overview/</guid>
+      <description>overviewing centreon it &amp;amp; getting fully hands-on introduction # The last article in this series will be devoted to discover &amp;amp; use Centreon IT.</description>
+      
+    </item>
+    
+    <item>
+      <title>combodo itop tour</title>
+      <link>http://localhost:1313/posts/itop-tour/</link>
+      <pubDate>Sat, 05 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/itop-tour/</guid>
+      <description>combodo itop tour &amp;amp; creating a living</description>
+      
+    </item>
+    
+    <item>
+      <title>nagios introduction</title>
+      <link>http://localhost:1313/posts/nagios-introduction/</link>
+      <pubDate>Tue, 25 Jul 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/nagios-introduction/</guid>
+      <description>understanding Nagios principles &amp;amp; deploying</description>
+      
+    </item>
+    
+  </channel>
+</rss>
