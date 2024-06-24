@@ -1,7 +1,7 @@
 ---
 title: "programming knowledge"
 date: 2023-09-03
-draft: true
+draft: false
 tags: [ "coding", "programming", "languages" ]
 slug: "programming-knowledge"
 ---
@@ -25,9 +25,9 @@ i won't be talking about development, just coding & progamming related stuff *- 
 
 coding is the way to implement things, giving instructions to computers & learn how things works, e.g. coding sorting algorithms
 
-programming is the way to use coding skills to create something or solve a problem using coding experience, e.g. programming a reservation planning
+programming is the way to use coding skills to create something or to solve a problem using coding experience, e.g. programming a reservation planning
 
-development (*by developpers obviously*) regroup processes like evaluating, conceiving, programming, documenting, testing, etc. a solution, e.g. developping a webapp
+development (*by developpers, obviously*) regroup processes like evaluating, conceiving, programming, documenting, testing, etc. a solution, e.g. developping a webapp
 
 ## languages levels
 
@@ -92,7 +92,7 @@ programming languages can follow one *single paradigm* or more paradigms *multi 
 
 ### imperative
 
-the *imperative paradigm* is based on instructing the machine how to change its state
+the *imperative paradigm* is based on instructing the machine on how to change its state
 
 to do so, the programmer gives explicit instructions, the *how*: do X then Y ~ to get Z
 
@@ -112,11 +112,11 @@ it is the most known paradigm, using functions, local or global variables, doing
 
 *object-oriented paradigm* is based on objects, which are a structure that contain data or code
 
-objects are reusable piece of code, like a blueprint, which can have `instances` of it
+objects are reusable pieces of code, like a blueprint, which can have `instances` of it
 
 considering the "Persons" object, each instance of this object would have the same patern: a name, a surname, an age, etc.
 
-*i took back the example of the [itop artcle](https://xeylou.fr/posts/itop-tour)*
+*i took back an example from my [combodo itop artcle](https://xeylou.fr/posts/itop-tour)*
 
 `methods` can be called on the instances to modify them or do a specific action
 
@@ -173,43 +173,42 @@ python & javascript are two main languages that are dynamically typed
 <!-- peut aller avec mutability/mutable objects -->
 <!-- en python, un tableau peut devenir un entier, puis une chaine de charactère... -->
 
-## bordel
+<!-- ## bordel
 
 programming model  
 parallel computing  
 execution model  
-<!-- https://en.wikipedia.org/wiki/List_of_programming_languages_by_type -->
+https://en.wikipedia.org/wiki/List_of_programming_languages_by_type
 
 ### interpreted
 
 donne des erreurs lors de l'exécution
 ### compiled
 donne des erreurs lors du compil
-<!-- python compile en bytecode puis interprete donc pas bon exemple -->
+python compile en bytecode puis interprete donc pas bon exemple
 
-<!-- ## type of language
+## type of language
 ### machine language
-### assembly language -->
+### assembly language
 
-<!-- ## simple objects
+## simple objects
 ### intergers
 ### floats
 ### strings
 ### lists
 https://stackoverflow.com/questions/176011/python-list-vs-array-when-to-use
-### arrays -->
+### arrays
 
 ## concepts
 pointers, heritage, polymorphism, heuristic, data structure, etc.
 ### pointers
-<!-- pour les deux en dessous prendre exemple de c & c++ -->
+pour les deux en dessous prendre exemple de c & c++
 ### heritage
 ### polymorphism
 ### heuristic
 ### data structure
 ### libraries
 
-<!--
 high level
 low level
 

@@ -1,7 +1,7 @@
 ---
 title: "regarding monitoring"
 date: 2023-11-18
-draft: true
+draft: false
 tags: ["gnu/linux", "monitoring", "open-source"]
 slug: "regarding-monitoring"
 ---
@@ -33,7 +33,7 @@ one of the most important point to clarify is: **why do you need monitoring?**
 
 asking you this question will help you choose what type of monitoring will suit you the most
 
-:warning: do not misunderstand: why you need to monitor && what you need to monitor
+⚠️ do not misunderstand: why you need to monitor && what you need to monitor
 
 this part is at the founding of your monitoring implementation: you won't need to change your monitoring solution on the future if you __plan from the start your monitoring usecases, its purposes && on the future__
 
@@ -55,7 +55,7 @@ that can lead to more advanced usecases, not obvious from start, like service di
 
 making clear what you want to monitor will considerably reduce the scope of the solutions you'd have for your needs too
 
-define the type of metrics you want to monitor, e.g. for website uptime, please don't go w/ big solutions, a simple uptime kuma is more than enough..
+define the type of metrics you want to monitor, e.g. for website uptime, please don't go w/ big solutions, a simple uptime kuma is more than enough...
 
 that could also lead to use more than one solution, because none of them check all your requirements: __take time to think && make down what you need or will need to monitor once__
 
@@ -95,13 +95,13 @@ a serious deployment could also integrate a subscription from the manufacturer t
 
 the people maintaining the solution in your team can be a hidden cost: taking on his time to troubleshoot, debug updates, maintaining...
 
-they sometimes they also need to form people on how to use or quickly troubleshoot, document etc.
+sometimes they also need to form people on how to use or quickly troubleshoot, do documentations etc.
 
-for me, the biggest cost is the time took by people who are responsible for the solution: the time spent && the time that will be spend
+for me, the biggest cost is the time took by people who are responsible for the solution: the time spent && the time that will be spent
 
-other than people, hidden cost can show up later by your solution: ease of moving data *"sh\*\* i can dump the database..."*, the storage consumming place...
+other than people, hidden cost can show up later by your solution: ease of moving data *"sh\*\* i can't dump the database..."*, the storage consumming place...
 
-i consider **ongoing maintenance, potential scaling problems, risk analysis for serious production, repairability && flexibility cost** - higher they are, higher will be the degree of complexity of use as hidden cost
+i consider **ongoing maintenance, potential scaling problems, risk analysis for serious production, repairability && flexibility cost** - the higher they are, the higher will be the degree of complexity of use as hidden cost
 
 ## overall budget
 

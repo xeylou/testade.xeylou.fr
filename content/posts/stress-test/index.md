@@ -1,7 +1,7 @@
 ---
 title: "bash stresstest"
 date: 2024-04-29
-draft: true
+draft: false
 tags: [ "gnu/linux", "ssh" ]
 slug: "bash-stresstest"
 ---
@@ -26,7 +26,9 @@ https://www.malekal.com/quest-ce-que-le-load-average-sur-linux/#Comprendre_et_li
 
 ## introduction
 
-i wanted to share && keep at one place commands i find usefull to do stress tests && benchmarks on hosts (cpu, disk ,network, ram)
+i wanted to share && keep at one place commands i find usefull to do stress tests && benchmarks on hosts (cpu, disk, network, ram)
+
+i used then to test an app in over load situations
 
 i will also explain why i found them in particular extremely usefull && what they do
 
@@ -42,7 +44,7 @@ the fourth column shows the number of running processes on top of the total numb
 
 the fifth one is the last PID created by the system
 
-i will use this is example fron my machine to explain how its works
+i will use this example to explain how its works
 
 ```bash
 0.08 0.18 0.25 1/713 7436
@@ -52,9 +54,9 @@ the loadavg is figured out by averaging the number of jobs in the run queue (pro
 
 so the higher the waiting processes are, the higher your cpu is busy && the higher will be your cpu load average
 
-for example, i have a 8 thread cpu, if the loadavg is at 0.75 for the last minute, i'd have arround 6 processes waiting for cpu time or are blocked (0.75*8=6)
+for example, i have a 8 thread cpu, if the loadavg is at 0.75 for the last minute, i'd have arround 6 processes waiting for cpu time or blocked (0.75*8=6)
 
-to give a more simple example, if my loadavg was at 1, i was using on average 100% of 1 cpu thread distributed on my cpu, 2 for 2 cpu threads && so on
+to give a more simple example, if my loadavg was at 1, i was using on average 100% of 1 cpu thread distributed, 2 for 2 cpu threads && so on
 
 on windows, they convert it to percentages : `(your load average / your number of cpu thread) * 100`, so for my example i was at 1% of my cpu at 0.08 loadavg
 
@@ -68,7 +70,7 @@ so one thread will be at 100% of utilization && go high on temperature, the othe
 
 to do so, i use `bzip2` to compress using its higher level of compression something that is in theory infinitely full to something in theory infinitely empty (it will never end)
 
-i compress `/dev/zero` && prompt the output to my terminal, to redirect it into `/dev/null` where it'll be deleted (nothing will append)
+i compress `/dev/zero` && prompt the output to my terminal, to redirect it into `/dev/null` where it'll be deleted (nothing will be written)
 
 in result, one cpu thread will constantly compress something (who has infinite size) to something that has no size (no disk space will be used)
 
@@ -87,3 +89,59 @@ kill -9 $(ps -ax | grep "bzip2" | awk '{ print $1 }')
 ```
 
 or list them && kill one by one manually
+
+## ram
+
+to overload ram, i use `awk` or more precisely, a specificity of the awk command
+
+awk is a text edition tool used in commands to parse text, do maths or format output of commands when doing scripts
+
+but what awk does is that it keep in memory the action it do
+
+in my case, i use awk to print the first entity of the `/dev/zero` file - which is an infinite number of zeros, so it put in memory an infinit number of `0` until it's full
+
+the ram memory will soon be full after launching the command, so be carefull 
+
+```bash
+awk '{print $0 ; }' /dev/zero
+```
+
+doing <kbd>CTRL+C</kbd> will stop the command from running
+
+## disk operations
+
+to saturate disk iops, i simply use `cat` to read at full speed the content of a disk, && i redirect it to write to saturate write
+
+for this command i assume you are in root
+
+you can simply show the content of your disk, because everything is a file in linux, your entire disk can be read from `/dev/sda` for example; && i redirect the output to `/dev/null` (the void)
+
+```bash
+cat /dev/sda /dev/null
+```
+
+to stress the write of a disk, i need to truly create a file that will increase its size
+
+to do so, i cat a file infinitly full to a new file that will grow bigger && bigger
+
+```bash
+cat /dev/zero > ~/tmp_gigantic_file
+```
+
+while doing so, you can do your test manipulation to try the scenario of a overloaded disk
+
+## network
+
+to overload the network (tx && rx), i need an other machine to do so
+
+what i do is the same for the disk operations, but over the network : i read /dev/zero localy && send the output to the /dev/null of the other machine (for tx)
+
+```bash
+dd if=/dev/zero | ssh <your_host> dd of=/dev/null
+```
+
+&& for rx, i simply do the same the other way around (asking the remote machine to send to me)
+
+```bash
+ssh <your_host> dd if=/dev/zero | dd of=/dev/null
+```
