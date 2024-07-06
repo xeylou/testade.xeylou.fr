@@ -1,4 +1,4 @@
-module github.com/xeylou/xeylou2.fr
+module github.com/xeylou/xeylou.fr
 
 go 1.22.3
 

@@ -9,6 +9,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>http://localhost:1313/posts/bash-stresstest/</loc>
+    <lastmod>2024-04-29T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>http://localhost:1313/posts/</loc>
     <lastmod>2024-04-29T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
@@ -35,6 +41,12 @@
   <url>
     <loc>http://localhost:1313/posts/work-thoughts/</loc>
     <lastmod>2023-12-23T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://localhost:1313/posts/regarding-monitoring/</loc>
+    <lastmod>2023-11-18T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
@@ -71,6 +83,12 @@
   <url>
     <loc>http://localhost:1313/posts/bind9-workshop/</loc>
     <lastmod>2023-09-27T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>http://localhost:1313/posts/programming-knowledge/</loc>
+    <lastmod>2023-09-03T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

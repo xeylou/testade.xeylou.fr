@@ -15,7 +15,7 @@ enableCodeCopy = true
 mainSections = ["posts"] # recent articles source for homepage
 # robots = ""
 
-disableImageOptimization = false
+disableImageOptimization = true
 
 # defaultBackgroundImage = "IMAGE.jpg" # used as default for background images 
 # defaultFeaturedImage = "IMAGE.jpg" # used as default for featured images in all articles
@@ -25,7 +25,7 @@ smartTOC = true
 smartTOCHideUnfocusedChildren = true
 
 [header]
-  layout = "fixed"
+  layout = "basic"
   # layout = "basic" # valid options: basic, fixed, fixed-fill, fixed-fill-blur
   
 [footer]

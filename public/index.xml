@@ -9,6 +9,16 @@
     
     <lastBuildDate>Mon, 29 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>bash stresstest</title>
+      <link>http://localhost:1313/posts/bash-stresstest/</link>
+      <pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/bash-stresstest/</guid>
+      <description>giving some comands i like to use</description>
+      
+    </item>
+    
+    <item>
       <title>hands on maas</title>
       <link>http://localhost:1313/posts/hands-on-maas/</link>
       <pubDate>Sun, 31 Mar 2024 00:00:00 +0000</pubDate>
@@ -45,6 +55,16 @@
       
       <guid>http://localhost:1313/posts/work-thoughts/</guid>
       <description>writing some thoughts,</description>
+      
+    </item>
+    
+    <item>
+      <title>regarding monitoring</title>
+      <link>http://localhost:1313/posts/regarding-monitoring/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/regarding-monitoring/</guid>
+      <description>having a broader vision of monitoring,</description>
       
     </item>
     
@@ -105,6 +125,16 @@
       
       <guid>http://localhost:1313/posts/bind9-workshop/</guid>
       <description>installation d&amp;rsquo;une infrastructure dns bind9 introduction # les deux premiers tp portaient sur l&amp;rsquo;installation d&amp;rsquo;une infrastructure dns avec bind9</description>
+      
+    </item>
+    
+    <item>
+      <title>programming knowledge</title>
+      <link>http://localhost:1313/posts/programming-knowledge/</link>
+      <pubDate>Sun, 03 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/programming-knowledge/</guid>
+      <description>explaining some coding</description>
       
     </item>
     
