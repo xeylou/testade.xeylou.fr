@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     
-    <lastBuildDate>Mon, 29 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/gnu/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/gnu/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>debian custom iso</title>
+      <link>http://localhost:1313/posts/debian-preseed/</link>
+      <pubDate>Tue, 20 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/posts/debian-preseed/</guid>
+      <description>creating custom debian</description>
+      
+    </item>
+    
     <item>
       <title>bash stresstest</title>
       <link>http://localhost:1313/posts/bash-stresstest/</link>
