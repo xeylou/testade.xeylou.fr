@@ -8,9 +8,7 @@ slug: "2024-09-29"
 
 <!-- prologue -->
 
-{{< lead >}}
-how as it been? 
-{{< /lead >}}
+how as it been?
 
 <!-- article -->
 
@@ -30,7 +28,7 @@ i was also accepted in better schools than the one i am currently in, but i didn
 
 i had academic recommendations & teachers to encourage me doing it, but i still think i wasn't good enough; maybe i was wrong as they told me, maybe i would have had a better future; i will never have to know i guess
 
-# moving
+## moving
 
 i had to move to get close to my new school
 
@@ -42,7 +40,7 @@ now i am in, i have to live and rent for two appartments and that is not a choic
 
 it sounds luxury but it's the opposite. i live in my school campus for my study periods and at people's house near my new job for my working ones
 
-# new job
+## getting a new job
 
 i had the choice to keep my previous job when moving from my previous studies, still in a sandwich program alonside my new studies
 
