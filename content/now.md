@@ -25,4 +25,4 @@ i do a work-study as an apprentice Network & System Administrator for a french I
 
 ### Freetime
 
-exploring & creating Github repos about IT related stuff
+exploring & creating Github repos about IT
